@@ -54,9 +54,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	// final String ServerIp ="87.55.208.165:1337";
+	 final String ServerIp ="87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	final String ServerIp = "10.0.2.2";
+	//final String ServerIp = "10.0.2.2";
 	String url;
 	HashMap<String, ArrayList<HashMap<String, String>>> lilDb;
 	String[] gameTypes;
@@ -498,7 +498,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				} else if (Keys.companyTable.equals(tableName)) {
 					selectQuery = "SELECT * FROM " + tableName + ";";
 				} else if (Keys.HomeMsgTable.equals(tableName)) {
-					selectQuery = "SELECT * FROM " + tableName + "Where "
+					selectQuery = "SELECT * FROM " + tableName + " Where "
 							+ Keys.ID_PLAYER + "=" + Keys.TEMPLAYERID + ";";
 				} else if (Keys.HomeSubscriptionTable.equals(tableName)) {
 					selectQuery = "SELECT * FROM " + tableName + ";";

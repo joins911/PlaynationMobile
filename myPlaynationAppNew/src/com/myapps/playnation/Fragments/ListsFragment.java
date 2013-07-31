@@ -254,8 +254,37 @@ public class ListsFragment extends Fragment {
 			FriendsListAdapter bindingData = new FriendsListAdapter(
 					getActivity(), results);
 			list.setAdapter(bindingData);
+			list.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent,
+						View view, int position, long id) {
+					Bundle args = new Bundle();
+					args.putString(Keys.ID_PLAYER, results
+							.get(position).get(Keys.ID_PLAYER));
+					args.putString(Keys.CITY, results.get(position)
+							.get(Keys.CITY));
+					args.putString(Keys.COUNTRY, results.get(position)
+							.get(Keys.COUNTRY));
+					args.putString(
+							Keys.PLAYERNICKNAME,
+							results.get(position).get(
+									Keys.PLAYERNICKNAME));
+					args.putString(Keys.Email, results.get(position)
+							.get(Keys.Email));
+					args.putString(Keys.PLAYERAVATAR,
+							results.get(position)
+									.get(Keys.PLAYERAVATAR));
+					args.putString(Keys.FirstName, results
+							.get(position).get(Keys.FirstName));
+					args.putString(Keys.LastName, results.get(position)
+							.get(Keys.LastName));
+
+					tabletOrPhoneControll(Keys.PlayersSTATE, args);
+				}
+			});
 		}
 
+		//Players ListView initialized twice Could cause bugs later on. NEEDS TO CHANGE!
+		
 		Button btn = (Button) rootView.findViewById(R.id.button1);
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -294,6 +323,7 @@ public class ListsFragment extends Fragment {
 							tabletOrPhoneControll(Keys.PlayersSTATE, args);
 						}
 					});
+					
 				}
 			}
 		});
