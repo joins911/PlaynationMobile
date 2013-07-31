@@ -1,0 +1,72 @@
+<com.myapps.playnation.Operations.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="horizontal"
+	tools:context=".MainActivity" >
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/background_pattern"
+		android:orientation="vertical" >
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onHome_click"
+			android:text="@string/homeString" />
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onGames_click"
+			android:text="@string/gamesString" />
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onGroups_click"
+			android:text="@string/groupString" />
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onNews_click"
+			android:text="@string/newsString" />
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onPlayers_click"
+			android:text="@string/playerString" />
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onCompanies_click"
+			android:text="@string/companiesString" />
+		<include
+			android:id="@+id/include_menu_search"
+			android:layout_gravity="bottom"
+			layout="@layout/component_searchsort_layout" />
+	</LinearLayout>
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#888888"
+		android:gravity="center"
+		android:orientation="vertical" >
+		<android.support.v4.view.ViewPager
+			android:id="@+id/pager"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" >
+			<!-- This title strip will display the currently visible page title, as well as the page -->
+			<!-- titles for adjacent pages. -->
+			<android.support.v4.view.PagerTabStrip
+				android:id="@+id/pager_title_strip"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top"
+				android:background="@drawable/background_pattern2"
+				android:paddingBottom="1dp"
+				android:paddingTop="1dp"
+				android:textColor="#fff" />
+		</android.support.v4.view.ViewPager>
+	</LinearLayout>
+</com.myapps.playnation.Operations.FlyOutContainer>

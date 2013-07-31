@@ -1,0 +1,89 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+	-->
+	<style name="AppBaseTheme" parent="android:Theme.Light">		<!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+		-->
+	</style>
+	<!-- Application theme. -->
+	<style name="AppTheme" parent="AppBaseTheme"> <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+	</style>
+	<style name="TabsTheme" parrent="AppTheme">
+		<item name="android:paddingTop">@dimen/TabHostSize</item>
+	</style>
+	<style name="GroupsStyle" parent="TabsTheme">
+		<item name="android:background">@drawable/tabs_my_back2</item>
+	</style>
+	<style name="GameStyle" parent="TabsTheme">
+		<item name="android:background">@drawable/tabs_my_back</item>
+	</style>
+	<style name="HomeStyle" parent="TabsTheme">
+		<item name="android:background">@drawable/tabs_my_back2</item>
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">@color/headlineColor</item>
+	</style>
+	<style name="HeaderStyle">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">@color/headlineColor</item>
+	</style>
+	<style name="textviewTextstyle">
+		<item name="android:paddingLeft">20dp</item>
+		<item name="android:paddingRight">20dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="textviewstyle">
+		<item name="android:paddingLeft">5dp</item>
+		<item name="android:paddingRight">5dp</item>
+		<item name="android:paddingTop">2dp</item>
+		<item name="android:paddingBottom">5dp</item>
+	</style>
+	<style name="newsfeedstyle">
+		<item name="android:paddingLeft">2dp</item>
+		<item name="android:paddingRight">2dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+	</style>
+	<style name="ButtonBar">
+		<item name="android:paddingLeft">2dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingRight">2dp</item>
+		<item name="android:paddingBottom">0dp</item>
+		<item name="android:background">@android:drawable/bottom_bar</item>
+	</style>
+	<style name="ButtonBarButton"></style>
+	<style name="ButtonFooter">
+		<item name="android:paddingLeft">2dp</item>
+		<item name="android:paddingTop">1dp</item>
+		<item name="android:paddingRight">2dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:background">@drawable/background_pattern</item>
+	</style>
+	<style name="SortButtons">
+		<item name="android:background">@drawable/footer_button_selector</item>
+		<item name="android:paddingLeft">3dp</item>
+		<item name="android:paddingRight">3dp</item>
+		<item name="android:height">25dp</item>
+	</style>
+	<style name="ButtonFooterButton">
+		<item name="android:width">75dp</item>
+		<item name="android:paddingLeft">3dp</item>
+		<item name="android:paddingRight">3dp</item>
+		<item name="android:height">38dp</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:background">@drawable/footer_button_selector</item>
+	</style>
+	<style name="TitleStyle">
+		<item name="android:textSize">15sp</item>
+		<item name="android:textColor">@color/black_overlay</item>
+	</style>
+	<style name="TextViewStyle">
+		<item name="android:background">@drawable/textview_layout</item>
+		<item name="android:textColor">@color/main_fontColor</item>
+	</style>
+</resources>

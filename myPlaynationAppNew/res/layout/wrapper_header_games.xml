@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/include_TabHolder_Games"
+        layout="@layout/component_gameheader_layout" 
+        android:layout_alignParentTop="true"/>
+
+        <FrameLayout
+            android:id="@+id/container_games"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_below="@id/include_TabHolder_Games">
+        </FrameLayout>
+
+</RelativeLayout>

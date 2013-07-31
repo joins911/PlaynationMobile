@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/gameList_LLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/list_selector"
+	android:orientation="vertical" >
+	<LinearLayout
+		android:id="@+id/searchLL"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		<EditText
+			android:id="@+id/editText1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ems="10" />
+		<Button
+			android:id="@+id/button1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Button" />
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="horizontal" >
+		<ListView
+			android:id="@+id/mainList"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_weight="1.16"
+			android:divider="#b5b5b5"
+			android:dividerHeight="1dp"
+			android:listSelector="@drawable/list_selector" >
+		</ListView>
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/mainLayoutPlayer"
+	style="@style/HomeStyle"
+	android:layout_width="fill_parent"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/contentPlayer"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:paddingBottom="2dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp" >
+		<RelativeLayout
+			android:id="@+id/infoSubContent"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<ImageView
+				android:id="@+id/imgEvent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:adjustViewBounds="true"
+				android:src="@drawable/ic_launcher" />
+			<TextView
+				android:id="@+id/txEHeadline"
+				style="@style/HeaderStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:textColor="@color/headlineColor" />
+			<TextView
+				android:id="@+id/txELocation"
+				style="@style/TitleStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/txEHeadline"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
+			<TextView
+				android:id="@+id/txEDate"
+				style="@style/TitleStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/txELocation"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
+		</RelativeLayout>
+		<TextView
+			android:id="@+id/txText"
+			style="@style/TextViewStyle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/infoSubContent"
+			android:maxLines="4"
+			android:text="TextView" />
+		<TextView
+			android:id="@+id/txEDuration"
+			style="@style/TitleStyle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/txText"
+			android:gravity="right"
+			android:text="TextView" />
+		<RelativeLayout
+			android:id="@+id/gameCLH_friendListLayout_RLayout"
+			style="@style/TextViewStyle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/txEDuration" >
+			<ImageView
+				android:id="@+id/gameCLH_friendListArrow_pic"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:adjustViewBounds="true"
+				android:src="@drawable/arrow" />
+			<LinearLayout
+				android:id="@+id/gameCLH_friendListLayout_LLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_toLeftOf="@+id/gameCLH_friendListArrow_pic" >
+				<ImageView
+					android:id="@+id/gameCLH_friendPic07"
+					android:layout_width="50dp"
+					android:layout_height="50dp"
+					android:adjustViewBounds="true"
+					android:src="@drawable/ic_launcher" />
+				<ImageView
+					android:id="@+id/gameCLH_friendPic01"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
+		</RelativeLayout>
+	</RelativeLayout>
+	<LinearLayout
+		android:id="@+id/footherPlayer"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/contentPlayer"
+		android:background="@drawable/background_pattern2"
+		android:orientation="vertical" >
+		<ListView
+			android:id="@+id/generalPlayerListView"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="-10dp"
+			android:choiceMode="singleChoice"
+			android:divider="@color/listTitleColor"
+			android:dividerHeight="1dp"
+			android:fadingEdgeLength="0dp" >
+		</ListView>
+		<ExpandableListView
+			android:id="@+id/fragMsgAndWallTemp_expList"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:groupIndicator="@null" >
+		</ExpandableListView>
+	</LinearLayout>
+</RelativeLayout>

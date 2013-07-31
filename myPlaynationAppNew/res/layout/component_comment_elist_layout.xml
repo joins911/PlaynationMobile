@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gamesCL_All_RLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_pattern2" >
+
+    <ImageView
+        android:id="@+id/gamesCL_commentImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/gamesCL_commentUsername_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/gamesCL_commentImage"
+        android:text="Baubau"
+        android:textSize="12sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/gamesCL_commentText_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gamesCL_commentImage"
+        android:layout_alignLeft="@+id/gamesCL_commentUsername_TView"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="Here there is gona be the comment, not the whole thing but just a bit with the rest on follow up "
+        android:textSize="11sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/gamesCL_commentTime_TView"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/gamesCL_commentText_TView"
+        android:layout_marginRight="15dp"
+        android:text="11:13PM, Saturday 19/10/2013"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

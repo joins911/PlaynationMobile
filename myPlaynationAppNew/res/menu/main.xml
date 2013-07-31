@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+     <item
+        android:id="@+id/HomeButt"
+        android:orderInCategory="1"
+        android:onClick="OnGroupsClick"
+        android:title="@string/homeString"/>
+    <item
+        android:id="@+id/GamesButt"
+        android:menuCategory="@id/HomeButt"        
+        android:orderInCategory="1"
+        android:onClick="OnGamesClick"
+        android:title="@string/homeString"/>
+    <item
+        android:id="@+id/GroupsButt"
+        android:menuCategory="@id/HomeButt"
+        android:orderInCategory="2"
+        android:onClick="OnGroupsClick"
+        android:title="@string/gamesString"/>
+    <item
+        android:id="@+id/NewsButt"
+        android:menuCategory="@id/HomeButt"
+        android:orderInCategory="3"
+        android:onClick="OnNewsClick"
+        android:title="@string/playerString"/>
+
+</menu>

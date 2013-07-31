@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Playnation</string>
+	<string name="action_settings">Settings</string>
+	<!-- Buttons Strings -->
+	<string name="descriptionButton">About</string>
+	<string name="newsString">News</string>
+	<string name="playerString">Players</string>
+	<string name="groupString">Groups</string>
+	<string name="gamesString">Games</string>
+	<string name="companiesString">Companies</string>
+	<string name="homeString">Home</string>
+	<string name="blogString">Blog</string>
+	<string name="buttonString_comment">Send</string>
+	<!-- Login+Register -->
+	<string name="loginString">Login</string>
+	<string name="emailString">Email</string>
+	<string name="passwordString">Password</string>
+	<string name="registerString">Register</string>
+	<string name="registerDesc">New to Playnation? Register here</string>
+	<string name="nameString">Full Name</string>
+	<string name="registerButtonString">Register New Account</string>
+	<string name="loginButtonString">Already have an account! Login here</string>
+	<!-- Text View Strings -->
+	<string name="commentString">Comment:</string>
+	<string name="usernameString">Your nickname:</string>
+	<string name="title_activity_game_description">GameDescriptionActivity</string>
+	<string name="commentsString">Comments</string>
+	<string name="reviewString">Game Reviews</string>
+	<string name="ratingString">Rating</string>
+	<string name="friendsString">Friends playing this game</string>
+	<string name="descString">Game Description</string>
+	<!-- Extras New -->
+	<string name="fontFamilyTextView">Ariel</string>
+	<string-array name="expandbleListParents">
+		<item>Wall</item>
+		<item>Messages</item>
+		<item>Groups</item>
+		<item>Games</item>
+		<item>Subscriptions</item>
+		<item>Friends</item>
+		<item>Events</item>
+		<item>Info</item>
+	</string-array>
+	<string name="btnSave">Save</string>
+	<string name="Date">Date: \u0020</string>
+	<string name="Location">Location: \u0020</string>
+	<string name="Age">Age: \u0020</string>
+	<string name="Country">Country: \u0020</string>
+	<string name="Nick">Nick: \u0020 </string>
+	<string name="Email">EMail:  \u0020</string>
+	<string name="City">City:  \u0020</string>
+	<string name="DisplayName">DisplayName:  \u0020</string>
+	<string name="FirstName">FirstName:  \u0020</string>
+	<string name="LastName">LastName:  \u0020</string>
+	<string name="Duration">Duration:  \u0020</string>
+	<string name="DayEvent">Day Event</string>
+	<string name="Members">\u0020members</string>
+	<string name="Leader">Leader:</string>
+	<string name="Type1">Type \u00201:</string>
+	<string name="Type2">Type \u00202:</string>
+	<string name="NewsMembers">Members:</string>
+	<string name="create">Created:</string>
+	<string name="Type">Type :</string>
+	<string name="startdate">Start date:</string>
+	<string name="endDate">End Date:</string>
+	<string name="Participants">Participants:</string>
+	<string name="Privacy">Privacy:</string>
+	<string name="Invitations">Invitations:</string>
+	<string name="headquarters">Headquarters :</string>
+	<string name="founded">Founded :</string>
+	<string name="employees">Employees :</string>
+	<string name="joined">Joined :</string>
+	<string name="website">WebSite :</string>
+	<string name="byPopularity">By Popularity</string>
+	<string name="byRating">By Rating</string>
+	<string name="byDate">By Date Added</string>
+	<string name="byAlphabetically">Alphabetically</string>
+	<string name="btnEdit">Edit Info</string>
+	<!-- Activities titles which will never appear on screen -->
+	<string name="title_activity_main_list">MainList</string>
+	<string name="title_activity_game">GamesActivity</string>
+	<string name="title_activity_groups">GroupsActivity</string>
+	<string name="title_activity_main_activity">MainActivity</string>
+	<string name="title_activity_group_description">GroupDescriptionActivity</string>
+	<!-- Base strings for coding purposes will be replaced at runtime with Database values -->
+	<string name="gamename">Crysis 3</string>
+	<string name="gametype">FPS ( First Person Shooter)</string>
+	<string name="gamedate">Release Date  15/10/2009</string>
+	<string name="ratings">5</string>
+	<string name="GameName">Crysis 3</string>
+	<string name="released">Released:</string>
+	<string name="platforms">Platforms:</string>
+	<string name="esrbRating">ESRB Rating</string>
+	<string name="developers">Developers:</string>
+	<string name="distributors">Distributors:</string>
+	<string name="title_item_list">Items</string>
+	<string name="title_item_detail">Item Detail</string>
+	<string name="subViewText">Please Select Item</string>
+</resources>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/newsTitle"
+	style="@style/GameStyle"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/content"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" >
+		<ImageView
+			android:id="@+id/newsImg"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:fitsSystemWindows="true"
+			android:scaleType="fitXY"
+			android:src="@drawable/ic_launcher" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/newsEventInfo"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/content" >
+		<TextView
+			android:id="@+id/txtEdit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/Type"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textColorHint="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/newsEventType"
+			android:text="@string/headquarters"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/newsEventStartDate"
+			android:text="@string/founded"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/newsEventType"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/txtEdit"
+			android:layout_marginLeft="19dp"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/newsEventStartDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/newsEventType"
+			android:layout_below="@+id/textView2"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/newsEventEndDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/newsEventStartDate"
+			android:layout_below="@id/textView3"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/newsEventLocation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/textView4"
+			android:layout_below="@+id/textView4"
+			android:gravity="right"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/textView9"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/textView5"
+			android:layout_below="@+id/newsEventPartcipants"
+			android:layout_centerHorizontal="true"
+			android:text="@string/website"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/newsEventInvetation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/textView4"
+			android:layout_below="@id/textView9"
+			android:autoLink="web"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/newsEventPartcipants"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@id/textView5"
+			android:layout_below="@id/textView5"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/textView4"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/newsEventType"
+			android:layout_alignLeft="@+id/textView5"
+			android:text="@string/employees"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/newsEventStartDate"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="99dp"
+			android:text="@string/joined"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+	</RelativeLayout>
+	<!-- <RelativeLayout -->
+	<!-- android:id="@+id/newsFoother" -->
+	<!-- android:layout_width="fill_parent" -->
+	<!-- android:layout_height="wrap_content" -->
+	<!-- android:layout_alignParentLeft="true" -->
+	<!-- android:layout_below="@id/newsEventInfo" > -->
+	<WebView
+		android:id="@+id/webView1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/newsEventInfo" />
+	<!-- </RelativeLayout> -->
+	<WebView
+		android:id="@+id/webView2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/webView1"
+		android:layout_marginTop="17dp" />
+</RelativeLayout>

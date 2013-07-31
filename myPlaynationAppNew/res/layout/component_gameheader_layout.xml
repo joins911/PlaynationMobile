@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gameM_Header_RLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_pattern2"
+    android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/gameM_headerPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/rsz_crysis_cover" />
+
+        <TextView
+            android:id="@+id/gameM_NameText_TView"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/gameM_headerPic"
+            android:text="@string/GameName" />
+
+        <TextView
+            android:id="@+id/gameM_TypeText_TView"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/gameM_NameText_TView"
+            android:layout_centerVertical="true"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/gamesM_ratingString_TView"
+            style="@style/TitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/gameM_RatingsNr_TView"
+            android:layout_alignBottom="@+id/gameM_RatingsNr_TView"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/gameM_headerPic"
+            android:text="@string/ratingString"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/gameM_RatingsNr_TView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/gameM_headerPic"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/gamesM_ratingString_TView"
+            android:text="@string/ratings" />
+    </RelativeLayout>

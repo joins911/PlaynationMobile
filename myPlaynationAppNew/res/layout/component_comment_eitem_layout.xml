@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gamesCI_All_RLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_gradient" >
+
+        <ImageView
+            android:id="@+id/gamesCI_replyImage_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/gamesCI_replyUsername_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/gamesCI_replyImage_pic"
+        android:text="how_i_met_your_mother"
+        android:textSize="12sp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/gamesCI_replyText_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gamesCI_replyUsername_TView"
+        android:layout_below="@+id/gamesCI_replyUsername_TView"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="Here there is gona be the comment, not the whole thing but just a bit with the rest on follow up "
+        android:textSize="11sp"
+        android:typeface="sans" />
+
+     <TextView
+         android:id="@+id/gamesCI_replyTime_TView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_below="@id/gamesCI_replyText_TView"
+         android:layout_marginRight="15dp"
+         android:layout_marginTop="5dp"
+         android:text="11:13PM, Saturday 19/10/2013"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textSize="12sp" />
+
+</RelativeLayout>

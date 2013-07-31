@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/GameStyle"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+	<ImageView
+		android:id="@+id/newsImg"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:fitsSystemWindows="true"
+		android:scaleType="fitXY"
+		android:src="@drawable/ic_launcher" />
+	<RelativeLayout
+		android:id="@+id/newsEventInfo"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/newsImg" >
+		<TextView
+			android:id="@+id/txtEdit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/Type"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/newsEventType"
+			android:text="@string/startdate"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/newsEventStartDate"
+			android:text="@string/endDate"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/newsEventType"
+			android:text="@string/Participants"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView7"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/textView5"
+			android:layout_below="@+id/newsEventPartcipants"
+			android:text="@string/Privacy"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView4"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/textView5"
+			android:layout_alignParentTop="true"
+			android:text="@string/Location"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textView9"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/newsEventEndDate"
+			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
+			android:layout_centerVertical="true"
+			android:text="@string/Invitations"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/newsEventInvetation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/textView9"
+			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
+			android:layout_centerVertical="true"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventLocation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/textView4"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventPartcipants"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/textView5"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventPrivacy"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/textView7"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventType"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/txtEdit"
+			android:layout_marginLeft="19dp"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventStartDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/newsEventType"
+			android:layout_below="@+id/textView2"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+		<TextView
+			android:id="@+id/newsEventEndDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/newsEventPrivacy"
+			android:layout_alignBottom="@+id/newsEventPrivacy"
+			android:layout_alignLeft="@+id/newsEventStartDate"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient" />
+	</RelativeLayout>
+	<WebView
+		android:id="@+id/webview"
+		android:layout_width="match_parent"
+		android:layout_height="70dp"
+		android:layout_below="@id/newsEventInfo"
+		android:layout_marginTop="15dp" />
+	<WebView
+		android:id="@+id/webview2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/webview"
+		android:layout_marginTop="15dp" />
+</RelativeLayout>

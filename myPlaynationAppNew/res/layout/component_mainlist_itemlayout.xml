@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gameList_All_RLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!-- ListRow Left side Thumbnail image -->
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip" >
+        <ImageView
+            android:id="@+id/gameList_GameImage"
+            android:contentDescription="@string/app_name"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:src="@drawable/crysis_cover" />
+    </LinearLayout>
+    <!-- Rightend Arrow -->
+    <ImageView
+        android:id="@+id/gameList_listArrowPic"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow" />
+    <!-- City-->
+    <!-- Weather Information-->
+
+    <TextView
+        android:id="@+id/gameList_GameName_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:paddingBottom="10dip"
+        android:maxLines="1"
+        android:text="@string/gamename"
+        android:textColor="#040404"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/gameList_GameDate_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_alignLeft="@+id/gameList_GameName_TView"
+        android:paddingTop="5dip"
+        android:text="@string/gamedate"
+        android:textColor="#343434"
+        android:textSize="13dip" />
+
+    <TextView
+        android:id="@+id/gameList_GameType_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/gameList_GameDate_TView"
+        android:layout_alignLeft="@+id/gameList_GameName_TView"
+        android:paddingTop="5dip"
+        android:text="@string/gametype"
+        android:textColor="#343434"
+        android:textSize="13dip" />
+
+</RelativeLayout>  

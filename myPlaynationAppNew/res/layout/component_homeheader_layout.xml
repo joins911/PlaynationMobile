@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/headerPlayer"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_alignParentTop="true"
+	android:background="@color/background_gradient"
+	android:padding="10dp" >
+	<QuickContactBadge
+		android:id="@+id/quickContactBadge1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:adjustViewBounds="true"
+		android:maxWidth="80dp"
+		android:scaleType="centerCrop"
+		android:src="@drawable/chess" />
+	<TextView
+		android:id="@+id/txtEdit"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/quickContactBadge1"
+		android:layout_centerInParent="false"
+		android:layout_toLeftOf="@+id/headerInfoPlayer"
+		android:text="@string/btnEdit" />
+	<LinearLayout
+		android:id="@+id/headerInfoPlayer"
+		style="@style/textviewstyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_toRightOf="@+id/quickContactBadge1"
+		android:background="@drawable/textview_layout"
+		android:baselineAligned="true"
+		android:orientation="vertical" >
+		<TextView
+			android:id="@+id/txPlName"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="@color/background_gradient"
+			android:textSize="15sp" />
+		<TextView
+			android:id="@+id/txPlUser"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="User Info:"
+			android:textColor="@color/headlineColor"
+			android:textSize="10sp"
+			android:textStyle="bold|italic" />
+		<TextView
+			android:id="@+id/txPlNick"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="10sp" />
+		<TextView
+			android:id="@+id/txPlAge"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="10sp" />
+		<TextView
+			android:id="@+id/txPlCountry"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Small Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="10sp" />
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/list_child_layout"
+		style="@style/GameStyle"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" >
+		<EditText
+			android:id="@+id/txtChiledItemFirstName"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/list_item_text_childFirstName"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@+id/list_item_text_childFirstName"
+			android:ems="10"
+			android:inputType="textPersonName"
+			android:textAlignment="center" >
+			<requestFocus />
+		</EditText>
+		<TextView
+			android:id="@+id/list_item_text_childFirstName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:padding="10dp"
+			android:text="First Name : "
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<TextView
+			android:id="@+id/list_item_text_childLastName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/list_item_text_childFirstName"
+			android:layout_below="@+id/txtChiledItemFirstName"
+			android:padding="10dp"
+			android:text="Last Name :"
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<EditText
+			android:id="@+id/txtChiledItemLastName"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/list_item_text_childLastName"
+			android:layout_alignParentRight="true"
+			android:layout_toRightOf="@id/list_item_text_childLastName"
+			android:ems="10"
+			android:inputType="textPersonName"
+			android:textAlignment="center" />
+		<TextView
+			android:id="@+id/list_item_text_childDisplayName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/list_item_text_childLastName"
+			android:layout_below="@+id/txtChiledItemLastName"
+			android:padding="10dp"
+			android:text="Nick Name :"
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<EditText
+			android:id="@+id/txtChiledItemDisplayName"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/list_item_text_childDisplayName"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@+id/list_item_text_childDisplayName"
+			android:layout_toRightOf="@id/list_item_text_childDisplayName"
+			android:ems="10"
+			android:inputType="textPersonName"
+			android:textAlignment="center" />
+		<TextView
+			android:id="@+id/list_item_text_childCity"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/list_item_text_childDisplayName"
+			android:layout_below="@+id/txtChiledItemDisplayName"
+			android:padding="10dp"
+			android:text="City :"
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<EditText
+			android:id="@+id/txtChiledItemCity"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/list_item_text_childCity"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@+id/list_item_text_childCity"
+			android:layout_toRightOf="@id/list_item_text_childCity"
+			android:ems="10"
+			android:inputType="textPersonName"
+			android:textAlignment="center" />
+		<TextView
+			android:id="@+id/list_item_text_childCountry"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/list_item_text_childCity"
+			android:layout_below="@+id/txtChiledItemCity"
+			android:padding="10dp"
+			android:text="Country :"
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<EditText
+			android:id="@+id/txtChiledItemCountry"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/list_item_text_childCountry"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@+id/list_item_text_childCountry"
+			android:layout_toRightOf="@id/list_item_text_childCountry"
+			android:ems="10"
+			android:inputType="textPersonName"
+			android:textAlignment="center" />
+		<TextView
+			android:id="@+id/list_item_text_childEmail"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/list_item_text_childCountry"
+			android:layout_below="@+id/list_item_text_childCountry"
+			android:padding="10dp"
+			android:text="Email :"
+			android:textColor="@color/background_gradient"
+			android:textSize="20sp" />
+		<EditText
+			android:id="@+id/txtChiledItemEmail"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/txtChiledItemCountry"
+			android:layout_toRightOf="@id/list_item_text_childEmail"
+			android:ems="10"
+			android:inputType="textPersonName|textEmailAddress"
+			android:textAlignment="center" />
+	</RelativeLayout>
+</RelativeLayout>

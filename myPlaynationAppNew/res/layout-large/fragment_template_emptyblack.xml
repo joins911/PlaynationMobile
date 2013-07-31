@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/background"
+	android:orientation="vertical" >
+	<TextView
+		android:id="@+id/textView1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:paddingTop="15dp"
+		android:text="@string/subViewText"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="@color/background_gradient"
+		android:textColorHint="@color/background_gradient"
+		android:textSize="30sp" />
+</LinearLayout>

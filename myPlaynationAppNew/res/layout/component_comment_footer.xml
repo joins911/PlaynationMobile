@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gamesF_All_RLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pattern2" >
+
+    <TextView
+        android:id="@+id/gamesF_comment_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/gamesF_username_EBox"
+        android:layout_marginTop="16dp"
+        android:text="@string/commentString"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/gamesF_comment_EBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gamesF_username_EBox"
+        android:layout_alignTop="@+id/gamesF_comment_TView"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/gamesF_username_TView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/usernameString"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/gamesF_username_EBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/gamesF_username_TView"
+        android:ems="10"
+        android:inputType="textShortMessage" />
+
+    <Button
+        android:id="@+id/gamesF_commB"
+        style="@style/SortButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/gamesF_comment_EBox"
+        android:onClick="button_onClick"
+        android:text="@string/buttonString_comment" />
+
+</RelativeLayout>

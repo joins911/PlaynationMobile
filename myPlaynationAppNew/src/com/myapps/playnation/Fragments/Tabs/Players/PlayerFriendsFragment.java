@@ -1,0 +1,78 @@
+package com.myapps.playnation.Fragments.Tabs.Players;
+
+import java.util.HashMap;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
+import com.myapps.playnation.R;
+import com.myapps.playnation.Adapters.PlayerHomeInfoAdapter;
+import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.main.ISectionAdapter;
+
+public class PlayerFriendsFragment extends Fragment {
+	private DataConnector con;
+	private ISectionAdapter mCallback;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		// This makes sure that the container activity has implemented
+		// the callback interface. If not, it throws an exception
+		try {
+			mCallback = (ISectionAdapter) getActivity();
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnHeadlineSelectedListener");
+		}
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_template_tabslistview,
+				container, false);
+		con = DataConnector.getInst(getActivity());
+
+		ListView mListView = (ListView) view
+				.findViewById(R.id.generalPlayerListView);
+
+		Bundle args = getArguments();
+
+		con.queryPlayerFriends(args.getString(Keys.ID_PLAYER));
+		mListView.setAdapter(new PlayerHomeInfoAdapter(getActivity(), con
+				.getTable(Keys.HomeFriendsTable, "")));
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				@SuppressWarnings("unchecked")
+				HashMap<String, String> results = (HashMap<String, String>) parent
+						.getItemAtPosition(position);
+				Bundle args = new Bundle();
+				args.putString(Keys.ID_PLAYER, results.get(Keys.ID_PLAYER));
+				args.putString(Keys.CITY, results.get(Keys.CITY));
+				args.putString(Keys.COUNTRY, results.get(Keys.COUNTRY));
+				args.putString(Keys.PLAYERNICKNAME,
+						results.get(Keys.PLAYERNICKNAME));
+				args.putString(Keys.Email, results.get(Keys.Email));
+				args.putString(Keys.PLAYERAVATAR,
+						results.get(Keys.PLAYERAVATAR));
+				args.putString(Keys.FirstName, results.get(Keys.FirstName));
+				args.putString(Keys.LastName, results.get(Keys.LastName));
+
+				mCallback.setPageAndTab(Keys.PlayersSTATE, 5, args);
+			}
+		});
+		return view;
+	}
+
+}

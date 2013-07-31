@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/newsfeedstyle"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/list_selector" >
+	<TextView
+		android:id="@+id/txtTitle"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:text="Large Text"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="@color/listTitleColor"
+		android:textSize="@dimen/activity_horizontal_margin" />
+	<ImageView
+		android:id="@+id/imgPlayerAvatarLog"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/txtTitle"
+		android:src="@drawable/crysis_cover" />
+	<TextView
+		android:id="@+id/txtNickNameText"
+		style="@style/textviewstyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/imgPlayerAvatarLog"
+		android:layout_alignTop="@+id/imgPlayerAvatarLog"
+		android:layout_toRightOf="@+id/imgPlayerAvatarLog"
+		android:text="sdadasdasdasdas a ads asdasd as "
+		android:textColor="@color/listTitleColor" />
+	<ImageView
+		android:id="@+id/imgArrow"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:src="@drawable/arrow" />
+</RelativeLayout>

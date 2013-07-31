@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/contentPlayer"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/black_overlay"
+		android:paddingBottom="4dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:paddingTop="4dp" >
+		<RelativeLayout
+			android:id="@+id/infoSubContent"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<ImageView
+				android:id="@+id/imgEvent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:adjustViewBounds="true"
+				android:src="@drawable/ic_launcher" />
+			<TextView
+				android:id="@+id/txEHeadline"
+				style="@style/HeaderStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:textColor="@color/headlineColor" />
+			<TextView
+				android:id="@+id/txELocation"
+				style="@style/TitleStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/txEHeadline"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
+			<TextView
+				android:id="@+id/txEDate"
+				style="@style/TitleStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/txELocation"
+				android:layout_toRightOf="@id/imgEvent"
+				android:text="Large Text"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>
