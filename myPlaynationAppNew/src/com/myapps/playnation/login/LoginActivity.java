@@ -93,7 +93,7 @@ public class LoginActivity extends Activity {
 					con.getArrayFromQuerryWithPostVariable("", Keys.gamesTable,
 							"");
 				}
-				progressbarStatus += 60;
+				progressbarStatus += 40;
 				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.companyTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
