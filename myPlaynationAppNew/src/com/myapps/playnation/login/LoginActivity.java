@@ -17,6 +17,7 @@ import com.myapps.playnation.main.MainActivity;
 
 public class LoginActivity extends Activity {
 	private ProgressDialog progressDialog;
+	private int progressbarStatus = 0;
 	public LoadViewTask task;
 	DataConnector con;
 
@@ -70,8 +71,15 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			// Create a new progress dialog
-			progressDialog = ProgressDialog.show(LoginActivity.this,
-					"Loading...", "Please wait...", false, false);
+			progressDialog = new ProgressDialog(LoginActivity.this);
+			// progressDialog.setMax(100);
+			progressDialog.setCancelable(true);
+			progressDialog.setMessage("Downloading Data... Please wait");
+			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			// progressDialog.setProgress(0);
+			progressDialog.show();
+			// ProgressBar.show(LoginActivity.this,
+			// "Loading...", "Please wait...", false, false);
 		}
 
 		// The code to be executed in a background thread.
@@ -79,27 +87,38 @@ public class LoginActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			// Get the current thread's token
 			synchronized (this) {
+				progressbarStatus += 0;
+				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.gamesTable)) {
 					con.getArrayFromQuerryWithPostVariable("", Keys.gamesTable,
 							"");
 				}
+				progressbarStatus += 40;
+				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.companyTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
 							Keys.companyTable, "");
 				}
+				progressbarStatus += 20;
+				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.groupsTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
 							Keys.groupsTable, "");
 				}
+				progressbarStatus += 20;
+				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.newsTable)) {
 					con.getArrayFromQuerryWithPostVariable("", Keys.newsTable,
 							"");
 				}
+				progressbarStatus += 20;
+				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.companyTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
 							Keys.companyTable, "");
 				}
-
+				progressbarStatus += 20;
+				progressDialog.setProgress(progressbarStatus);
 				mInt = new Intent(getApplicationContext(), MainActivity.class);
 			}
 			return null;

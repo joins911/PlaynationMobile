@@ -1,10 +1,10 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +18,10 @@ import com.myapps.playnation.main.ISectionAdapter;
 
 public class CompanyListAdapter extends BaseAdapter {
 	private LayoutInflater inflator;
-	private ArrayList<HashMap<String, String>> companiesList;
+	private ArrayList<Bundle> companiesList;
 	ISectionAdapter context;
 
-	public CompanyListAdapter(Activity context,
-			ArrayList<HashMap<String, String>> items) {
+	public CompanyListAdapter(Activity context, ArrayList<Bundle> items) {
 		this.context = (ISectionAdapter) context;
 		this.companiesList = items;
 		inflator = (LayoutInflater) context
@@ -46,8 +45,7 @@ public class CompanyListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		HashMap<String, String> map = (HashMap<String, String>) companiesList
-				.get(position);
+		Bundle map = (Bundle) companiesList.get(position);
 		View v = convertView;
 		if (v == null)
 			v = inflator.inflate(R.layout.component_newslist_itemlayout, null);
@@ -55,9 +53,9 @@ public class CompanyListAdapter extends BaseAdapter {
 		TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
 		// ImageView img = (ImageView) v.findViewById(R.id.imgPlayerAvatarLog);
 		TextView txtText = (TextView) v.findViewById(R.id.txtNickNameText);
-		txtTitle.setText(Html.fromHtml(map.get(Keys.CompanyName)));
+		txtTitle.setText(Html.fromHtml(map.getString(Keys.CompanyName)));
 		// img.setImageResource(map.get(Keys.CompanyImageURL));
-		txtText.setText(Html.fromHtml(map.get(Keys.CompanyDesc)));
+		txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
 
 		return v;
 	}

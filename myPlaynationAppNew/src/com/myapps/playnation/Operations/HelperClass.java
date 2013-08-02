@@ -6,13 +6,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,12 +71,12 @@ public class HelperClass {
 	 * @param game
 	 * @return string
 	 */
-	public static String checkGameComments(HashMap<String, String> game) {
+	public static String checkGameComments(Bundle game) {
 		String result = "";
-		if (game.get(Keys.GameComments).equalsIgnoreCase("")) {
-			result = game.get(Keys.GAMEDESC);
+		if (game.getString(Keys.GameComments).equalsIgnoreCase("")) {
+			result = game.getString(Keys.GAMEDESC);
 		} else {
-			result = game.get(Keys.GameComments);
+			result = game.getString(Keys.GameComments);
 		}
 		return result;
 	}
@@ -201,24 +201,25 @@ public class HelperClass {
 		}
 	}
 
-	public static ArrayList<NewsFeedItem> queryNewsList(
-			ArrayList<HashMap<String, String>> result) {
+	public static ArrayList<NewsFeedItem> queryNewsList(ArrayList<Bundle> result) {
 		ArrayList<NewsFeedItem> newsFeedList = new ArrayList<NewsFeedItem>();
 		for (int i = 0; i < result.size(); i++) {
 			try {
 				NewsFeed feed = new NewsFeed();
-				//
-				feed.setKey_NewsFeedID(Integer.valueOf(result.get(i).get(
+
+				feed.setKey_NewsFeedID(Integer.valueOf(result.get(i).getString(
 						Keys.NEWSCOLID_NEWS)));
-				feed.setKey_NewsText(result.get(i).get(Keys.NEWSCOLNEWSTEXT));
-				feed.setKey_NewsIntroText(result.get(i).get(
+				feed.setKey_NewsText(result.get(i).getString(
+						Keys.NEWSCOLNEWSTEXT));
+				feed.setKey_NewsIntroText(result.get(i).getString(
 						Keys.NEWSCOLINTROTEXT));
-				feed.setKey_Author(result.get(i).get(Keys.Author));
-				feed.setKey_NewsFeedID(Integer.parseInt(result.get(i).get(
-						Keys.NEWSCOLID_NEWS)));
-				feed.setKey_NewsTitle(result.get(i).get(Keys.NEWSCOLHEADLINE));
+				feed.setKey_Author(result.get(i).getString(Keys.Author));
+				feed.setKey_NewsFeedID(Integer.parseInt(result.get(i)
+						.getString(Keys.NEWSCOLID_NEWS)));
+				feed.setKey_NewsTitle(result.get(i).getString(
+						Keys.NEWSCOLHEADLINE));
 				feed.setKey_NewsDate(feed.convertTime(Integer.valueOf(result
-						.get(i).get(Keys.NEWSCOLPOSTINGTIME))));
+						.get(i).getString(Keys.NEWSCOLPOSTINGTIME))));
 				newsFeedList.add(feed);
 			} catch (Exception e) {
 				Log.e("ListsFragments ", " queryNewsList Error " + e);

@@ -1,7 +1,6 @@
 package com.myapps.playnation.Fragments.Tabs.Game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,7 @@ import com.myapps.playnation.Operations.DataConnector;
 
 public class GameReviewFragment extends Fragment {
 
-	ArrayList<HashMap<String, String>> reviewList;
+	ArrayList<Bundle> reviewList;
 	DataConnector con;
 	CommExpListAdapter commentsAdapter;
 	ReviewListAdapter reviewsAdapter;
@@ -39,7 +38,7 @@ public class GameReviewFragment extends Fragment {
 		ListView reviews = (ListView) mainView
 				.findViewById(R.id.frag_reviewTemp_reviewList);
 
-		reviewList = new ArrayList<HashMap<String, String>>();
+		reviewList = new ArrayList<Bundle>();
 		reviewList.add(con.getTable(Keys.gamesTable, "").get(3));
 		reviewList.add(con.getTable(Keys.gamesTable, "").get(4));
 		reviewList.add(con.getTable(Keys.gamesTable, "").get(5));

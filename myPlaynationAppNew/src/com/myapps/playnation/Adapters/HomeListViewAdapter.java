@@ -1,9 +1,9 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,7 @@ import com.myapps.playnation.Fragments.Tabs.Players.PlayerGamesFragment;
 import com.myapps.playnation.Operations.HelperClass;
 
 public class HomeListViewAdapter extends BaseAdapter {
-	private ArrayList<HashMap<String, String>> generalList;
+	private ArrayList<Bundle> generalList;
 
 	private static int TYPE_HEADER = 0;
 	private static int TYPE_CHILD = 1;
@@ -30,8 +30,8 @@ public class HomeListViewAdapter extends BaseAdapter {
 	// Only used as mark which class is currently present.
 	private Object currentFragment;
 
-	public HomeListViewAdapter(Context context,
-			ArrayList<HashMap<String, String>> list, Object currentFragment) {
+	public HomeListViewAdapter(Context context, ArrayList<Bundle> list,
+			Object currentFragment) {
 		super();
 		this.generalList = list;
 		inflater = (LayoutInflater) context
@@ -101,17 +101,18 @@ public class HomeListViewAdapter extends BaseAdapter {
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.event);
 
-			final HashMap<String, String> mapEntry = generalList.get(position);
+			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
-				txEHeadline.setText("" + mapEntry.get(Keys.EventHeadline));
+				txEHeadline
+						.setText("" + mapEntry.getString(Keys.EventHeadline));
 				txELocation.setText(view.getResources().getString(
 						R.string.Location)
-						+ mapEntry.get(Keys.EventLocation));
+						+ mapEntry.getString(Keys.EventLocation));
 				txEDate.setText(view.getResources().getString(R.string.Date)
-						+ mapEntry.get(Keys.EventTime));
-				txEDuration.setText(mapEntry.get(Keys.EventDuration));
+						+ mapEntry.getString(Keys.EventTime));
+				txEDuration.setText(mapEntry.getString(Keys.EventDuration));
 				txText.setText(Html.fromHtml(mapEntry
-						.get(Keys.EventDescription)));
+						.getString(Keys.EventDescription)));
 			}
 		} else if (currentFragment instanceof HomeGamesFragment
 				|| currentFragment instanceof PlayerGamesFragment) {
@@ -125,10 +126,10 @@ public class HomeListViewAdapter extends BaseAdapter {
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.game);
 
-			final HashMap<String, String> mapEntry = generalList.get(position);
+			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
-				txEHeadline.setText("" + mapEntry.get(Keys.GAMENAME));
-				txELocation.setText(mapEntry.get(Keys.GAMETYPE));
+				txEHeadline.setText("" + mapEntry.getString(Keys.GAMENAME));
+				txELocation.setText(mapEntry.getString(Keys.GAMETYPE));
 
 				txText.setText(Html.fromHtml(HelperClass
 						.checkGameComments(mapEntry)));
@@ -145,12 +146,12 @@ public class HomeListViewAdapter extends BaseAdapter {
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.event);
 
-			final HashMap<String, String> mapEntry = generalList.get(position);
+			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
-				txEHeadline.setText("" + mapEntry.get(Keys.GROUPNAME));
-				txELocation.setText(mapEntry.get(Keys.GAMENAME));
-				txText.setText(mapEntry.get(Keys.GROUPDESC));
-				txEDuration.setText(mapEntry.get(Keys.GroupMemberCount)
+				txEHeadline.setText("" + mapEntry.getString(Keys.GROUPNAME));
+				txELocation.setText(mapEntry.getString(Keys.GAMENAME));
+				txText.setText(mapEntry.getString(Keys.GROUPDESC));
+				txEDuration.setText(mapEntry.getString(Keys.GroupMemberCount)
 						+ view.getResources().getString(R.string.Members));
 			}
 
@@ -165,11 +166,11 @@ public class HomeListViewAdapter extends BaseAdapter {
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.subscription);
 
-			HashMap<String, String> mapEntry = generalList.get(position);
+			Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
-				txEHeadline.setText("" + mapEntry.get(Keys.ItemName));
-				txELocation.setText(mapEntry.get(Keys.ItemType));
-				txEDate.setText(mapEntry.get(Keys.SubscriptionTime));
+				txEHeadline.setText("" + mapEntry.getString(Keys.ItemName));
+				txELocation.setText(mapEntry.getString(Keys.ItemType));
+				txEDate.setText(mapEntry.getString(Keys.SubscriptionTime));
 			}
 		}
 		return view;

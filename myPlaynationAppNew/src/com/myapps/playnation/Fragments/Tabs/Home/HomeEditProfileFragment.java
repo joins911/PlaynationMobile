@@ -1,7 +1,5 @@
 package com.myapps.playnation.Fragments.Tabs.Home;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,14 +39,14 @@ public class HomeEditProfileFragment extends Fragment {
 		EditText editEmail = (EditText) mView
 				.findViewById(R.id.txtChiledItemEmail);
 
-		HashMap<String, String> map = con.getTable(Keys.PlayerTable, "").get(0);
+		Bundle map = con.getTable(Keys.PlayerTable, "").get(0);
 		// Bundle args = getArguments();
-		editFirst.setText(map.get(Keys.FirstName));
-		editLast.setText(map.get(Keys.LastName));
-		editDisp.setText(map.get(Keys.PLAYERNICKNAME));
-		editCity.setText(map.get(Keys.CITY));
-		editCountry.setText(map.get(Keys.COUNTRY));
-		editEmail.setText(map.get(Keys.Email));
+		editFirst.setText(map.getString(Keys.FirstName));
+		editLast.setText(map.getString(Keys.LastName));
+		editDisp.setText(map.getString(Keys.PLAYERNICKNAME));
+		editCity.setText(map.getString(Keys.CITY));
+		editCountry.setText(map.getString(Keys.COUNTRY));
+		editEmail.setText(map.getString(Keys.Email));
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

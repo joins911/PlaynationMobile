@@ -1,12 +1,12 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,7 @@ import com.myapps.playnation.Classes.Keys;
 public class GroupsListAdapter extends BaseAdapter {
 	LayoutInflater inflater;
 	ImageView thumb_image;
-	ArrayList<HashMap<String, String>> groupsDataCollection;
+	ArrayList<Bundle> groupsDataCollection;
 	JSONArray groupsArray;
 	ViewHolder holder;
 
@@ -28,14 +28,13 @@ public class GroupsListAdapter extends BaseAdapter {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupsListAdapter(Activity act,
-			ArrayList<HashMap<String, String>> map) {
+	public GroupsListAdapter(Activity act, ArrayList<Bundle> map) {
 		this.groupsDataCollection = map;
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	public ArrayList<HashMap<String, String>> getGamesList() {
+	public ArrayList<Bundle> getGamesList() {
 		return groupsDataCollection;
 	}
 
@@ -84,13 +83,15 @@ public class GroupsListAdapter extends BaseAdapter {
 		 * sdf.setTimeZone(TimeZone.getTimeZone("UTC")); String formattedDate =
 		 * sdf.format(date);
 		 */
-		holder.tvGameName.setText(groupsDataCollection.get(position).get(
+		holder.tvGameName.setText(groupsDataCollection.get(position).getString(
 				Keys.GROUPNAME));
-		holder.tvGameType.setText(groupsDataCollection.get(position).get(
-				Keys.GROUPTYPE)
-				+ "  "
-				+ groupsDataCollection.get(position).get(Keys.GROUPTYPE2));
-		holder.tvGameDate.setText(groupsDataCollection.get(position).get(
+		holder.tvGameType
+				.setText(groupsDataCollection.get(position).getString(
+						Keys.GROUPTYPE)
+						+ "  "
+						+ groupsDataCollection.get(position).getString(
+								Keys.GROUPTYPE2));
+		holder.tvGameDate.setText(groupsDataCollection.get(position).getString(
 				Keys.GROUPDATE));
 
 		// Setting an image

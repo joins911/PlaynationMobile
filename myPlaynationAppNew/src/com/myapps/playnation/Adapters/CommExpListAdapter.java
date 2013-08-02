@@ -2,10 +2,6 @@ package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
 
-import com.myapps.playnation.R;
-import com.myapps.playnation.Classes.CommentInfo;
-import com.myapps.playnation.Classes.UserComment;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +9,16 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.myapps.playnation.R;
+import com.myapps.playnation.Classes.CommentInfo;
+import com.myapps.playnation.Classes.UserComment;
+
 /**
  * 
  * @author viperime
- * @version 1.0;
- *   Adapter for the Comments Expandable List which first resided under the game Desc,
- * but might be change to be useld for comments everywhere in the app
+ * @version 1.0; Adapter for the Comments Expandable List which first resided
+ *          under the game Desc, but might be change to be useld for comments
+ *          everywhere in the app
  */
 public class CommExpListAdapter extends BaseExpandableListAdapter {
 

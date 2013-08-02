@@ -33,6 +33,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -54,18 +55,18 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	 final String ServerIp ="87.55.208.165:1337";
+	// final String ServerIp ="87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	//final String ServerIp = "10.0.2.2";
+	final String ServerIp = "10.0.2.2";
 	String url;
-	HashMap<String, ArrayList<HashMap<String, String>>> lilDb;
+	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
 	String[] groupTypes;
 	public final SimpleDateFormat dataTemplate = new SimpleDateFormat(
 			"MMM dd,yyyy HH:mm", Locale.getDefault());
 	private static JSONArray json;
-	private static ArrayList<HashMap<String, String>> searchArray;
-	private static ArrayList<HashMap<String, String>> arrayChildren = new ArrayList<HashMap<String, String>>();
+	private static ArrayList<Bundle> searchArray;
+	private static ArrayList<Bundle> arrayChildren = new ArrayList<Bundle>();
 
 	private static String DATABASE_NAME = "cdcol";
 	private static int DATABASE_VERSION = 2;
@@ -73,7 +74,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	private DataConnector(Context con) {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 		url = "http://" + ServerIp + "/test/";
-		lilDb = new HashMap<String, ArrayList<HashMap<String, String>>>();
+		lilDb = new HashMap<String, ArrayList<Bundle>>();
 
 	}
 
@@ -187,8 +188,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		}
 	}
 
-	public ArrayList<HashMap<String, String>> getTempNewsTab(String id,
-			String gameType) {
+	public ArrayList<Bundle> getTempNewsTab(String id, String gameType) {
 		SQLiteDatabase sql = null;
 		Cursor cursor = null;
 		String selectQuery = "";
@@ -203,22 +203,26 @@ public class DataConnector extends SQLiteOpenHelper {
 		sql = getReadableDatabase();
 		cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
-			ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
+			ArrayList<Bundle> arrayList = new ArrayList<Bundle>();
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
 				do {
-					HashMap<String, String> temp = new HashMap<String, String>();
-					temp.put(Keys.NEWSCOLID_NEWS, cursor.getString(cursor
+					Bundle temp = new Bundle();
+					temp.putString(Keys.NEWSCOLID_NEWS, cursor.getString(cursor
 							.getColumnIndex(Keys.NEWSCOLID_NEWS)));
-					temp.put(Keys.NEWSCOLNEWSTEXT, cursor.getString(cursor
-							.getColumnIndex(Keys.NEWSCOLNEWSTEXT)));
-					temp.put(Keys.NEWSCOLINTROTEXT, cursor.getString(cursor
-							.getColumnIndex(Keys.NEWSCOLINTROTEXT)));
-					temp.put(Keys.NEWSCOLPOSTINGTIME, cursor.getString(cursor
-							.getColumnIndex(Keys.NEWSCOLPOSTINGTIME)));
-					temp.put(Keys.NEWSCOLHEADLINE, cursor.getString(cursor
-							.getColumnIndex(Keys.NEWSCOLHEADLINE)));
-					temp.put(Keys.Author, cursor.getString(cursor
+					temp.putString(Keys.NEWSCOLNEWSTEXT, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.NEWSCOLNEWSTEXT)));
+					temp.putString(Keys.NEWSCOLINTROTEXT, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.NEWSCOLINTROTEXT)));
+					temp.putString(Keys.NEWSCOLPOSTINGTIME, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.NEWSCOLPOSTINGTIME)));
+					temp.putString(Keys.NEWSCOLHEADLINE, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.NEWSCOLHEADLINE)));
+					temp.putString(Keys.Author, cursor.getString(cursor
 							.getColumnIndex(Keys.Author)));
 					arrayList.add(temp);
 				} while (cursor.moveToNext());
@@ -258,7 +262,6 @@ public class DataConnector extends SQLiteOpenHelper {
 		} catch (Exception e) {
 			Log.e("Fetching GetGameInfo", "Error GetGameInfo" + e);
 		}
-		// lilDb.put(Keys.GAMELILDBTABLENAME, list);
 		return list;
 	}
 
@@ -306,8 +309,6 @@ public class DataConnector extends SQLiteOpenHelper {
 	 */
 	public void addGames(JSONArray jsonArray) throws JSONException {
 		SQLiteDatabase sql = this.getWritableDatabase();
-		// ArrayList<HashMap<String, String>> arrayList = new
-		// ArrayList<HashMap<String, String>>();
 		Set<String> gameTypes = new HashSet<String>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -340,17 +341,10 @@ public class DataConnector extends SQLiteOpenHelper {
 			temp.put(Keys.CompanyFounded, map.get(Keys.CompanyFounded));
 			temp.put(Keys.CompanyName, map.get(Keys.CompanyName));
 
-			// temp.put(Keys.GAMETYPENAME, "");
-			// temp.put(Keys.GAMEPLATFORM, "");
-			// temp.put(Keys.GAMECompanyDistributor, "");
-			// temp.put(Keys.CompanyFounded, "");
-			// temp.put(Keys.CompanyName, "");
-			// arrayList.add(temp);
-			sql.insert(Keys.gamesTable, null, temp);
 			gameTypes.add(jsonArray.getJSONObject(i).getString(Keys.GAMETYPE));
+			sql.insert(Keys.gamesTable, null, temp);
 		}
 
-		// lilDb.put(Keys.gamesTable, arrayList);
 		sql.close();
 		convertGameTypes(gameTypes);
 	}
@@ -364,17 +358,17 @@ public class DataConnector extends SQLiteOpenHelper {
 	 * @throws JSONException
 	 */
 	public void addComments(JSONArray jsonArray) throws JSONException {
-		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
+		ArrayList<Bundle> arrayList = new ArrayList<Bundle>();
 		for (int i = 0; i < jsonArray.length(); i++) {
-			HashMap<String, String> temp = new HashMap<String, String>();
-			temp.put(Keys.ID_OWNER,
+			Bundle temp = new Bundle();
+			temp.putString(Keys.ID_OWNER,
 					jsonArray.getJSONObject(i).getString(Keys.ID_OWNER));
-			temp.put(Keys.COMMENT,
+			temp.putString(Keys.COMMENT,
 					jsonArray.getJSONObject(i).getString(Keys.COMMENT));
-			temp.put(Keys.WallMessage,
-					jsonArray.getJSONObject(i).getString(Keys.WallMessage));
-			temp.put(Keys.CommentTime,
-					jsonArray.getJSONObject(i).getString(Keys.CommentTime));
+			temp.putString(Keys.WallMessage, jsonArray.getJSONObject(i)
+					.getString(Keys.WallMessage));
+			temp.putString(Keys.CommentTime, jsonArray.getJSONObject(i)
+					.getString(Keys.CommentTime));
 			arrayList.add(temp);
 		}
 		if (!lilDb.containsKey(Keys.commentsTable))
@@ -385,8 +379,6 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	public void addGroups(JSONArray jsonArray) throws JSONException {
 		SQLiteDatabase sql = this.getWritableDatabase();
-		// ArrayList<HashMap<String, String>> arrayList = new
-		// ArrayList<HashMap<String, String>>();
 		Set<String> groupTypes = new HashSet<String>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ContentValues temp = new ContentValues();
@@ -412,20 +404,16 @@ public class DataConnector extends SQLiteOpenHelper {
 			String creator = jsonArray.getJSONObject(i).getString(
 					Keys.PLAYERNICKNAME);
 			temp.put(Keys.GruopCreatorName, creator);
-			// arrayList.add(temp);
 			sql.insert(Keys.groupsTable, null, temp);
 			groupTypes
 					.add(jsonArray.getJSONObject(i).getString(Keys.GROUPTYPE));
 		}
 		sql.close();
-		// lilDb.put(Keys.groupsTable, arrayList);
 		convertGroupTypes(groupTypes);
 	}
 
 	public void addNews(JSONArray jsonArray) throws JSONException {
 		SQLiteDatabase sql = this.getWritableDatabase();
-		// ArrayList<HashMap<String, String>> arrayList = new
-		// ArrayList<HashMap<String, String>>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ContentValues temp = new ContentValues();
 			temp.put(Keys.NEWSCOLID_NEWS,
@@ -444,10 +432,8 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ " "
 							+ jsonArray.getJSONObject(i).getString(
 									Keys.LastName));
-			// arrayList.add(temp);
 			sql.insert(Keys.newsTable, null, temp);
 		}
-		// lilDb.put(Keys.newsTable, arrayList);
 		sql.close();
 	}
 
@@ -473,8 +459,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	 *            Table name we want to get from the DatabaseMAP
 	 * @return Database table
 	 */
-	public ArrayList<HashMap<String, String>> getTable(String tableName,
-			String sepateID) {
+	public ArrayList<Bundle> getTable(String tableName, String sepateID) {
+
 		if (lilDb.get(tableName) == null) {
 			if (!checkDBTableExits(tableName)) {
 				getQuerry(tableName);
@@ -482,6 +468,8 @@ public class DataConnector extends SQLiteOpenHelper {
 				// TODO
 				SQLiteDatabase sql = null;
 				Cursor cursor = null;
+				Bundle bundle = null;
+
 				String selectQuery = "";
 				if (Keys.HomeWallTable.equals(tableName)) {
 					selectQuery = "SELECT * FROM " + tableName + " WHERE "
@@ -528,424 +516,562 @@ public class DataConnector extends SQLiteOpenHelper {
 				sql = getReadableDatabase();
 				cursor = sql.rawQuery(selectQuery, null);
 				if (cursor != null) {
-					ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+					ArrayList<Bundle> list = new ArrayList<Bundle>();
 					cursor.moveToFirst();
 					if (!cursor.isAfterLast()) {
 						do {
 							if (tableName.equals(Keys.HomeWallTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.WallPosterDisplayName,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.WallPosterDisplayName,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallPosterDisplayName))
 												+ "");
-								m.put(Keys.ID_WALLITEM,
+								bundle.putString(
+										Keys.ID_WALLITEM,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_WALLITEM))
 												+ "");
-								m.put(Keys.ID_OWNER,
+								bundle.putString(
+										Keys.ID_OWNER,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_OWNER))
 												+ "");
-								m.put(Keys.ItemType, cursor.getString(cursor
-										.getColumnIndex(Keys.ItemType)));
-								m.put(Keys.WallLastActivityTime,
+								bundle.putString(Keys.ItemType, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.ItemType)));
+								bundle.putString(
+										Keys.WallLastActivityTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallLastActivityTime)));
-								m.put(Keys.WallMessage, cursor.getString(cursor
-										.getColumnIndex(Keys.WallMessage)));
-								m.put(Keys.WallOwnerType,
+								bundle.putString(
+										Keys.WallMessage,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.WallMessage)));
+								bundle.putString(
+										Keys.WallOwnerType,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallOwnerType)));
-								m.put(Keys.WallPostingTime,
+								bundle.putString(
+										Keys.WallPostingTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallPostingTime)));
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.newsTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.NEWSCOLID_NEWS,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.NEWSCOLID_NEWS,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.NEWSCOLID_NEWS)));
-								m.put(Keys.NEWSCOLNEWSTEXT,
+								bundle.putString(
+										Keys.NEWSCOLNEWSTEXT,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.NEWSCOLNEWSTEXT)));
-								m.put(Keys.NEWSCOLINTROTEXT,
+								bundle.putString(
+										Keys.NEWSCOLINTROTEXT,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.NEWSCOLINTROTEXT)));
-								m.put(Keys.NEWSCOLPOSTINGTIME,
+								bundle.putString(
+										Keys.NEWSCOLPOSTINGTIME,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.NEWSCOLPOSTINGTIME)));
-								m.put(Keys.NEWSCOLHEADLINE,
+								bundle.putString(
+										Keys.NEWSCOLHEADLINE,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.NEWSCOLHEADLINE)));
-								m.put(Keys.Author, cursor.getString(cursor
-										.getColumnIndex(Keys.Author)));
-								list.add(m);
+								bundle.putString(Keys.Author, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.Author)));
+								list.add(bundle);
 							} else if (tableName.equals(Keys.groupsTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.GROUPNAME, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPNAME)));
-								m.put(Keys.GROUPTYPE, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPTYPE)));
-								m.put(Keys.GROUPDESC, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPDESC)));
-								m.put(Keys.GROUPTYPE2, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPTYPE2)));
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.GROUPNAME,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPNAME)));
+								bundle.putString(
+										Keys.GROUPTYPE,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPTYPE)));
+								bundle.putString(
+										Keys.GROUPDESC,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPDESC)));
+								bundle.putString(
+										Keys.GROUPTYPE2,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPTYPE2)));
 								// Changed so date and members should be
-								m.put(Keys.GroupMemberCount,
+								bundle.putString(
+										Keys.GroupMemberCount,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GroupMemberCount)));
-								m.put(Keys.GROUPDATE, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPDATE)));
-								m.put(Keys.ID_GROUP, cursor.getString(cursor
-										.getColumnIndex(Keys.ID_GROUP)));
+								bundle.putString(
+										Keys.GROUPDATE,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPDATE)));
+								bundle.putString(Keys.ID_GROUP, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.ID_GROUP)));
 
-								m.put(Keys.GruopCreatorName,
+								bundle.putString(
+										Keys.GruopCreatorName,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GruopCreatorName)));
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.gamesTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.GAMENAME, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMENAME)));
+								bundle = new Bundle();
+								bundle.putString(Keys.GAMENAME, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMENAME)));
 								String gameType = cursor.getString(cursor
 										.getColumnIndex(Keys.GAMETYPE));
-								m.put(Keys.GAMETYPE, gameType);
-								m.put(Keys.GAMEDESC, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMEDESC)));
-								m.put(Keys.GAMEDATE, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMEDATE)));
-								m.put(Keys.RATING, cursor.getString(cursor
-										.getColumnIndex(Keys.RATING)));
-								m.put(Keys.GAMEESRB, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMEESRB)));
-								m.put(Keys.GAMEURL, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMEURL)));
-								m.put(Keys.GAMEPLAYERSCOUNT,
+								bundle.putString(Keys.GAMETYPE, gameType);
+								bundle.putString(Keys.GAMEDESC, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMEDESC)));
+								bundle.putString(Keys.GAMEDATE, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMEDATE)));
+								bundle.putString(Keys.RATING, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.RATING)));
+								bundle.putString(Keys.GAMEESRB, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMEESRB)));
+								bundle.putString(Keys.GAMEURL, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMEURL)));
+								bundle.putString(
+										Keys.GAMEPLAYERSCOUNT,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMEPLAYERSCOUNT)));
 								String id_GAME = cursor.getString(cursor
 										.getColumnIndex(Keys.ID_GAME));
-								m.put(Keys.ID_GAME, id_GAME);
-								m.put(Keys.GAMETYPENAME,
+								bundle.putString(Keys.ID_GAME, id_GAME);
+								bundle.putString(
+										Keys.GAMETYPENAME,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMETYPENAME)));
-								m.put(Keys.GAMEPLATFORM,
+								bundle.putString(Keys.GAMETYPE, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMETYPE)));
+								bundle.putString(
+										Keys.GAMEPLATFORM,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMEPLATFORM)));
-								m.put(Keys.GAMECompanyDistributor,
+								bundle.putString(
+										Keys.GAMECompanyDistributor,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMECompanyDistributor)));
-								m.put(Keys.CompanyFounded,
+								bundle.putString(
+										Keys.CompanyFounded,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyFounded)));
-								m.put(Keys.CompanyName, cursor.getString(cursor
-										.getColumnIndex(Keys.CompanyName)));
-
-								list.add(m);
-							} else if (tableName.equals(Keys.companyTable)) {
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put(Keys.EventID_COMPANY,
-										cursor.getString(cursor
-												.getColumnIndex(Keys.EventID_COMPANY)));
-								map.put(Keys.CompanyName,
+								bundle.putString(
+										Keys.CompanyName,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyName)));
-								map.put(Keys.CompanyEmployees,
+
+								list.add(bundle);
+							} else if (tableName.equals(Keys.companyTable)) {
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.EventID_COMPANY,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.EventID_COMPANY)));
+								bundle.putString(
+										Keys.CompanyName,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.CompanyName)));
+								bundle.putString(
+										Keys.CompanyEmployees,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyEmployees)));
-								map.put(Keys.CompanyImageURL,
+								bundle.putString(
+										Keys.CompanyImageURL,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyImageURL)));
-								map.put(Keys.CompanyAddress,
+								bundle.putString(
+										Keys.CompanyAddress,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyAddress)));
-								map.put(Keys.CompanyDesc,
+								bundle.putString(
+										Keys.CompanyDesc,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyDesc)));
-
-								map.put(Keys.CompanyFounded,
+								bundle.putString(
+										Keys.CompanyFounded,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyFounded)));
-								map.put(Keys.CompanyURL,
+								bundle.putString(
+										Keys.CompanyURL,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyURL)));
-								map.put(Keys.CompanyCreatedTime,
+								bundle.putString(
+										Keys.CompanyCreatedTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyCreatedTime)));
-								map.put(Keys.CompanyOwnership,
+								bundle.putString(
+										Keys.CompanyOwnership,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyOwnership)));
-								map.put(Keys.CompanyType,
+								bundle.putString(
+										Keys.CompanyType,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyType)));
-								map.put(Keys.CompanyNewsCount,
+								bundle.putString(
+										Keys.CompanyNewsCount,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyNewsCount)));
-								map.put(Keys.CompanyEventCount,
+								bundle.putString(
+										Keys.CompanyEventCount,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyEventCount)));
-								map.put(Keys.CompanyGameCount,
+								bundle.putString(
+										Keys.CompanyGameCount,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanyGameCount)));
-								map.put(Keys.CompanySocialRating,
+								bundle.putString(
+										Keys.CompanySocialRating,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.CompanySocialRating)));
-								list.add(map);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.HomeMsgTable)) {
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put(Keys.ID_MESSAGE,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_MESSAGE,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_MESSAGE))
 												+ "");
-								map.put(Keys.MessageID_CONVERSATION,
+								bundle.putString(
+										Keys.MessageID_CONVERSATION,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.MessageID_CONVERSATION))
 												+ "");
-								map.put(Keys.PLAYERNICKNAME,
+								bundle.putString(
+										Keys.PLAYERNICKNAME,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERNICKNAME)));
-								map.put(Keys.PLAYERAVATAR,
+								bundle.putString(
+										Keys.PLAYERAVATAR,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERAVATAR)));
 
-								map.put(Keys.MessageText,
+								bundle.putString(
+										Keys.MessageText,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.MessageText)));
-								map.put(Keys.MessageTime,
+								bundle.putString(
+										Keys.MessageTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.MessageTime)));
-								list.add(map);
+								list.add(bundle);
 							} else if (tableName
 									.equals(Keys.HomeSubscriptionTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.ID_ITEM,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_ITEM,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_ITEM))
 												+ "");
-								m.put(Keys.ID_OWNER,
+								bundle.putString(
+										Keys.ID_OWNER,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_OWNER))
 												+ "");
-								m.put(Keys.ItemName, cursor.getString(cursor
-										.getColumnIndex(Keys.ItemName)));
-								m.put(Keys.ItemType, cursor.getString(cursor
-										.getColumnIndex(Keys.ItemType)));
-								m.put(Keys.SubscriptionTime,
+								bundle.putString(Keys.ItemName, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.ItemName)));
+								bundle.putString(Keys.ItemType, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.ItemType)));
+								bundle.putString(
+										Keys.SubscriptionTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.SubscriptionTime)));
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.HomeEventTable)) {
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put(Keys.ID_EVENT,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_EVENT,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_EVENT))
 												+ "");
-								map.put(Keys.EventID_COMPANY,
+								bundle.putString(
+										Keys.EventID_COMPANY,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.EventID_COMPANY))
 												+ "");
-								map.put(Keys.ID_GAME,
+								bundle.putString(
+										Keys.ID_GAME,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_GAME))
 												+ "");
-								map.put(Keys.ID_GROUP,
+								bundle.putString(
+										Keys.ID_GROUP,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_GROUP))
 												+ "");
-								map.put(Keys.EventID_TEAM,
+								bundle.putString(
+										Keys.EventID_TEAM,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.EventID_TEAM))
 												+ "");
-								map.put(Keys.EventIMAGEURL,
+								bundle.putString(
+										Keys.EventIMAGEURL,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventIMAGEURL)));
-								map.put(Keys.EventDescription,
+								bundle.putString(
+										Keys.EventDescription,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventDescription)));
-								map.put(Keys.EventDuration,
+								bundle.putString(
+										Keys.EventDuration,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventDuration)));
-								map.put(Keys.EventHeadline,
+								bundle.putString(
+										Keys.EventHeadline,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventHeadline)));
-								map.put(Keys.EventTime, cursor.getString(cursor
-										.getColumnIndex(Keys.EventTime)));
-								map.put(Keys.EventLocation,
+								bundle.putString(
+										Keys.EventTime,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.EventTime)));
+								bundle.putString(
+										Keys.EventLocation,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventLocation)));
-								map.put(Keys.EventInviteLevel,
+								bundle.putString(
+										Keys.EventInviteLevel,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventInviteLevel)));
-								map.put(Keys.EventIsPublic,
+								bundle.putString(
+										Keys.EventIsPublic,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.EventIsPublic))
 												+ "");
-								map.put(Keys.EventType, cursor.getString(cursor
-										.getColumnIndex(Keys.EventType)));
-								map.put(Keys.EventIsExpired,
+								bundle.putString(
+										Keys.EventType,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.EventType)));
+								bundle.putString(
+										Keys.EventIsExpired,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.EventIsExpired))
 												+ "");
-								list.add(map);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.HomeFriendsTable)) {
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put(Keys.ID_PLAYER, cursor.getString(cursor
-										.getColumnIndex(Keys.ID_PLAYER)));
-								map.put(Keys.ID_OWNER, cursor.getString(cursor
-										.getColumnIndex(Keys.ID_OWNER)));
-								map.put(Keys.CITY, cursor.getString(cursor
-										.getColumnIndex(Keys.CITY)));
-								map.put(Keys.COUNTRY, cursor.getString(cursor
-										.getColumnIndex(Keys.COUNTRY)));
-								map.put(Keys.PLAYERNICKNAME,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_PLAYER,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.ID_PLAYER)));
+								bundle.putString(Keys.ID_OWNER, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.ID_OWNER)));
+								bundle.putString(Keys.CITY, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.CITY)));
+								bundle.putString(Keys.COUNTRY, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.COUNTRY)));
+								bundle.putString(
+										Keys.PLAYERNICKNAME,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERNICKNAME)));
-								map.put(Keys.Email, cursor.getString(cursor
-										.getColumnIndex(Keys.Email)));
-								map.put(Keys.PLAYERAVATAR,
+								bundle.putString(Keys.Email, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.Email)));
+								bundle.putString(
+										Keys.PLAYERAVATAR,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERAVATAR)));
-								map.put(Keys.FirstName, cursor.getString(cursor
-										.getColumnIndex(Keys.FirstName)));
-								map.put(Keys.LastName, cursor.getString(cursor
-										.getColumnIndex(Keys.LastName)));
+								bundle.putString(
+										Keys.FirstName,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.FirstName)));
+								bundle.putString(Keys.LastName, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.LastName)));
 
-								map.put(Keys.Age, cursor.getString(cursor
-										.getColumnIndex(Keys.Age)));
+								bundle.putString(Keys.Age, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.Age)));
 
-								list.add(map);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.HomeGamesTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.ID_GAME,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_GAME,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_GAME))
 												+ "");
-								m.put(Keys.GameComments,
+								bundle.putString(
+										Keys.GameComments,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GameComments)));
-								m.put(Keys.GAMENAME, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMENAME)));
-								m.put(Keys.GAMEDESC,
+								bundle.putString(Keys.GAMENAME, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMENAME)));
+								bundle.putString(
+										Keys.GAMEDESC,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMEDESC))
 												+ "");
-
-								m.put(Keys.GameID_GAMETYPE,
+								bundle.putString(
+										Keys.GameID_GAMETYPE,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.GameID_GAMETYPE))
 												+ "");
-								m.put(Keys.GAMETYPE,
+								bundle.putString(
+										Keys.GAMETYPE,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GAMETYPE))
 												+ "");
-								m.put(Keys.GameisPlaying,
+								bundle.putString(
+										Keys.GameisPlaying,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.GameisPlaying))
 												+ "");
-								m.put(Keys.GamesisSubscribed,
+								bundle.putString(
+										Keys.GamesisSubscribed,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.GamesisSubscribed))
 												+ "");
-								m.put(Keys.GamePostCount,
+								bundle.putString(
+										Keys.GamePostCount,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.GamePostCount))
 												+ "");
-								m.put(Keys.GamesSubscriptionTime,
+								bundle.putString(
+										Keys.GamesSubscriptionTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GamesSubscriptionTime)));
 
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName.equals(Keys.HomeGroupTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.ID_GROUP,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_GROUP,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_GROUP))
 												+ "");
-								m.put(Keys.ID_PLAYER,
+								bundle.putString(
+										Keys.ID_PLAYER,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_PLAYER))
 												+ "");
-								m.put(Keys.GROUPNAME, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPNAME)));
-								m.put(Keys.GROUPDESC, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPDESC)));
-								m.put(Keys.GROUPTYPE, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPTYPE)));
-								m.put(Keys.GROUPTYPE2, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPTYPE2)));
-								m.put(Keys.GAMENAME, cursor.getString(cursor
-										.getColumnIndex(Keys.GAMENAME)));
-								m.put(Keys.GroupMemberCount,
+								bundle.putString(
+										Keys.GROUPNAME,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPNAME)));
+								bundle.putString(
+										Keys.GROUPDESC,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPDESC)));
+								bundle.putString(
+										Keys.GROUPTYPE,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPTYPE)));
+								bundle.putString(
+										Keys.GROUPTYPE2,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPTYPE2)));
+								bundle.putString(Keys.GAMENAME, cursor
+										.getString(cursor
+												.getColumnIndex(Keys.GAMENAME)));
+								bundle.putString(
+										Keys.GroupMemberCount,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.GroupMemberCount)));
-								m.put(Keys.EventIMAGEURL,
+								bundle.putString(
+										Keys.EventIMAGEURL,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.EventIMAGEURL)));
-								m.put(Keys.GROUPDATE, cursor.getString(cursor
-										.getColumnIndex(Keys.GROUPDATE)));
-								m.put(Keys.GruopCreatorName,
+								bundle.putString(
+										Keys.GROUPDATE,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.GROUPDATE)));
+								bundle.putString(
+										Keys.GruopCreatorName,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERNICKNAME)));
 
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName
 									.equals(Keys.HomeWallRepliesTable)) {
-								HashMap<String, String> m = new HashMap<String, String>();
-								m.put(Keys.WallPosterDisplayName,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.WallPosterDisplayName,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallPosterDisplayName))
 												+ "");
-								m.put(Keys.ID_ORGOWNER,
+								bundle.putString(
+										Keys.ID_ORGOWNER,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_ORGOWNER))
 												+ "");
-								m.put(Keys.ID_WALLITEM,
+								bundle.putString(
+										Keys.ID_WALLITEM,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_WALLITEM))
 												+ "");
-								m.put(Keys.PLAYERAVATAR,
+								bundle.putString(
+										Keys.PLAYERAVATAR,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERAVATAR))
 												+ "");
-								m.put(Keys.WallLastActivityTime,
+								bundle.putString(
+										Keys.WallLastActivityTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallLastActivityTime)));
-								m.put(Keys.WallMessage, cursor.getString(cursor
-										.getColumnIndex(Keys.WallMessage)));
-								m.put(Keys.WallOwnerType,
+								bundle.putString(
+										Keys.WallMessage,
+										cursor.getString(cursor
+												.getColumnIndex(Keys.WallMessage)));
+								bundle.putString(
+										Keys.WallOwnerType,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallOwnerType)));
-								m.put(Keys.WallPostingTime,
+								bundle.putString(
+										Keys.WallPostingTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.WallPostingTime)));
 
-								list.add(m);
+								list.add(bundle);
 							} else if (tableName
 									.equals(Keys.HomeMsgRepliesTable)) {
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put(Keys.ID_MESSAGE,
+								bundle = new Bundle();
+								bundle.putString(
+										Keys.ID_MESSAGE,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.ID_MESSAGE))
 												+ "");
-								map.put(Keys.MessageID_CONVERSATION,
+								bundle.putString(
+										Keys.MessageID_CONVERSATION,
 										cursor.getInt(cursor
 												.getColumnIndex(Keys.MessageID_CONVERSATION))
 												+ "");
-								map.put(Keys.PLAYERNICKNAME,
+								bundle.putString(
+										Keys.PLAYERNICKNAME,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERNICKNAME)));
-								map.put(Keys.PLAYERAVATAR,
+								bundle.putString(
+										Keys.PLAYERAVATAR,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.PLAYERAVATAR)));
 
-								map.put(Keys.MessageText,
+								bundle.putString(
+										Keys.MessageText,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.MessageText)));
-								map.put(Keys.MessageTime,
+								bundle.putString(
+										Keys.MessageTime,
 										cursor.getString(cursor
 												.getColumnIndex(Keys.MessageTime)));
 
-								list.add(map);
+								list.add(bundle);
 							}
 
 						} while (cursor.moveToNext());
@@ -1081,8 +1207,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		// return null;
 	}
 
-	public void getQuerryWithPostVariable(String tableName,
-			HashMap<String, String> data) {
+	public void getQuerryWithPostVariable(String tableName, Bundle data) {
 		String result = "";
 
 		String temp = url;
@@ -1190,30 +1315,29 @@ public class DataConnector extends SQLiteOpenHelper {
 		return null;
 	}
 
-	public ArrayList<NameValuePair> initializeData(int tableID,
-			HashMap<String, String> data) {
+	public ArrayList<NameValuePair> initializeData(int tableID, Bundle data) {
 		switch (tableID) {
 		case Keys.commentsID:
 			ArrayList<NameValuePair> comment = new ArrayList<NameValuePair>();
 			comment.add(new BasicNameValuePair(Keys.USERNAME, data
-					.get(Keys.USERNAME)));
+					.getString(Keys.USERNAME)));
 			comment.add(new BasicNameValuePair(Keys.COMMENT, data
-					.get(Keys.COMMENT)));
+					.getString(Keys.COMMENT)));
 			lilDb.get(Keys.commentsTable).add(data);
 			return comment;
 		case Keys.replysID:
 			ArrayList<NameValuePair> reply = new ArrayList<NameValuePair>();
 			reply.add(new BasicNameValuePair(Keys.USERNAME, data
-					.get(Keys.USERNAME)));
+					.getString(Keys.USERNAME)));
 			reply.add(new BasicNameValuePair(Keys.COMMENT, data
-					.get(Keys.COMMENT)));
+					.getString(Keys.COMMENT)));
 			return reply;
 		case Keys.gamesID:
 			ArrayList<NameValuePair> post = new ArrayList<NameValuePair>();
 			post.add(new BasicNameValuePair(Keys.ID_OWNER, data
-					.get(Keys.ID_OWNER)));
+					.getString(Keys.ID_OWNER)));
 			post.add(new BasicNameValuePair(Keys.OWNERTYPE, data
-					.get(Keys.OWNERTYPE)));
+					.getString(Keys.OWNERTYPE)));
 			// lilDb.get(Keys.commentsTable).add(data);
 			return post;
 
@@ -1240,7 +1364,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// -------------------------------------------------
-	private HashMap<String, String> mPlayer;
+	private Bundle mPlayer;
 
 	// -------------------------------------------------------------------
 
@@ -1365,8 +1489,6 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeFriendsTable, "0");
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
 				try {
@@ -1389,9 +1511,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							json.getJSONObject(i).getString(Keys.FirstName));
 					map.put(Keys.LastName,
 							json.getJSONObject(i).getString(Keys.LastName));
-
 					map.put(Keys.Age, json.getJSONObject(i).getString(Keys.Age));
-					// arrayChildren.add(map);
 					sql.insert(Keys.HomeFriendsTable, null, map);
 				} catch (Exception e) {
 					Log.e("Fetching Friends", "Error Friends" + e);
@@ -1399,22 +1519,32 @@ public class DataConnector extends SQLiteOpenHelper {
 			}
 		}
 		sql.close();
-		// lilDb.put(Keys.HomeFriendsTable, arrayChildren);
 	}
 
 	public void queryPlayerGames(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeGamesTable, "0");
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
+		Set<String> gameTypes = new HashSet<String>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
 					ContentValues m = new ContentValues();
-					m.put(Keys.ID_GAME,
-							json.getJSONObject(i).getInt(Keys.ID_GAME) + "");
+
+					String id_GAME = json.getJSONObject(i).getInt(Keys.ID_GAME)
+							+ "";
+					m.put(Keys.ID_GAME, id_GAME);
+					m.put(Keys.RATING,
+							json.getJSONObject(i).getString(Keys.RATING));
+					m.put(Keys.GAMEESRB,
+							json.getJSONObject(i).getString(Keys.GAMEESRB));
+					m.put(Keys.GAMEURL,
+							json.getJSONObject(i).getString(Keys.GAMEURL));
+					m.put(Keys.GAMEPLAYERSCOUNT, json.getJSONObject(i)
+							.getString(Keys.GAMEPLAYERSCOUNT));
+					m.put(Keys.GAMEDATE,
+							json.getJSONObject(i).getString(Keys.GAMEDATE));
 					m.put(Keys.ID_PLAYER,
 							json.getJSONObject(i).getInt(Keys.ID_PLAYER) + "");
 					m.put(Keys.GameComments,
@@ -1427,8 +1557,13 @@ public class DataConnector extends SQLiteOpenHelper {
 					m.put(Keys.GameID_GAMETYPE,
 							json.getJSONObject(i).getInt(Keys.GameID_GAMETYPE)
 									+ "");
-					m.put(Keys.GAMETYPE,
-							json.getJSONObject(i).getString(Keys.GAMETYPE) + "");
+					String gameType = json.getJSONObject(i).getString(
+							Keys.GAMETYPE)
+							+ "";
+					m.put(Keys.GAMETYPE, gameType);
+					m.put(Keys.GameTypeName,
+							json.getJSONObject(i).getString(Keys.GameTypeName)
+									+ "");
 					m.put(Keys.GameisPlaying,
 							json.getJSONObject(i).getInt(Keys.GameisPlaying)
 									+ "");
@@ -1440,24 +1575,31 @@ public class DataConnector extends SQLiteOpenHelper {
 									+ "");
 					m.put(Keys.GamesSubscriptionTime, json.getJSONObject(i)
 							.getString(Keys.GamesSubscriptionTime));
+					HashMap<String, String> map = getGameInfo(id_GAME, gameType)
+							.get(0);
+					m.put(Keys.GAMETYPENAME, map.get(Keys.GAMETYPENAME));
+					m.put(Keys.GAMEPLATFORM, map.get(Keys.GAMEPLATFORM));
+					m.put(Keys.GAMECompanyDistributor,
+							map.get(Keys.GAMECompanyDistributor));
+					m.put(Keys.CompanyFounded, map.get(Keys.CompanyFounded));
+					m.put(Keys.CompanyName, map.get(Keys.CompanyName));
+
+					gameTypes.add(json.getJSONObject(i)
+							.getString(Keys.GAMETYPE));
 
 					sql.insert(Keys.HomeGamesTable, null, m);
-					// if (!arrayChildren.contains(m))
-					// arrayChildren.add(m);
+
 				} catch (Exception e) {
 					Log.e("Fetching Games", "Error Games" + e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeGamesTable, arrayChildren);
 	}
 
 	public void queryPlayerGroup(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeGroupTable, "0");
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1488,21 +1630,17 @@ public class DataConnector extends SQLiteOpenHelper {
 					m.put(Keys.GruopCreatorName, json.getJSONObject(i)
 							.getString(Keys.PLAYERNICKNAME));
 					sql.insert(Keys.HomeGroupTable, null, m);
-					// arrayChildren.add(m);
 				} catch (Exception e) {
 					Log.e("Fetching Group", "Error Group " + e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeGroupTable, arrayChildren);
 	}
 
 	public void queryPlayerMessages(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeMsgTable, "0");
-		// ArrayList<HashMap<String, String>> list = new
-		// ArrayList<HashMap<String, String>>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1526,14 +1664,12 @@ public class DataConnector extends SQLiteOpenHelper {
 							Integer.parseInt(json.getJSONObject(i).getString(
 									Keys.MessageTime)), dataTemplate));
 
-					// list.add(map);
 					sql.insert(Keys.HomeMsgTable, null, map);
 				} catch (Exception e) {
 					Log.e("Fetching Msg", "Error Msg" + e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeMsgTable, list);
 	}
 
 	public void queryPlayerSubscription(String playerID) {
@@ -1541,8 +1677,6 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeSubscriptionTable, "0");
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1560,15 +1694,12 @@ public class DataConnector extends SQLiteOpenHelper {
 							Integer.parseInt(json.getJSONObject(i).getString(
 									Keys.SubscriptionTime)), dataTemplate));
 
-					// if (!arrayChildren.contains(m))
-					// arrayChildren.add(m);
 					sql.insert(Keys.HomeSubscriptionTable, null, m);
 				} catch (Exception e) {
 					Log.e("Fetching Subscription", "Error Subscription " + e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeSubscriptionTable, arrayChildren);
 	}
 
 	public boolean checkDBTableExits(String tableName) {
@@ -1591,16 +1722,11 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallTable, "0");
-		// ArrayList<HashMap<String, String>> list = new
-		// ArrayList<HashMap<String, String>>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
 					ContentValues m = new ContentValues();
-
-					// HashMap<String, String> m = new HashMap<String,
-					// String>();
 					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 							.getString(Keys.WallPosterDisplayName) + "");
 					m.put(Keys.ID_WALLITEM,
@@ -1624,15 +1750,12 @@ public class DataConnector extends SQLiteOpenHelper {
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.TableHomeWall, list);
 	}
 
 	public void queryPlayerWallReplices(String wallitem, String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallRepliesTable, wallitem);
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
 
 		// // Print the data to the console
 		if (json != null)
@@ -1660,14 +1783,12 @@ public class DataConnector extends SQLiteOpenHelper {
 									Keys.WallPostingTime)), dataTemplate));
 
 					sql.insert(Keys.HomeWallRepliesTable, null, m);
-					// arrayChildren.add(m);
 				} catch (Exception e) {
 					Log.e("Fetching Wall Replies",
 							"Fetching WallReplies: Error" + e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeWallRepliesTable, arrayChildren);
 	}
 
 	public void queryPlayerMSGReplices(String wallitem, String playerID) {
@@ -1675,8 +1796,6 @@ public class DataConnector extends SQLiteOpenHelper {
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeMsgRepliesTable, wallitem);
 
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1697,20 +1816,17 @@ public class DataConnector extends SQLiteOpenHelper {
 							Integer.parseInt(json.getJSONObject(i).getString(
 									Keys.MessageTime)), dataTemplate));
 					sql.insert(Keys.HomeMsgRepliesTable, null, map);
-					// arrayChildren.add(map);
 				} catch (Exception e) {
 					Log.e("Fetching MSG Replies", "Fetching MSGReplies Error"
 							+ e);
 				}
 			}
 		sql.close();
-		// lilDb.put(Keys.HomeMsgRepliesTable, arrayChildren);
 	}
 
 	// -----------------------------------------------------------------
 
 	public void queryPlayerInfo(String playerID) {
-
 		json = getArrayFromQuerryWithPostVariable(playerID, Keys.PlayerTable,
 				"0");
 
@@ -1719,25 +1835,26 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put(Keys.ID_PLAYER,
-							json.getJSONObject(i).getString(Keys.ID_PLAYER));
-					map.put(Keys.CITY,
+					Bundle map = new Bundle();
+					map.putString(Keys.ID_PLAYER, json.getJSONObject(i)
+							.getString(Keys.ID_PLAYER));
+					map.putString(Keys.CITY,
 							json.getJSONObject(i).getString(Keys.CITY));
-					map.put(Keys.COUNTRY,
-							json.getJSONObject(i).getString(Keys.COUNTRY));
-					map.put(Keys.PLAYERNICKNAME, json.getJSONObject(i)
+					map.putString(Keys.COUNTRY, json.getJSONObject(i)
+							.getString(Keys.COUNTRY));
+					map.putString(Keys.PLAYERNICKNAME, json.getJSONObject(i)
 							.getString(Keys.PLAYERNICKNAME));
-					map.put(Keys.PLAYERAVATAR,
-							json.getJSONObject(i).getString(Keys.PLAYERAVATAR));
-					map.put(Keys.FirstName,
-							json.getJSONObject(i).getString(Keys.FirstName));
-					map.put(Keys.LastName,
-							json.getJSONObject(i).getString(Keys.LastName));
-					map.put(Keys.LastName,
-							json.getJSONObject(i).getString(Keys.LastName));
-					map.put(Keys.Age, json.getJSONObject(i).getString(Keys.Age));
-					map.put(Keys.Email,
+					map.putString(Keys.PLAYERAVATAR, json.getJSONObject(i)
+							.getString(Keys.PLAYERAVATAR));
+					map.putString(Keys.FirstName, json.getJSONObject(i)
+							.getString(Keys.FirstName));
+					map.putString(Keys.LastName, json.getJSONObject(i)
+							.getString(Keys.LastName));
+					map.putString(Keys.LastName, json.getJSONObject(i)
+							.getString(Keys.LastName));
+					map.putString(Keys.Age,
+							json.getJSONObject(i).getString(Keys.Age));
+					map.putString(Keys.Email,
 							json.getJSONObject(i).getString(Keys.Email));
 					setPlayer(map);
 					arrayChildren.add(map);
@@ -1749,16 +1866,13 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	public View populatePlayerGeneralInfo(View v, String nameT) {
-		HashMap<String, String> currentPlayer = getPlayer();
+		Bundle currentPlayer = getPlayer();
 
 		if (v != null) {
 			TextView txPlName = (TextView) v.findViewById(R.id.txPlName);
 			TextView txPlNick = (TextView) v.findViewById(R.id.txPlNick);
 			TextView txPlAge = (TextView) v.findViewById(R.id.txPlAge);
 			TextView txPlCountry = (TextView) v.findViewById(R.id.txPlCountry);
-
-			// TextView txlabel = (TextView) v.findViewById(R.id.txWhereLabel);
-			// txlabel.setText(nameT);
 
 			if (txPlName != null)
 				txPlName.setText("Name : " + currentPlayer.get(Keys.FirstName)
@@ -1770,7 +1884,8 @@ public class DataConnector extends SQLiteOpenHelper {
 
 			if (txPlAge != null)
 				txPlAge.setText("Age : "
-						+ HelperClass.convertToAge(currentPlayer.get(Keys.Age)));
+						+ HelperClass.convertToAge(currentPlayer
+								.getString(Keys.Age)));
 
 			if (txPlCountry != null)
 				txPlCountry.setText("Country: "
@@ -1780,9 +1895,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// MAYNOT BE NEEDED CURRENTLY NOT USED
-	public ArrayList<HashMap<String, String>> queryPlayerGroupSearch(
-			CharSequence search) {
-		searchArray = new ArrayList<HashMap<String, String>>();
+	public ArrayList<Bundle> queryPlayerGroupSearch(CharSequence search) {
+		searchArray = new ArrayList<Bundle>();
 
 		json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
 				Keys.SearchGroupTable, search.toString());
@@ -1791,24 +1905,24 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> m = new HashMap<String, String>();
-					m.put(Keys.ID_GROUP,
+					Bundle m = new Bundle();
+					m.putString(Keys.ID_GROUP,
 							json.getJSONObject(i).getInt(Keys.ID_GROUP) + "");
-					m.put(Keys.GROUPNAME,
-							json.getJSONObject(i).getString(Keys.GROUPNAME));
-					m.put(Keys.GROUPDESC,
-							json.getJSONObject(i).getString(Keys.GROUPDESC));
-					m.put(Keys.GROUPTYPE,
-							json.getJSONObject(i).getString(Keys.GROUPTYPE));
-					m.put(Keys.GROUPTYPE2,
-							json.getJSONObject(i).getString(Keys.GROUPTYPE2));
-					m.put(Keys.GAMENAME,
+					m.putString(Keys.GROUPNAME, json.getJSONObject(i)
+							.getString(Keys.GROUPNAME));
+					m.putString(Keys.GROUPDESC, json.getJSONObject(i)
+							.getString(Keys.GROUPDESC));
+					m.putString(Keys.GROUPTYPE, json.getJSONObject(i)
+							.getString(Keys.GROUPTYPE));
+					m.putString(Keys.GROUPTYPE2, json.getJSONObject(i)
+							.getString(Keys.GROUPTYPE2));
+					m.putString(Keys.GAMENAME,
 							json.getJSONObject(i).getString(Keys.GAMENAME));
-					m.put(Keys.GroupMemberCount, json.getJSONObject(i)
+					m.putString(Keys.GroupMemberCount, json.getJSONObject(i)
 							.getString(Keys.GroupMemberCount));
-					m.put(Keys.EventIMAGEURL,
-							json.getJSONObject(i).getString(Keys.EventIMAGEURL));
-					m.put(Keys.GROUPDATE, HelperClass.convertTime(
+					m.putString(Keys.EventIMAGEURL, json.getJSONObject(i)
+							.getString(Keys.EventIMAGEURL));
+					m.putString(Keys.GROUPDATE, HelperClass.convertTime(
 							Integer.parseInt(json.getJSONObject(i).getString(
 									Keys.GROUPDATE)), dataTemplate));
 
@@ -1821,9 +1935,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// MAYNOT BE NEEDED CURRENTLY NOT USED
-	public ArrayList<HashMap<String, String>> queryPlayerEventSearch(
-			CharSequence search, Context context) {
-		searchArray = new ArrayList<HashMap<String, String>>();
+	public ArrayList<Bundle> queryPlayerEventSearch(CharSequence search,
+			Context context) {
+		searchArray = new ArrayList<Bundle>();
 
 		json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
 				Keys.SearchEventTable, search.toString());
@@ -1832,36 +1946,35 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put(Keys.ID_EVENT,
+					Bundle map = new Bundle();
+					map.putString(Keys.ID_EVENT,
 							json.getJSONObject(i).getInt(Keys.ID_EVENT) + "");
-					map.put(Keys.EventID_COMPANY,
-							json.getJSONObject(i).getInt(Keys.EventID_COMPANY)
-									+ "");
-					map.put(Keys.ID_GAME,
+					map.putString(Keys.EventID_COMPANY, json.getJSONObject(i)
+							.getInt(Keys.EventID_COMPANY) + "");
+					map.putString(Keys.ID_GAME,
 							json.getJSONObject(i).getInt(Keys.ID_GAME) + "");
-					map.put(Keys.ID_GROUP,
+					map.putString(Keys.ID_GROUP,
 							json.getJSONObject(i).getInt(Keys.ID_GROUP) + "");
-					map.put(Keys.EventID_TEAM,
-							json.getJSONObject(i).getInt(Keys.EventID_TEAM)
-									+ "");
-					map.put(Keys.EventIMAGEURL, json.getJSONObject(i)
+					map.putString(Keys.EventID_TEAM, json.getJSONObject(i)
+							.getInt(Keys.EventID_TEAM) + "");
+					map.putString(Keys.EventIMAGEURL, json.getJSONObject(i)
 							.getString(Keys.EventIMAGEURL));
-					map.put(Keys.EventDescription, json.getJSONObject(i)
+					map.putString(Keys.EventDescription, json.getJSONObject(i)
 							.getString(Keys.EventDescription));
-					map.put(Keys.EventDuration, HelperClass.durationConverter(
-							json.getJSONObject(i).getString(Keys.EventDuration)
-									+ "", context));
-					map.put(Keys.EventHeadline, json.getJSONObject(i)
+					map.putString(Keys.EventDuration, HelperClass
+							.durationConverter(
+									json.getJSONObject(i).getString(
+											Keys.EventDuration)
+											+ "", context));
+					map.putString(Keys.EventHeadline, json.getJSONObject(i)
 							.getString(Keys.EventHeadline));
-					map.put(Keys.EventTime, HelperClass.convertTime(
+					map.putString(Keys.EventTime, HelperClass.convertTime(
 							Integer.parseInt(json.getJSONObject(i).getString(
 									Keys.EventTime)), dataTemplate));
-					map.put(Keys.EventLocation, json.getJSONObject(i)
+					map.putString(Keys.EventLocation, json.getJSONObject(i)
 							.getString(Keys.EventLocation));
-					map.put(Keys.EventIsExpired,
-							json.getJSONObject(i).getInt(Keys.EventIsExpired)
-									+ "");
+					map.putString(Keys.EventIsExpired, json.getJSONObject(i)
+							.getInt(Keys.EventIsExpired) + "");
 
 					searchArray.add(map);
 				} catch (Exception e) {
@@ -1872,9 +1985,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// MAYNOT BE NEEDED CURRENTLY NOT USED
-	public ArrayList<HashMap<String, String>> queryPlayerGameSearch(
-			CharSequence search, Context context) {
-		searchArray = new ArrayList<HashMap<String, String>>();
+	public ArrayList<Bundle> queryPlayerGameSearch(CharSequence search,
+			Context context) {
+		searchArray = new ArrayList<Bundle>();
 
 		json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
 				Keys.SearchGameTable, search.toString());
@@ -1883,30 +1996,29 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> m = new HashMap<String, String>();
-					m.put(Keys.ID_GAME,
+					Bundle m = new Bundle();
+					m.putString(Keys.ID_GAME,
 							json.getJSONObject(i).getInt(Keys.ID_GAME) + "");
-					m.put(Keys.GameComments,
-							json.getJSONObject(i).getString(Keys.GameComments));
-					m.put(Keys.GAMENAME,
+					m.putString(Keys.GameComments, json.getJSONObject(i)
+							.getString(Keys.GameComments));
+					m.putString(Keys.GAMENAME,
 							json.getJSONObject(i).getString(Keys.GAMENAME));
-					m.put(Keys.GAMEDESC,
+					m.putString(Keys.GAMEDESC,
 							json.getJSONObject(i).getString(Keys.GAMEDESC) + "");
-					m.put(Keys.GameID_GAMETYPE, json.getJSONObject(i)
+					m.putString(Keys.GameID_GAMETYPE, json.getJSONObject(i)
 							.getString(Keys.GameID_GAMETYPE) + "");
-					m.put(Keys.GAMETYPE,
+					m.putString(Keys.GAMETYPE,
 							json.getJSONObject(i).getInt(Keys.GAMETYPE) + "");
-					m.put(Keys.GameisPlaying,
-							json.getJSONObject(i).getInt(Keys.GameisPlaying)
-									+ "");
-					m.put(Keys.GamesisSubscribed,
-							json.getJSONObject(i)
-									.getInt(Keys.GamesisSubscribed) + "");
-					m.put(Keys.GamePostCount,
-							json.getJSONObject(i).getInt(Keys.GamePostCount)
-									+ "");
-					m.put(Keys.GamesSubscriptionTime, json.getJSONObject(i)
-							.getString(Keys.GamesSubscriptionTime));
+					m.putString(Keys.GameisPlaying, json.getJSONObject(i)
+							.getInt(Keys.GameisPlaying) + "");
+					m.putString(Keys.GamesisSubscribed, json.getJSONObject(i)
+							.getInt(Keys.GamesisSubscribed) + "");
+					m.putString(Keys.GamePostCount, json.getJSONObject(i)
+							.getInt(Keys.GamePostCount) + "");
+					m.putString(
+							Keys.GamesSubscriptionTime,
+							json.getJSONObject(i).getString(
+									Keys.GamesSubscriptionTime));
 
 					searchArray.add(m);
 				} catch (Exception e) {
@@ -1916,9 +2028,8 @@ public class DataConnector extends SQLiteOpenHelper {
 		return searchArray;
 	}
 
-	public ArrayList<HashMap<String, String>> queryPlayerFriendsSearch(
-			CharSequence search) {
-		searchArray = new ArrayList<HashMap<String, String>>();
+	public ArrayList<Bundle> queryPlayerFriendsSearch(CharSequence search) {
+		searchArray = new ArrayList<Bundle>();
 		JSONArray json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
 				Keys.SearchFriendsTable, search.toString());
 
@@ -1926,25 +2037,25 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put(Keys.ID_PLAYER,
-							json.getJSONObject(i).getString(Keys.ID_PLAYER));
-					map.put(Keys.CITY,
+					Bundle map = new Bundle();
+					map.putString(Keys.ID_PLAYER, json.getJSONObject(i)
+							.getString(Keys.ID_PLAYER));
+					map.putString(Keys.CITY,
 							json.getJSONObject(i).getString(Keys.CITY));
-					map.put(Keys.COUNTRY,
-							json.getJSONObject(i).getString(Keys.COUNTRY));
-					map.put(Keys.PLAYERNICKNAME, json.getJSONObject(i)
+					map.putString(Keys.COUNTRY, json.getJSONObject(i)
+							.getString(Keys.COUNTRY));
+					map.putString(Keys.PLAYERNICKNAME, json.getJSONObject(i)
 							.getString(Keys.PLAYERNICKNAME));
-					map.put(Keys.Email,
+					map.putString(Keys.Email,
 							json.getJSONObject(i).getString(Keys.Email));
-					map.put(Keys.PLAYERAVATAR,
-							json.getJSONObject(i).getString(Keys.PLAYERAVATAR));
-					map.put(Keys.FirstName,
-							json.getJSONObject(i).getString(Keys.FirstName));
-					map.put(Keys.LastName,
-							json.getJSONObject(i).getString(Keys.LastName));
-
-					map.put(Keys.Age, json.getJSONObject(i).getString(Keys.Age));
+					map.putString(Keys.PLAYERAVATAR, json.getJSONObject(i)
+							.getString(Keys.PLAYERAVATAR));
+					map.putString(Keys.FirstName, json.getJSONObject(i)
+							.getString(Keys.FirstName));
+					map.putString(Keys.LastName, json.getJSONObject(i)
+							.getString(Keys.LastName));
+					map.putString(Keys.Age,
+							json.getJSONObject(i).getString(Keys.Age));
 
 					searchArray.add(map);
 				} catch (Exception e) {
@@ -1957,9 +2068,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// MAYNOT BE NEEDED CURRENTLY NOT USED
-	public ArrayList<HashMap<String, String>> queryPlayerSubsSearch(
-			CharSequence search) {
-		searchArray = new ArrayList<HashMap<String, String>>();
+	public ArrayList<Bundle> queryPlayerSubsSearch(CharSequence search) {
+		searchArray = new ArrayList<Bundle>();
 
 		json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
 				Keys.SearchSubscriptionTable, search.toString());
@@ -1968,18 +2078,19 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put(Keys.ID_ITEM,
+					Bundle map = new Bundle();
+					map.putString(Keys.ID_ITEM,
 							json.getJSONObject(i).getInt(Keys.ID_ITEM) + "");
-					map.put(Keys.ID_OWNER,
+					map.putString(Keys.ID_OWNER,
 							json.getJSONObject(i).getInt(Keys.ID_OWNER) + "");
-					map.put(Keys.ItemName,
-							json.getJSONObject(i).getString(Keys.ItemName));
-					map.put(Keys.ItemType,
-							json.getJSONObject(i).getString(Keys.ItemType));
-					map.put(Keys.SubscriptionTime, HelperClass.convertTime(
-							Integer.parseInt(json.getJSONObject(i).getString(
-									Keys.SubscriptionTime)), dataTemplate));
+					map.putString(Keys.ItemName, json.getJSONObject(i)
+							.getString(Keys.ItemName));
+					map.putString(Keys.ItemType, json.getJSONObject(i)
+							.getString(Keys.ItemType));
+					map.putString(Keys.SubscriptionTime, HelperClass
+							.convertTime(Integer.parseInt(json.getJSONObject(i)
+									.getString(Keys.SubscriptionTime)),
+									dataTemplate));
 
 					searchArray.add(map);
 				} catch (Exception e) {
@@ -2034,19 +2145,19 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	private String[] gametypes;
 
-	public void setPlayer(HashMap<String, String> map) {
+	public void setPlayer(Bundle map) {
 		mPlayer = map;
 	}
 
-	public HashMap<String, String> getPlayer() {
+	public Bundle getPlayer() {
 		return mPlayer;
 	}
 
-	public ArrayList<HashMap<String, String>> getArrayChildren() {
+	public ArrayList<Bundle> getArrayChildren() {
 		return arrayChildren;
 	}
 
-	public ArrayList<HashMap<String, String>> getSearchArray() {
+	public ArrayList<Bundle> getSearchArray() {
 		return searchArray;
 	}
 

@@ -1,12 +1,12 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +26,19 @@ import com.myapps.playnation.Operations.DataConnector;
 public class GamesListAdapter extends BaseAdapter {
 	LayoutInflater inflater;
 	ImageView thumb_image;
-	ArrayList<HashMap<String, String>> gamesDataCollection;
+	ArrayList<Bundle> gamesDataCollection;
 	JSONArray gamesArray;
 	ViewHolder holder;
 	DataConnector con;
 
-	public GamesListAdapter(Activity act, ArrayList<HashMap<String, String>> map) {
+	public GamesListAdapter(Activity act, ArrayList<Bundle> map) {
 		this.gamesDataCollection = map;
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		con = DataConnector.getInst(act);
 	}
 
-	public ArrayList<HashMap<String, String>> getGamesList() {
+	public ArrayList<Bundle> getGamesList() {
 		return gamesDataCollection;
 	}
 
@@ -83,11 +83,11 @@ public class GamesListAdapter extends BaseAdapter {
 
 		// Setting all values in listview
 
-		holder.tvGameName.setText(gamesDataCollection.get(position).get(
+		holder.tvGameName.setText(gamesDataCollection.get(position).getString(
 				Keys.GAMENAME));
-		holder.tvGameType.setText(gamesDataCollection.get(position).get(
+		holder.tvGameType.setText(gamesDataCollection.get(position).getString(
 				Keys.GAMETYPE));
-		holder.tvGameDate.setText(gamesDataCollection.get(position).get(
+		holder.tvGameDate.setText(gamesDataCollection.get(position).getString(
 				Keys.GAMEDATE));
 		/*
 		 * For getting image try {

@@ -1,7 +1,6 @@
 package com.myapps.playnation.Fragments.Tabs.Home;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,8 +31,7 @@ public class HomeWallFragment extends Fragment {
 		}
 
 		listParents.clear();
-		for (HashMap<String, String> hashMap : con.getTable(Keys.HomeWallTable,
-				"")) {
+		for (Bundle hashMap : con.getTable(Keys.HomeWallTable, "")) {
 			ExpandbleParent parentItem = new ExpandbleParent();
 			parentItem.setFirstChild(hashMap);
 			listParents.add(parentItem);

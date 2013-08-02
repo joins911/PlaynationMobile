@@ -2,9 +2,9 @@ package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +17,9 @@ import com.myapps.playnation.Classes.Keys;
 
 public class PlayerHomeInfoAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
-	private ArrayList<HashMap<String, String>> tempList;
+	private ArrayList<Bundle> tempList;
 
-	public PlayerHomeInfoAdapter(Context context,
-			ArrayList<HashMap<String, String>> list) {
+	public PlayerHomeInfoAdapter(Context context, ArrayList<Bundle> list) {
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.tempList = list;
@@ -59,17 +58,18 @@ public class PlayerHomeInfoAdapter extends BaseAdapter {
 		TextView txEdit = (TextView) view.findViewById(R.id.txtEdit);
 		txEdit.setVisibility(View.GONE);
 
-		HashMap<String, String> mapEntry = tempList.get(arg0);
+		Bundle mapEntry = tempList.get(arg0);
 		if (mapEntry != null) {
 			playerIcon.setImageResource(R.drawable.person);
-			playerIcon.setContentDescription(mapEntry.get(Keys.PLAYERNICKNAME));
-			txPlName.setText("" + mapEntry.get(Keys.FirstName) + " , "
-					+ mapEntry.get(Keys.LastName));
+			playerIcon.setContentDescription(mapEntry
+					.getString(Keys.PLAYERNICKNAME));
+			txPlName.setText("" + mapEntry.getString(Keys.FirstName) + " , "
+					+ mapEntry.getString(Keys.LastName));
 			txPlNick.setText(view.getResources().getString(R.string.Nick)
-					+ mapEntry.get(Keys.PLAYERNICKNAME));
+					+ mapEntry.getString(Keys.PLAYERNICKNAME));
 			txPlCountry.setText(view.getResources().getString(R.string.Country)
-					+ mapEntry.get(Keys.COUNTRY));
-			String[] dates = mapEntry.get(Keys.Age).split("-");
+					+ mapEntry.getString(Keys.COUNTRY));
+			String[] dates = mapEntry.getString(Keys.Age).split("-");
 			int year = Integer.parseInt(dates[0]);
 			int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 			txPlAge.setText(view.getResources().getString(R.string.Age)

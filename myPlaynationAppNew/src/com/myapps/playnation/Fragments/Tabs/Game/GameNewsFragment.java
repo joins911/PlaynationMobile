@@ -2,7 +2,6 @@ package com.myapps.playnation.Fragments.Tabs.Game;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -28,15 +27,13 @@ public class GameNewsFragment extends Fragment {
 	private ListView list;
 	private DataConnector con;
 	private TextView txtMessage;
-	@SuppressWarnings("unused")
 	private ISectionAdapter mCallback;
 
 	public void initGameNews() {
 		con = DataConnector.getInst(getActivity());
 		Bundle myIntent = getArguments();
 		String id = myIntent.getString(Keys.ID_GAME);
-		final ArrayList<HashMap<String, String>> results = con.getTempNewsTab(
-				id, "game");
+		final ArrayList<Bundle> results = con.getTempNewsTab(id, "game");
 		if (results != null) {
 			list = (ListView) mView.findViewById(R.id.mainList);
 			txtMessage = (TextView) mView.findViewById(R.id.frag_Gnews_TView);

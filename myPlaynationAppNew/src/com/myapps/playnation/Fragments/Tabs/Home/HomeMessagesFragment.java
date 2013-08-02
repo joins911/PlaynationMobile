@@ -1,7 +1,6 @@
 package com.myapps.playnation.Fragments.Tabs.Home;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,8 +33,7 @@ public class HomeMessagesFragment extends Fragment {
 			con.queryPlayerMessages(Keys.TEMPLAYERID);
 
 		listParents.clear();
-		for (HashMap<String, String> hashMap : con.getTable(Keys.HomeMsgTable,
-				"")) {
+		for (Bundle hashMap : con.getTable(Keys.HomeMsgTable, "")) {
 			ExpandbleParent parentItem = new ExpandbleParent();
 			parentItem.setFirstChild(hashMap);
 			listParents.add(parentItem);

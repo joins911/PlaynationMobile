@@ -1,10 +1,10 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +30,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 	private ExpandableListView mExpandableList;
 
 	private DataConnector con;
-	private ArrayList<HashMap<String, String>> array;
+	private ArrayList<Bundle> array;
 	@SuppressWarnings("unused")
 	private Context context;
 	// Only used as mark which class is currently present.
@@ -110,8 +110,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		TextView txEDate;
 		TextView txText;
 
-		HashMap<String, String> mapEntry = mParent.get(groupPosition)
-				.getFirstChild();
+		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
 		if (currentFragment instanceof HomeWallFragment) {
 			view = inflater.inflate(R.layout.fragment_home_wall, viewGroup,
 					false);
@@ -121,11 +120,13 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.event);
 
-			txEHeadline.setText("" + mapEntry.get(Keys.WallPosterDisplayName));
-			txText.setText("" + Html.fromHtml(mapEntry.get(Keys.WallMessage)));
+			txEHeadline.setText(""
+					+ mapEntry.getString(Keys.WallPosterDisplayName));
+			txText.setText(""
+					+ Html.fromHtml(mapEntry.getString(Keys.WallMessage)));
 			txEDate.setText("Date: "
 					+ HelperClass.convertTime(Integer.parseInt(mapEntry
-							.get(Keys.WallPostingTime)), con.dataTemplate));
+							.getString(Keys.WallPostingTime)), con.dataTemplate));
 		} else if (currentFragment instanceof HomeMessagesFragment) {
 			view = inflater.inflate(R.layout.fragment_home_msggame, viewGroup,
 					false);
@@ -135,9 +136,9 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			txText = (TextView) view.findViewById(R.id.txText);
 			txELocation = (TextView) view.findViewById(R.id.txELocation);
 
-			txEHeadline.setText("" + mapEntry.get(Keys.PLAYERNICKNAME));
-			txELocation.setText(mapEntry.get(Keys.MessageTime));
-			txText.setText(mapEntry.get(Keys.MessageText));
+			txEHeadline.setText("" + mapEntry.getString(Keys.PLAYERNICKNAME));
+			txELocation.setText(mapEntry.getString(Keys.MessageTime));
+			txText.setText(mapEntry.getString(Keys.MessageText));
 		}
 
 		// return the entire view
@@ -161,7 +162,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		TextView txText;
 
 		if (!array.isEmpty()) {
-			HashMap<String, String> mapEntry = array.get(childPosition);
+			Bundle mapEntry = array.get(childPosition);
 			if (mapEntry != null) {
 				if (currentFragment instanceof HomeWallFragment) {
 					view = inflater.inflate(R.layout.fragment_home_wall,
@@ -169,8 +170,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
 							.findViewById(R.id.mainLayoutPlayer);
 					mainLayoutPlayer.setPadding(50, 0, 50, 0);
-					// mainLayoutPlayer.setBackgroundColor(context.getResources()
-					// .getColor(R.drawable.borders));
+
 					txEHeadline = (TextView) view
 							.findViewById(R.id.txEHeadline);
 					txText = (TextView) view.findViewById(R.id.txText);
@@ -180,19 +180,19 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					img.setImageResource(R.drawable.event);
 
 					txEHeadline.setText(""
-							+ mapEntry.get(Keys.WallPosterDisplayName));
+							+ mapEntry.getString(Keys.WallPosterDisplayName));
 					txText.setText(""
-							+ Html.fromHtml(mapEntry.get(Keys.WallMessage)));
+							+ Html.fromHtml(mapEntry
+									.getString(Keys.WallMessage)));
 					txEDate.setText("Date: "
-							+ mapEntry.get(Keys.WallPostingTime));
+							+ mapEntry.getString(Keys.WallPostingTime));
 				} else if (currentFragment instanceof HomeMessagesFragment) {
 					view = inflater.inflate(R.layout.fragment_home_msggame,
 							viewGroup, false);
 					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
 							.findViewById(R.id.mainLayoutPlayer);
 					mainLayoutPlayer.setPadding(50, 0, 50, 0);
-					// mainLayoutPlayer.setBackgroundColor(context.getResources()
-					// .getColor(R.color.background));
+
 					ImageView img = (ImageView) view
 							.findViewById(R.id.imgEvent);
 					img.setImageResource(R.drawable.msgopen);
@@ -202,13 +202,15 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					txELocation = (TextView) view
 							.findViewById(R.id.txELocation);
 
-					txEHeadline.setText("" + mapEntry.get(Keys.PLAYERNICKNAME));
-					txELocation.setText(mapEntry.get(Keys.MessageTime));
-					// txText.setText(mapEntry.get(Keys.MessageText));
+					txEHeadline.setText(""
+							+ mapEntry.getString(Keys.PLAYERNICKNAME));
+					txELocation.setText(mapEntry.getString(Keys.MessageTime));
 
-					txEHeadline.setText("" + mapEntry.get(Keys.PLAYERNICKNAME));
-					txELocation.setText(mapEntry.get(Keys.MessageTime));
-					txText.setText(Html.fromHtml(mapEntry.get(Keys.MessageText)));
+					txEHeadline.setText(""
+							+ mapEntry.getString(Keys.PLAYERNICKNAME));
+					txELocation.setText(mapEntry.getString(Keys.MessageTime));
+					txText.setText(Html.fromHtml(mapEntry
+							.getString(Keys.MessageText)));
 				}
 			}
 		}
@@ -233,21 +235,20 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		if (groupPosition != lastParent) {
 			mExpandableList.collapseGroup(lastParent);
 		}
-		array = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> mapEntry = mParent.get(groupPosition)
-				.getFirstChild();
+		array = new ArrayList<Bundle>();
+		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
 		if (lastParent == groupPosition
 				|| currentFragment instanceof HomeWallFragment) {
 			con.queryPlayerWallReplices(Keys.TEMPLAYERID,
-					mapEntry.get(Keys.ID_WALLITEM));
+					mapEntry.getString(Keys.ID_WALLITEM));
 			array = con.getTable(Keys.HomeWallRepliesTable,
-					mapEntry.get(Keys.ID_WALLITEM));
+					mapEntry.getString(Keys.ID_WALLITEM));
 			mParent.get(groupPosition).setArrayChildren(array);
 		} else if (currentFragment instanceof HomeMessagesFragment) {
 			con.queryPlayerMSGReplices(Keys.TEMPLAYERID,
-					mapEntry.get(Keys.MessageID_CONVERSATION));
+					mapEntry.getString(Keys.MessageID_CONVERSATION));
 			array = con.getTable(Keys.HomeMsgRepliesTable,
-					mapEntry.get(Keys.MessageID_CONVERSATION));
+					mapEntry.getString(Keys.MessageID_CONVERSATION));
 			mParent.get(groupPosition).setArrayChildren(array);
 		}
 

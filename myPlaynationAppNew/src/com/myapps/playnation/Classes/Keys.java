@@ -72,7 +72,6 @@ public final class Keys {
 
 	// in the future hopefully for image
 	public static final String ICON = "icon";
-	public final static String Segment = "Segment";
 
 	// State used for the mainList mostly to keep track of the current selected
 	// state/tab

@@ -26,21 +26,6 @@ public class GameInfoFragment extends Fragment {
 		// newsImage = (ImageView) view.findViewById(R.id.newsImg);
 		Bundle myIntent = getArguments();
 
-		String gameName = myIntent.getString(Keys.GAMENAME);
-		String gameDesc = myIntent.getString(Keys.GAMEDESC);
-		String gameDate = myIntent.getString(Keys.GAMEDATE);
-		String gameEsrb = myIntent.getString(Keys.GAMEESRB);
-		String gamePlCount = myIntent.getString(Keys.GAMEPLAYERSCOUNT);
-		String gameType = myIntent.getString(Keys.GAMETYPE);
-		String gameURL = myIntent.getString(Keys.GAMEURL);
-
-		String gameTypeName = myIntent.getString(Keys.GAMETYPENAME);
-		String gamePlatform = myIntent.getString(Keys.GAMEPLATFORM);
-		String gameDistributor = myIntent
-				.getString(Keys.GAMECompanyDistributor);
-		String gameFounded = myIntent.getString(Keys.CompanyFounded);
-		String gameDeveloper = myIntent.getString(Keys.CompanyName);
-
 		TextView txtType = (TextView) view.findViewById(R.id.txtgameinfoType);
 		TextView txtReleased = (TextView) view
 				.findViewById(R.id.txtgameinfoReleased);
@@ -58,6 +43,21 @@ public class GameInfoFragment extends Fragment {
 		TextView txtWeb = (TextView) view.findViewById(R.id.txtgameinfoWebsite);
 
 		if (myIntent != null) {
+			String gameName = myIntent.getString(Keys.GAMENAME);
+			String gameDesc = myIntent.getString(Keys.GAMEDESC);
+			String gameDate = myIntent.getString(Keys.GAMEDATE);
+			String gameEsrb = myIntent.getString(Keys.GAMEESRB);
+			String gamePlCount = myIntent.getString(Keys.GAMEPLAYERSCOUNT);
+			String gameType = myIntent.getString(Keys.GAMETYPE);
+			String gameURL = myIntent.getString(Keys.GAMEURL);
+
+			String gameTypeName = myIntent.getString(Keys.GAMETYPENAME);
+			String gamePlatform = myIntent.getString(Keys.GAMEPLATFORM);
+			String gameDistributor = myIntent
+					.getString(Keys.GAMECompanyDistributor);
+			String gameFounded = myIntent.getString(Keys.CompanyFounded);
+			String gameDeveloper = myIntent.getString(Keys.CompanyName);
+
 			txtNewsTitle.loadData(gameName, "text/html", null);
 			// newsImage.setImageResource(myIntent.getIntExtra(Keys.NEWSCOLIMAGE,
 			// 0));

@@ -1,7 +1,5 @@
 package com.myapps.playnation.Fragments.Tabs.Home;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import com.myapps.playnation.main.ISectionAdapter;
 
 public class HomeGroupsFragment extends Fragment {
 	private DataConnector con;
-	@SuppressWarnings("unused")
 	private ISectionAdapter mCallback;
 
 	@Override
@@ -57,24 +54,22 @@ public class HomeGroupsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) { // TODO Auto-generated method stub
-				Bundle args = new Bundle();
 
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> mapEntry = (HashMap<String, String>) arg0
-						.getItemAtPosition(arg2);
-				args.putString(Keys.Segment, Keys.HomeGroupTable);
+				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
+				// args.putString(Keys.Segment, Keys.HomeGroupTable);
 
-				args.putString(Keys.GROUPNAME, mapEntry.get(Keys.GROUPNAME));
-				args.putString(Keys.GROUPTYPE, mapEntry.get(Keys.GROUPTYPE));
-				args.putString(Keys.GROUPTYPE2, mapEntry.get(Keys.GROUPTYPE2));
-				args.putString(Keys.GroupMemberCount,
-						mapEntry.get(Keys.GroupMemberCount));
-				args.putString(Keys.GROUPDATE, mapEntry.get(Keys.GROUPDATE));
-				args.putString(Keys.GROUPDESC, mapEntry.get(Keys.GROUPDESC));
-				args.putString(Keys.GruopIsLeader,
-						mapEntry.get(Keys.GruopIsLeader));
-				args.putString(Keys.GruopCreatorName,
-						mapEntry.get(Keys.GruopCreatorName));
+				// args.putString(Keys.GROUPNAME, mapEntry.get(Keys.GROUPNAME));
+				// args.putString(Keys.GROUPTYPE, mapEntry.get(Keys.GROUPTYPE));
+				// args.putString(Keys.GROUPTYPE2,
+				// mapEntry.get(Keys.GROUPTYPE2));
+				// args.putString(Keys.GroupMemberCount,
+				// mapEntry.get(Keys.GroupMemberCount));
+				// args.putString(Keys.GROUPDATE, mapEntry.get(Keys.GROUPDATE));
+				// args.putString(Keys.GROUPDESC, mapEntry.get(Keys.GROUPDESC));
+				// args.putString(Keys.GruopIsLeader,
+				// mapEntry.get(Keys.GruopIsLeader));
+				// args.putString(Keys.GruopCreatorName,
+				// mapEntry.get(Keys.GruopCreatorName));
 				mCallback.setPageAndTab(Keys.GroupsSTATE, 2, args);
 			}
 		});

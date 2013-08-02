@@ -2,7 +2,6 @@ package com.myapps.playnation.Fragments.Tabs.Companies;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -34,8 +33,7 @@ public class CompaniesNewsFragment extends Fragment {
 		con = DataConnector.getInst(getActivity());
 		Bundle myIntent = getArguments();
 		String id = myIntent.getString(Keys.EventID_COMPANY);
-		final ArrayList<HashMap<String, String>> results = con.getTempNewsTab(
-				id, "company");
+		final ArrayList<Bundle> results = con.getTempNewsTab(id, "company");
 
 		if (results != null) {
 			list = (ListView) mView.findViewById(R.id.mainList);

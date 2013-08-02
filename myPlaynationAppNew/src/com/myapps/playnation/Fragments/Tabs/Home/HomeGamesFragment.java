@@ -1,7 +1,5 @@
 package com.myapps.playnation.Fragments.Tabs.Home;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import com.myapps.playnation.main.ISectionAdapter;
 
 public class HomeGamesFragment extends Fragment {
 	private DataConnector con;
-	@SuppressWarnings("unused")
 	private ISectionAdapter mCallback;
 
 	@Override
@@ -58,16 +55,13 @@ public class HomeGamesFragment extends Fragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) { // TODO Auto-generated method stub
 
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> mapEntry = (HashMap<String, String>) arg0
-						.getItemAtPosition(arg2);
-				Bundle args = new Bundle();
-				args.putString(Keys.Segment, Keys.HomeGamesTable);
-				args.putString(Keys.GAMENAME, mapEntry.get(Keys.GAMENAME));
-				args.putString(Keys.GAMEDESC, mapEntry.get(Keys.GAMEDESC));
-				args.putString(Keys.GAMEDATE, mapEntry.get(Keys.GAMEDATE));
-				args.putString(Keys.RATING, mapEntry.get(Keys.RATING));
-				args.putString(Keys.ID_GAME, mapEntry.get(Keys.ID_GAME));
+				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
+				// args.putString(Keys.Segment, Keys.HomeGamesTable);
+				// args.putString(Keys.GAMENAME, mapEntry.get(Keys.GAMENAME));
+				// args.putString(Keys.GAMEDESC, mapEntry.get(Keys.GAMEDESC));
+				// args.putString(Keys.GAMEDATE, mapEntry.get(Keys.GAMEDATE));
+				// args.putString(Keys.RATING, mapEntry.get(Keys.RATING));
+				// args.putString(Keys.ID_GAME, mapEntry.get(Keys.ID_GAME));
 				mCallback.setPageAndTab(Keys.GamesSTATE, 3, args);
 			}
 		});
