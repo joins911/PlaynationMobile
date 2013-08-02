@@ -23,19 +23,22 @@ import com.myapps.playnation.Operations.DataConnector;
  * @author viperime Adapter for the Games ListView which sets up all the items
  *         in the list
  */
-public class GamesListAdapter extends BaseAdapter {
+public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	LayoutInflater inflater;
 	ImageView thumb_image;
 	ArrayList<Bundle> gamesDataCollection;
 	JSONArray gamesArray;
 	ViewHolder holder;
 	DataConnector con;
+	int count;
+	boolean showMore = true;
 
 	public GamesListAdapter(Activity act, ArrayList<Bundle> map) {
 		this.gamesDataCollection = map;
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		con = DataConnector.getInst(act);
+		count = 10;
 	}
 
 	public ArrayList<Bundle> getGamesList() {
@@ -43,7 +46,7 @@ public class GamesListAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return gamesDataCollection.size();
+		return count;
 	}
 
 	public Object getItem(int arg0) {
@@ -54,6 +57,21 @@ public class GamesListAdapter extends BaseAdapter {
 		return 0;
 	}
 
+	public boolean canShowMore()
+	{
+		return showMore;
+	}
+	
+	public void showMore()
+	{
+		if (showMore)
+			if (count + 10 <= gamesDataCollection.size())
+				count = count + 10;
+			else {
+				count = gamesDataCollection.size();
+				showMore = false;
+			}
+	}
 	/**
 	 * @param position
 	 *            : The position of the View within the list

@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
+import android.widget.BaseAdapter;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CompanyListAdapter;
@@ -25,6 +27,7 @@ import com.myapps.playnation.Adapters.FriendsListAdapter;
 import com.myapps.playnation.Adapters.GamesListAdapter;
 import com.myapps.playnation.Adapters.GroupsListAdapter;
 import com.myapps.playnation.Adapters.NewsListAdapter;
+import com.myapps.playnation.Adapters.MyBaseAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Operations.DataConnector;
@@ -38,6 +41,7 @@ public class ListsFragment extends Fragment {
 	private int mViewPagerState;
 	private ISectionAdapter mCallback;
 	private ViewFlipper flipper = null;
+	private ListView mList;
 
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
@@ -65,7 +69,16 @@ public class ListsFragment extends Fragment {
 				false);
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
-
+		mList = list;
+		Button but = (Button) rootView.findViewById(R.id.showMoreButton);
+		but.setOnClickListener(new OnClickListener(){
+			public void onClick(View v)
+			{
+				((MyBaseAdapter) mList.getAdapter()).showMore();
+				((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+				Log.e("onClick showMore","ListsFragment");
+			}
+		});
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
@@ -87,7 +100,7 @@ public class ListsFragment extends Fragment {
 	private void initializeGames(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.gamesTable, "");
 
-		list = (ListView) rootView.findViewById(R.id.mainList);
+		//list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 
@@ -144,7 +157,7 @@ public class ListsFragment extends Fragment {
 
 	private void initializeGroups(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.groupsTable, "");
-		list = (ListView) rootView.findViewById(R.id.mainList);
+		//list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 
@@ -181,6 +194,7 @@ public class ListsFragment extends Fragment {
 		});
 	}
 
+	
 	private void initializeNews(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.newsTable, "");
 		list = (ListView) rootView.findViewById(R.id.mainList);

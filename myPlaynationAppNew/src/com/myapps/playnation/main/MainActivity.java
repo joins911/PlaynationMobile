@@ -76,57 +76,54 @@ public class MainActivity extends FragmentActivity implements ISectionAdapter {
 		mViewPager.setOffscreenPageLimit(6);
 	}
 
-	private void initializeSearchMenu() {
-		EditText searchBox = (EditText) root
-				.findViewById(R.id.component_searchsort_searchBox);
-
-		final Spinner spinner = (Spinner) root
-				.findViewById(R.id.component_spinner);
-		SpinnerAdapter adapter = new SpinnerAdapter(this,
-				android.R.layout.simple_dropdown_item_1line,
-				con.getGroupTypes());
-		spinner.setAdapter(adapter);
-
-		/*
-		 * spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-		 * 
-		 * @Override public void onItemSelected(AdapterView<?> parent, View
-		 * view, int position, long id) { String selectedType =
-		 * spinner.getSelectedItem().toString(); if
-		 * (!selectedType.equalsIgnoreCase("All")) { searchResults.clear(); for
-		 * (int i = 0; i < results.size(); i++) {
-		 * Log.e("log.MainList in for loop", "selectedType = " + selectedType +
-		 * "; results[i]" + results.get(i).get(Keys.GROUPTYPE) + ";"); if
-		 * (results.get(i).get(Keys.GROUPTYPE) .equals(selectedType))
-		 * searchResults.add(results.get(i)); }
-		 * bindingData.notifyDataSetChanged(); } else { searchResults.clear();
-		 * searchResults.addAll(results); bindingData.notifyDataSetChanged(); }
-		 * }
-		 * 
-		 * @Override public void onNothingSelected(AdapterView<?> parent) { }
-		 * 
-		 * }); searchBox.addTextChangedListener(new TextWatcher() { public void
-		 * onTextChanged(CharSequence s, int start, int before, int count) { //
-		 * get the text in the EditText String searchString =
-		 * searchBox.getText().toString(); int textLength =
-		 * searchString.length(); searchResults.clear();
-		 * 
-		 * for (int i = 0; i < results.size(); i++) { String playerName =
-		 * results.get(i).get(Keys.GROUPNAME) .toString(); if (textLength <=
-		 * playerName.length()) { // compare the String in EditText with Names
-		 * in the // ArrayList //
-		 * if(searchString.equalsIgnoreCase(playerName.substring(0,textLength)))
-		 * if (playerName.contains(s)) searchResults.add((results.get(i))); } }
-		 * bindingData.notifyDataSetChanged();
-		 * 
-		 * }
-		 * 
-		 * public void beforeTextChanged(CharSequence s, int start, int count,
-		 * int after) { }
-		 * 
-		 * public void afterTextChanged(Editable s) { } });
-		 */
-	}
+	/*
+	 * private void initializeSearchMenu() { EditText searchBox = (EditText)
+	 * root .findViewById(R.id.component_searchsort_searchBox);
+	 * 
+	 * final Spinner spinner = (Spinner) root
+	 * .findViewById(R.id.component_spinner); SpinnerAdapter adapter = new
+	 * SpinnerAdapter(this, android.R.layout.simple_dropdown_item_1line,
+	 * con.getGroupTypes()); spinner.setAdapter(adapter);
+	 * 
+	 * /* spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	 * 
+	 * @Override public void onItemSelected(AdapterView<?> parent, View view,
+	 * int position, long id) { String selectedType =
+	 * spinner.getSelectedItem().toString(); if
+	 * (!selectedType.equalsIgnoreCase("All")) { searchResults.clear(); for (int
+	 * i = 0; i < results.size(); i++) { Log.e("log.MainList in for loop",
+	 * "selectedType = " + selectedType + "; results[i]" +
+	 * results.get(i).get(Keys.GROUPTYPE) + ";"); if
+	 * (results.get(i).get(Keys.GROUPTYPE) .equals(selectedType))
+	 * searchResults.add(results.get(i)); } bindingData.notifyDataSetChanged();
+	 * } else { searchResults.clear(); searchResults.addAll(results);
+	 * bindingData.notifyDataSetChanged(); } }
+	 * 
+	 * @Override public void onNothingSelected(AdapterView<?> parent) { }
+	 * 
+	 * }); searchBox.addTextChangedListener(new TextWatcher() { public void
+	 * onTextChanged(CharSequence s, int start, int before, int count) { // get
+	 * the text in the EditText String searchString =
+	 * searchBox.getText().toString(); int textLength = searchString.length();
+	 * searchResults.clear();
+	 * 
+	 * for (int i = 0; i < results.size(); i++) { String playerName =
+	 * results.get(i).get(Keys.GROUPNAME) .toString(); if (textLength <=
+	 * playerName.length()) { // compare the String in EditText with Names in
+	 * the // ArrayList //
+	 * if(searchString.equalsIgnoreCase(playerName.substring(0,textLength))) if
+	 * (playerName.contains(s)) searchResults.add((results.get(i))); } }
+	 * bindingData.notifyDataSetChanged();
+	 * 
+	 * }
+	 * 
+	 * public void beforeTextChanged(CharSequence s, int start, int count, int
+	 * after) { }
+	 * 
+	 * public void afterTextChanged(Editable s) { } });
+	 * 
+	 * }
+	 */
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

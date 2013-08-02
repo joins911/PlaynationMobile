@@ -19,10 +19,12 @@ import com.myapps.playnation.Classes.NewsFeedItem;
 import com.myapps.playnation.main.ISectionAdapter;
 
 @SuppressWarnings("rawtypes")
-public class NewsListAdapter extends ArrayAdapter {
+public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter{
 	private LayoutInflater inflator;
 	private List<NewsFeedItem> newsFeedsLists;
 	ISectionAdapter context;
+	int count;
+	boolean showMore=true;
 
 	@SuppressWarnings("unchecked")
 	public NewsListAdapter(Activity context, List<NewsFeedItem> items) {
@@ -31,6 +33,7 @@ public class NewsListAdapter extends ArrayAdapter {
 		this.newsFeedsLists = items;
 		inflator = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		count = 10;
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -74,19 +77,33 @@ public class NewsListAdapter extends ArrayAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return newsFeedsLists.size();
+		return count;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return newsFeedsLists.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void showMore() {
+		if (showMore)
+			if (count + 10 <= newsFeedsLists.size())
+				count = count + 10;
+			else {
+				count = newsFeedsLists.size();
+				showMore = false;
+			}
+	}
+
+	@Override
+	public boolean canShowMore() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

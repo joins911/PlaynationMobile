@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class GroupsListAdapter extends BaseAdapter {
+public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter{
 	LayoutInflater inflater;
 	ImageView thumb_image;
 	ArrayList<Bundle> groupsDataCollection;
 	JSONArray groupsArray;
 	ViewHolder holder;
+	int count;
+	boolean showMore = true;
 
 	public GroupsListAdapter() {
 		// TODO Auto-generated constructor stub
@@ -32,6 +34,7 @@ public class GroupsListAdapter extends BaseAdapter {
 		this.groupsDataCollection = map;
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		count = 10;
 	}
 
 	public ArrayList<Bundle> getGamesList() {
@@ -39,18 +42,29 @@ public class GroupsListAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return groupsDataCollection.size();
+		return count;
 	}
 
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void showMore() {
+		if (showMore)
+			if (count + 10 <= groupsDataCollection.size())
+				count = count + 10;
+			else {
+				count = groupsDataCollection.size();
+				showMore = false;
+			}
+	}
+	
+	public boolean canShowMore() {
+		return showMore;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {

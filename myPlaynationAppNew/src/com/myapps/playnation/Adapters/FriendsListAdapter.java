@@ -15,20 +15,23 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class FriendsListAdapter extends BaseAdapter {
+public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter{
 	private LayoutInflater inflater;
 	private ArrayList<Bundle> generalList;
+	private int count;
+	private boolean showMore=true;
 
 	public FriendsListAdapter(Context context, ArrayList<Bundle> list) {
 		this.generalList = list;
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		count = 10;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return generalList.size();
+		return count;
 	}
 
 	@Override
@@ -81,6 +84,23 @@ public class FriendsListAdapter extends BaseAdapter {
 					+ (currentYear - year));
 		}
 		return view;
+	}
+
+	@Override
+	public void showMore() {
+		if (showMore)
+			if (count + 10 <= generalList.size())
+				count = count + 10;
+			else {
+				count = generalList.size();
+				showMore = false;
+			}
+		
+	}
+
+	@Override
+	public boolean canShowMore() {		
+		return showMore;
 	}
 
 }

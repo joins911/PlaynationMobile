@@ -15,19 +15,22 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class PlayerHomeInfoAdapter extends BaseAdapter {
+public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter{
 	private LayoutInflater inflater;
 	private ArrayList<Bundle> tempList;
+	private int count;
+	private boolean showMore=true;
 
 	public PlayerHomeInfoAdapter(Context context, ArrayList<Bundle> list) {
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.tempList = list;
+		count = 10;
 	}
 
 	@Override
 	public int getCount() {
-		return tempList.size();
+		return count;
 	}
 
 	@Override
@@ -77,6 +80,22 @@ public class PlayerHomeInfoAdapter extends BaseAdapter {
 		}
 		// }
 		return view;
+	}
+
+	@Override
+	public void showMore() {
+		if (showMore)
+			if (count + 10 <= tempList.size())
+				count = count + 10;
+			else {
+				count = tempList.size();
+				showMore = false;
+			}
+	}
+
+	@Override
+	public boolean canShowMore() {
+		return showMore;
 	}
 
 }

@@ -16,10 +16,12 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.main.ISectionAdapter;
 
-public class CompanyListAdapter extends BaseAdapter {
+public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter{
 	private LayoutInflater inflator;
 	private ArrayList<Bundle> companiesList;
-	ISectionAdapter context;
+	private ISectionAdapter context;
+	private int count = 10;
+	private boolean showMore = true;
 
 	public CompanyListAdapter(Activity context, ArrayList<Bundle> items) {
 		this.context = (ISectionAdapter) context;
@@ -58,6 +60,23 @@ public class CompanyListAdapter extends BaseAdapter {
 		txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
 
 		return v;
+	}
+
+	@Override
+	public void showMore() {
+		if (showMore)
+			if (count + 10 <= companiesList.size())
+				count = count + 10;
+			else {
+				count = companiesList.size();
+				showMore = false;
+			}
+		
+	}
+
+	@Override
+	public boolean canShowMore() {
+		return showMore;
 	}
 
 }
