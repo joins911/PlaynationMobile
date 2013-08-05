@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -23,13 +22,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -64,15 +59,14 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-<<<<<<< HEAD
-	final String ServerIp = "87.55.208.165:1337";
+	// final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
 	// final String ServerIp = "10.0.2.2";
-=======
+
 	// final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
 	final String ServerIp = "10.0.2.2";
->>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
+	// >>>>>>> 8F627546D38847A030E8026A653FBD7383C40D29
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -91,11 +85,11 @@ public class DataConnector extends SQLiteOpenHelper {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 		url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
-		new CheckConnectionTask(){
-		    protected void onPostExecute(Boolean result) {
-		       connStatus = result;
-		       }
-		  }.execute();	
+		new CheckConnectionTask() {
+			protected void onPostExecute(Boolean result) {
+				connStatus = result;
+			}
+		}.execute();
 	}
 
 	/**
@@ -2394,7 +2388,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	public boolean checkConnection() {
 
-		return connStatus;	
+		return connStatus;
 	}
 
 	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
@@ -2402,11 +2396,11 @@ public class DataConnector extends SQLiteOpenHelper {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				 URL serverURL = new URL(url);
-			        URLConnection urlconn = serverURL.openConnection();
-			        urlconn.setConnectTimeout(5000);
-			        urlconn.connect();
-			        return true;
+				URL serverURL = new URL(url);
+				URLConnection urlconn = serverURL.openConnection();
+				urlconn.setConnectTimeout(5000);
+				urlconn.connect();
+				return true;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -2416,6 +2410,88 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	}
 
+	public JSONArray registerPlayerMobileQuery(String nickname, String email,
+			String password) {
+		String temp = url;
+		url += "registerPlayerMobile.php";
+
+		// http post
+		try {
+			httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(url);
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			url = temp;
+			pairs.add(new BasicNameValuePair("nickname", nickname));
+			pairs.add(new BasicNameValuePair("email", email));
+			pairs.add(new BasicNameValuePair("password", password));
+
+			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+			httpclient.execute(httppost);
+
+		} catch (Exception e) {
+			Log.e("log_tag HTML Conn",
+					"Error in registerPlayerMobile http connection "
+							+ e.toString());
+		}
+
+		return null;
+	}
+
+	public boolean checkLogin(String nick, String pass) {
+		String result = "";
+		String temp = url;
+		url += "Login.php";
+		JSONArray jArray = null;
+		boolean results = false;
+		// http post
+		try {
+			httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(url);
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			url = temp;
+			pairs.add(new BasicNameValuePair(Keys.POSTID_PLAYER, nick));
+			pairs.add(new BasicNameValuePair(Keys.POSTTableName, pass));
+
+			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+		} catch (Exception e) {
+			Log.e("log_tag HTML Conn", "Error in checkLogin http connection "
+					+ e.toString());
+		}
+
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "iso-8859-1"), 8);
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			is.close();
+			result = sb.toString();
+		} catch (Exception e) {
+			Log.e("DataConnector checkLogin() ",
+					"Error converting result " + e.toString());
+		}
+		try {
+			if (result != null) {
+				jArray = new JSONArray(result);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		if (jArray != null) {
+			// Put return ID_PLAYER should be set into Keys.TEMPLAYERID
+			results = true;
+		} else {
+			results = false;
+		}
+		return results;
+	}
 }
 
 /*
