@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,8 +44,6 @@ public class ListsFragment extends Fragment {
 	private ViewFlipper flipper = null;
 	private ListView mList;
 
-	
-	
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
 		// setRetainInstance(true);
@@ -75,6 +72,7 @@ public class ListsFragment extends Fragment {
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
 
+<<<<<<< HEAD
 	//	Button but = (Button) rootView.findViewById(R.id.showMoreButton);
 	/*	but.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
@@ -93,36 +91,59 @@ public class ListsFragment extends Fragment {
 			}
 		});*/
 		mList.setOnScrollListener(new OnScrollListener(){
+=======
+		// Button but = (Button) rootView.findViewById(R.id.showMoreButton);
+		/*
+		 * but.setOnClickListener(new OnClickListener(){ public void
+		 * onClick(View v) { ======= Button but = (Button)
+		 * rootView.findViewById(R.id.showMoreButton);
+		 * but.setOnClickListener(new OnClickListener() { public void
+		 * onClick(View v) { >>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
+		 * ((MyBaseAdapter) mList.getAdapter()).showMore(); ((BaseAdapter)
+		 * mList.getAdapter()).notifyDataSetChanged(); // Sets the index to the
+		 * last item of the list. mList.setSelection(((BaseAdapter)
+		 * mList.getAdapter()) .getCount() - 1); Log.i("onClick showMore",
+		 * "ListsFragment"); } });
+		 */
+		mList.setOnScrollListener(new OnScrollListener() {
+>>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 
 			private int currentFirstVisibleItem;
 			private int currentVisibleItemCount;
 			private int currentScrollState;
 			private boolean isLoading;
+
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				 currentFirstVisibleItem = firstVisibleItem;
-				 currentVisibleItemCount = visibleItemCount;
-				
+				currentFirstVisibleItem = firstVisibleItem;
+				currentVisibleItemCount = visibleItemCount;
+
 			}
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				this.currentScrollState = scrollState;
-			    this.isScrollCompleted();
-				
+				this.isScrollCompleted();
+
 			}
+
 			private void isScrollCompleted() {
-			    if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE) {
-			        /*** In this way I detect if there's been a scroll which has completed ***/
-			        /*** do the work for load more date! ***/
-			        if(((MyBaseAdapter) mList.getAdapter()).canShowMore()){
-			             ((MyBaseAdapter) mList.getAdapter()).showMore();
-						 ((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
-			        }
-			    }
+				if (this.currentVisibleItemCount > 0
+						&& this.currentScrollState == SCROLL_STATE_IDLE) {
+					/***
+					 * In this way I detect if there's been a scroll which has
+					 * completed
+					 ***/
+					/*** do the work for load more date! ***/
+					if (((MyBaseAdapter) mList.getAdapter()).canShowMore()) {
+						((MyBaseAdapter) mList.getAdapter()).showMore();
+						((BaseAdapter) mList.getAdapter())
+								.notifyDataSetChanged();
+					}
+				}
 			}
-			
+
 		});
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);

@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+=======
+>>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,11 +40,16 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		con = DataConnector.getInst(getApplicationContext());
-		username = (EditText) findViewById(R.id.username_logIn);
-		password = (EditText) findViewById(R.id.password_logIn);
+		username = (EditText) findViewById(R.id.password_logIn);
+		password = (EditText) findViewById(R.id.username_logIn);
 		Button logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
+<<<<<<< HEAD
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);		
+=======
+		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+
+>>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		logButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -58,7 +65,11 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
+<<<<<<< HEAD
 		/*
+=======
+
+>>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		logGuestButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				logOnlineGuest();
@@ -80,7 +91,7 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-		
+
 		if (!isNetworkAvailable()) {
 			Toast.makeText(
 					getApplicationContext(),
@@ -101,8 +112,9 @@ public class LoginActivity extends Activity {
 	}
 
 	private void logOfflineUser() {
-		//Log Offline WIthout Comments posibility + ???		
-		Toast.makeText(getApplicationContext(), "Server could not be reached", Toast.LENGTH_LONG).show();
+		// Log Offline WIthout Comments posibility + ???
+		Toast.makeText(getApplicationContext(), "Server could not be reached",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private void logOnlineGuest() {
@@ -111,12 +123,11 @@ public class LoginActivity extends Activity {
 	}
 
 	private void logOfflineGuest() {
-		//Log Offline WIthout Home
+		// Log Offline WIthout Home
 		startMainActivity(Configurations.appStateOffGuest);
 	}
-	
-	private void startMainActivity(int appState)
-	{
+
+	private void startMainActivity(int appState) {
 		task = new LoadViewTask(appState);
 		task.execute();
 	}
@@ -244,11 +255,17 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean checkCredentials() {
+<<<<<<< HEAD
 		//String userName = username.getText().toString();
 	//	String passWord = password.getText().toString();
+=======
+		String userName = username.getText().toString();
+		String passWord = password.getText().toString();
+
+>>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		// if (con != null)
 		// return con.checkUsernameAndPassword(userName, passWord);
-		return true;
+		return con.checkLogin(userName, passWord);
 		// return true;
 	}
 }
