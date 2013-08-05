@@ -81,6 +81,46 @@ public class HelperClass {
 		return result;
 	}
 
+	public static String sqliteQueryStrings(String tableName, String separeteID) {
+		if (tableName.equals(Keys.HomeWallTable)) {
+			return "SELECT * FROM " + tableName + " WHERE " + Keys.ID_OWNER
+					+ "=" + Keys.TEMPLAYERID + " Order by "
+					+ Keys.WallPostingTime + " desc;";
+		} else if (tableName.equals(Keys.newsTable)) {
+			return "SELECT * FROM " + tableName + " Order by "
+					+ Keys.NEWSCOLPOSTINGTIME + " desc;";
+		} else if (tableName.equals(Keys.groupsTable)
+				|| tableName.equals(Keys.gamesTable)
+				|| tableName.equals(Keys.companyTable)
+				|| tableName.equals(Keys.HomeSubscriptionTable)) {
+			return "SELECT * FROM " + tableName + ";";
+		} else if (tableName.equals(Keys.HomeMsgTable)) {
+			return "SELECT * FROM " + tableName + " Where " + Keys.ID_PLAYER
+					+ "=" + Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.HomeEventTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
+					+ Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.HomeFriendsTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_OWNER="
+					+ Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.HomeGamesTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
+					+ Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.HomeGroupTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
+					+ Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
+			return "SELECT * FROM " + tableName + " Where "
+					+ Keys.MessageID_CONVERSATION + "=" + separeteID
+					+ " Order By MessageTime desc;";
+		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
+			return "SELECT * FROM " + tableName + " Where " + Keys.ID_WALLITEM
+					+ "=" + Keys.TEMPLAYERID + " " + Keys.ID_OWNER + "="
+					+ separeteID + " Order By PostingTime desc;";
+		}
+		return "";
+	}
+
 	public static String getDate(String integer) {
 		SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy h:mm,a",
 				Locale.ENGLISH);

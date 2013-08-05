@@ -56,20 +56,7 @@ public class HomeGroupsFragment extends Fragment {
 					long arg3) { // TODO Auto-generated method stub
 
 				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
-				// args.putString(Keys.Segment, Keys.HomeGroupTable);
 
-				// args.putString(Keys.GROUPNAME, mapEntry.get(Keys.GROUPNAME));
-				// args.putString(Keys.GROUPTYPE, mapEntry.get(Keys.GROUPTYPE));
-				// args.putString(Keys.GROUPTYPE2,
-				// mapEntry.get(Keys.GROUPTYPE2));
-				// args.putString(Keys.GroupMemberCount,
-				// mapEntry.get(Keys.GroupMemberCount));
-				// args.putString(Keys.GROUPDATE, mapEntry.get(Keys.GROUPDATE));
-				// args.putString(Keys.GROUPDESC, mapEntry.get(Keys.GROUPDESC));
-				// args.putString(Keys.GruopIsLeader,
-				// mapEntry.get(Keys.GruopIsLeader));
-				// args.putString(Keys.GruopCreatorName,
-				// mapEntry.get(Keys.GruopCreatorName));
 				mCallback.setPageAndTab(Keys.GroupsSTATE, 2, args);
 			}
 		});

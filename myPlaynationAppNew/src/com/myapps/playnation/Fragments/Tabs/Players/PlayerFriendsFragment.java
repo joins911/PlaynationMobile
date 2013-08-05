@@ -1,7 +1,5 @@
 package com.myapps.playnation.Fragments.Tabs.Players;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -54,20 +52,7 @@ public class PlayerFriendsFragment extends Fragment {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> results = (HashMap<String, String>) parent
-						.getItemAtPosition(position);
-				Bundle args = new Bundle();
-				args.putString(Keys.ID_PLAYER, results.get(Keys.ID_PLAYER));
-				args.putString(Keys.CITY, results.get(Keys.CITY));
-				args.putString(Keys.COUNTRY, results.get(Keys.COUNTRY));
-				args.putString(Keys.PLAYERNICKNAME,
-						results.get(Keys.PLAYERNICKNAME));
-				args.putString(Keys.Email, results.get(Keys.Email));
-				args.putString(Keys.PLAYERAVATAR,
-						results.get(Keys.PLAYERAVATAR));
-				args.putString(Keys.FirstName, results.get(Keys.FirstName));
-				args.putString(Keys.LastName, results.get(Keys.LastName));
+				Bundle args = (Bundle) parent.getItemAtPosition(position);
 
 				mCallback.setPageAndTab(Keys.PlayersSTATE, 5, args);
 			}

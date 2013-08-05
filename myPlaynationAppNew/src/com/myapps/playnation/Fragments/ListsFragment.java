@@ -16,20 +16,20 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
-import android.widget.BaseAdapter;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CompanyListAdapter;
 import com.myapps.playnation.Adapters.FriendsListAdapter;
 import com.myapps.playnation.Adapters.GamesListAdapter;
 import com.myapps.playnation.Adapters.GroupsListAdapter;
-import com.myapps.playnation.Adapters.NewsListAdapter;
 import com.myapps.playnation.Adapters.MyBaseAdapter;
+import com.myapps.playnation.Adapters.NewsListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Operations.DataConnector;
@@ -74,13 +74,22 @@ public class ListsFragment extends Fragment {
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
+<<<<<<< HEAD
 	//	Button but = (Button) rootView.findViewById(R.id.showMoreButton);
 	/*	but.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
 			{
+=======
+		Button but = (Button) rootView.findViewById(R.id.showMoreButton);
+		but.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+>>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
 				((MyBaseAdapter) mList.getAdapter()).showMore();
 				((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
-				Log.e("onClick showMore","ListsFragment");
+				// Sets the index to the last item of the list.
+				mList.setSelection(((BaseAdapter) mList.getAdapter())
+						.getCount() - 1);
+				Log.i("onClick showMore", "ListsFragment");
 			}
 		});*/
 		mList.setOnScrollListener(new OnScrollListener(){
@@ -136,7 +145,7 @@ public class ListsFragment extends Fragment {
 	private void initializeGames(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.gamesTable, "");
 
-		//list = (ListView) rootView.findViewById(R.id.mainList);
+		// list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 
@@ -147,53 +156,19 @@ public class ListsFragment extends Fragment {
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// Bundle args = new Bundle();
-				// args.putString(Keys.GAMENAME,
-				// results.get(position).get(Keys.GAMENAME));
-				// args.putString(Keys.GAMETYPE,
-				// results.get(position).get(Keys.GAMETYPE));
-				// args.putString(Keys.RATING,
-				// results.get(position).get(Keys.RATING));
-				// args.putString(Keys.GAMEDATE,
-				// results.get(position).get(Keys.GAMEDATE));
-				// args.putString(Keys.GAMEDESC,
-				// results.get(position).get(Keys.GAMEDESC));
-				// args.putString(Keys.GAMEESRB,
-				// results.get(position).get(Keys.GAMEESRB));
-				// args.putString(Keys.GAMEURL,
-				// results.get(position).get(Keys.GAMEURL));
-				// args.putString(Keys.GAMEPLAYERSCOUNT, results.get(position)
-				// .get(Keys.GAMEPLAYERSCOUNT));
-				// args.putString(Keys.ID_GAME,
-				// results.get(position).get(Keys.ID_GAME));
-				//
-				// // For the other stuff on game info
-				// args.putString(Keys.GAMETYPENAME,
-				// results.get(position).get(Keys.GAMETYPENAME));
-				// args.putString(Keys.GAMEPLATFORM,
-				// results.get(position).get(Keys.GAMEPLATFORM));
-				// args.putString(Keys.GAMECompanyDistributor,
-				// results.get(position).get(Keys.GAMECompanyDistributor));
-				// args.putString(Keys.CompanyFounded,
-				// results.get(position).get(Keys.CompanyFounded));
-				// args.putString(Keys.CompanyName,
-				// results.get(position).get(Keys.CompanyName));
-				// if (!con.checkDBTableExits(Keys.newsTempTable))
+
 				con.writeTempNewsTab(
 						results.get(position).getString(Keys.ID_GAME),
 						Keys.gamesubNewsTAB);
 
 				tabletOrPhoneControll(Keys.GamesSTATE, results.get(position));
-				// mCallback.getAdapter().switchTo(Keys.GamesSTATE, args);
-				// getChildFragmentManager().executePendingTransactions();
-
 			}
 		});
 	}
 
 	private void initializeGroups(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.groupsTable, "");
-		//list = (ListView) rootView.findViewById(R.id.mainList);
+		// list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 
@@ -203,34 +178,12 @@ public class ListsFragment extends Fragment {
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// Bundle args = new Bundle();
-				// args.putString(Keys.GROUPNAME,
-				// results.get(position).get(Keys.GROUPNAME));
-				// args.putString(Keys.GROUPTYPE,
-				// results.get(position).get(Keys.GROUPTYPE));
-				// args.putString(Keys.GROUPTYPE2,
-				// results.get(position).get(Keys.GROUPTYPE2));
-				// args.putString(Keys.GROUPDATE,
-				// results.get(position).get(Keys.GROUPDATE));
-				// args.putString(Keys.GroupMemberCount, results.get(position)
-				// .get(Keys.GroupMemberCount));
-				// args.putString(Keys.GROUPDESC,
-				// results.get(position).get(Keys.GROUPDESC));
-				// args.putString(Keys.GruopIsLeader,
-				// results.get(position).get(Keys.GruopIsLeader));
-				// args.putString(Keys.ID_GROUP,
-				// results.get(position).get(Keys.ID_GROUP));
-				// args.putString(Keys.GruopCreatorName, results.get(position)
-				// .get(Keys.GruopCreatorName));
-				// mCallback.getAdapter().switchTo(Keys.GroupsSTATE, args);
-				tabletOrPhoneControll(Keys.GroupsSTATE, results.get(position));
-				// getChildFragmentManager().executePendingTransactions();
 
+				tabletOrPhoneControll(Keys.GroupsSTATE, results.get(position));
 			}
 		});
 	}
 
-	
 	private void initializeNews(ListView list) {
 		final ArrayList<Bundle> results = con.getTable(Keys.newsTable, "");
 		list = (ListView) rootView.findViewById(R.id.mainList);
@@ -251,32 +204,20 @@ public class ListsFragment extends Fragment {
 				if (parent.getItemAtPosition(position) instanceof NewsFeed) {
 					NewsFeed feed = (NewsFeed) parent
 							.getItemAtPosition(position);
-					Bundle edit = results.get(position);
+					Bundle edit = new Bundle();
 					SimpleDateFormat format = con.dataTemplate;
-
-					// edit.putInt(Keys.NEWSCOLID_NEWS,
-					// feed.getKey_NewsFeedID());
-					// edit.putInt(Keys.NEWSCOLIMAGE, feed.getKey_NewsImage());
-					// edit.putString(Keys.NEWSCOLHEADLINE,
-					// feed.getKey_NewsTitle());
-					// edit.putString(Keys.NEWSCOLINTROTEXT,
-					// feed.getKey_NewsIntroText());
-					// edit.putString(Keys.NEWSCOLNEWSTEXT,
-					// feed.getKey_NewsText());
-					// edit.putString(Keys.Author, feed.getKey_Author());
+					edit.putInt(Keys.NEWSCOLID_NEWS, feed.getKey_NewsFeedID());
+					edit.putInt(Keys.NEWSCOLIMAGE, feed.getKey_NewsImage());
+					edit.putString(Keys.NEWSCOLHEADLINE,
+							feed.getKey_NewsTitle());
+					edit.putString(Keys.NEWSCOLINTROTEXT,
+							feed.getKey_NewsIntroText());
+					edit.putString(Keys.NEWSCOLNEWSTEXT, feed.getKey_NewsText());
+					edit.putString(Keys.Author, feed.getKey_Author());
 					edit.putString(Keys.NEWSCOLPOSTINGTIME,
 							format.format(feed.getKey_NewsDate().getTime()));
 
-					if (flipper != null) {
-						flipper.setDisplayedChild(2);
-						flipper.showNext();
-					}
-					mCallback.getAdapter().switchTo(Keys.NewsSTATE, edit);
-				} else {
-					if (flipper != null) {
-						flipper.setDisplayedChild(1);
-						flipper.showNext();
-					}
+					tabletOrPhoneControll(Keys.NewsSTATE, edit);
 				}
 			}
 		});
@@ -306,25 +247,8 @@ public class ListsFragment extends Fragment {
 			list.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					Bundle args = results.get(position);
-					// args.putString(Keys.ID_PLAYER,
-					// results.get(position).get(Keys.ID_PLAYER));
-					// args.putString(Keys.CITY,
-					// results.get(position).get(Keys.CITY));
-					// args.putString(Keys.COUNTRY,
-					// results.get(position).get(Keys.COUNTRY));
-					// args.putString(Keys.PLAYERNICKNAME, results.get(position)
-					// .get(Keys.PLAYERNICKNAME));
-					// args.putString(Keys.Email,
-					// results.get(position).get(Keys.Email));
-					// args.putString(Keys.PLAYERAVATAR, results.get(position)
-					// .get(Keys.PLAYERAVATAR));
-					// args.putString(Keys.FirstName,
-					// results.get(position).get(Keys.FirstName));
-					// args.putString(Keys.LastName,
-					// results.get(position).get(Keys.LastName));
-
-					tabletOrPhoneControll(Keys.PlayersSTATE, args);
+					tabletOrPhoneControll(Keys.PlayersSTATE,
+							results.get(position));
 				}
 			});
 		}
@@ -346,30 +270,8 @@ public class ListsFragment extends Fragment {
 					list.setOnItemClickListener(new OnItemClickListener() {
 						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
-							Bundle args = results.get(position);
-							// args.putString(Keys.ID_PLAYER, results
-							// .get(position).get(Keys.ID_PLAYER));
-							// args.putString(Keys.CITY, results.get(position)
-							// .get(Keys.CITY));
-							// args.putString(Keys.COUNTRY,
-							// results.get(position)
-							// .get(Keys.COUNTRY));
-							// args.putString(
-							// Keys.PLAYERNICKNAME,
-							// results.get(position).get(
-							// Keys.PLAYERNICKNAME));
-							// args.putString(Keys.Email, results.get(position)
-							// .get(Keys.Email));
-							// args.putString(Keys.PLAYERAVATAR,
-							// results.get(position)
-							// .get(Keys.PLAYERAVATAR));
-							// args.putString(Keys.FirstName, results
-							// .get(position).get(Keys.FirstName));
-							// args.putString(Keys.LastName,
-							// results.get(position)
-							// .get(Keys.LastName));
-
-							tabletOrPhoneControll(Keys.PlayersSTATE, args);
+							tabletOrPhoneControll(Keys.PlayersSTATE,
+									results.get(position));
 						}
 					});
 
@@ -410,46 +312,13 @@ public class ListsFragment extends Fragment {
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Bundle args = results.get(position);
-				// args.putString(Keys.EventID_COMPANY,
-				// results.get(position).get(Keys.EventID_COMPANY));
-				// args.putString(Keys.CompanyAddress,
-				// results.get(position).get(Keys.CompanyAddress));
-				// args.putString(Keys.CompanyCreatedTime, results.get(position)
-				// .get(Keys.CompanyCreatedTime));
-				// args.putString(Keys.CompanyDesc,
-				// results.get(position).get(Keys.CompanyDesc));
-				// args.putString(Keys.CompanyEmployees, results.get(position)
-				// .get(Keys.CompanyEmployees));
-				// args.putString(Keys.CompanyEventCount, results.get(position)
-				// .get(Keys.CompanyEventCount));
-				// args.putString(Keys.CompanyFounded,
-				// results.get(position).get(Keys.CompanyFounded));
-				// args.putString(Keys.CompanyGameCount, results.get(position)
-				// .get(Keys.CompanyGameCount));
-				// args.putString(Keys.CompanyImageURL,
-				// results.get(position).get(Keys.CompanyImageURL));
-				// args.putString(Keys.CompanyName,
-				// results.get(position).get(Keys.CompanyName));
-				// args.putString(Keys.CompanyNewsCount, results.get(position)
-				// .get(Keys.CompanyNewsCount));
-				// args.putString(Keys.CompanyOwnership, results.get(position)
-				// .get(Keys.CompanyOwnership));
-				// args.putString(Keys.CompanySocialRating,
-				// results.get(position)
-				// .get(Keys.CompanySocialRating));
-				// args.putString(Keys.CompanyURL,
-				// results.get(position).get(Keys.CompanyURL));
-				// args.putString(Keys.CompanyType,
-				// results.get(position).get(Keys.CompanyType));
 
-				// if (!con.checkDBTableExits(Keys.companyTempTable))
 				con.writeTempNewsTab(
 						results.get(position).getString(Keys.EventID_COMPANY),
 						Keys.companysubNewsTAB);
 
-				tabletOrPhoneControll(Keys.CompaniesSTATE, args);
-				// mCallback.getAdapter().switchTo(Keys.CompaniesSTATE, args);
+				tabletOrPhoneControll(Keys.CompaniesSTATE,
+						results.get(position));
 			}
 		});
 	}

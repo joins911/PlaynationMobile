@@ -12,24 +12,16 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
 public class SelectedHomeEvent extends Fragment {
-	// private Bundle storedValues;
-	// private TextView txtNewsTitle;
-	// private TextView txtNewsText;
 	private WebView txtNewsTitle;
 	private WebView txtNewsText;
 	// private ImageView newsImage;
-	// private ImageView newsImage;
 
 	private View mView;
-
-	// private Button btnEdit;
-	// private Button btnBack;
 
 	public void initEvent() {
 		txtNewsTitle = (WebView) mView.findViewById(R.id.webview);
 		txtNewsText = (WebView) mView.findViewById(R.id.webview2);
 		// newsImage = (ImageView) mView.findViewById(R.id.newsImg);
-		//
 
 		Bundle args = getArguments();
 		txtNewsTitle.loadData(args.getString(Keys.EventHeadline), "text/html",
@@ -38,13 +30,9 @@ public class SelectedHomeEvent extends Fragment {
 		// txtNewsText.setFocusable(true);
 		txtNewsText.loadData(args.getString(Keys.EventDescription),
 				"text/html", null);
-		// txtNewsTitle.setText(args.getString(Keys.NEWSCOLINTROTEXT));
-		// newsImage.setImageResource(args.getInt("NewsFeedImg", 0));
-		// String text = args.getString(Keys.NEWSCOLPOSTINGTIME);
 
-		// txtNewsAuthor.setText(Uri.parse("Playnation.eu") +
-		// " - Martin Author "
-		// + text);
+		// newsImage.setImageResource(args.getInt("NewsFeedImg", 0));
+
 		TextView txtEventEndDate = (TextView) mView
 				.findViewById(R.id.newsEventEndDate);
 		TextView txtEventInvetation = (TextView) mView
@@ -61,8 +49,6 @@ public class SelectedHomeEvent extends Fragment {
 				.findViewById(R.id.newsEventType);
 
 		// newsImage.setImageResource(myIntent.getString(Keys.NEWSCOLIMAGE, 0));
-		// txtNewsText.setMovementMethod(new ScrollingMovementMethod());
-		// txtNewsText.setFocusable(true);
 
 		txtEventInvetation.setText(args.getString(Keys.EventInviteLevel));
 		txtEventLocation.setText(args.getString(Keys.EventLocation));
