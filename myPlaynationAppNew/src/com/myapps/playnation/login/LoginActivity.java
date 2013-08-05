@@ -1,5 +1,6 @@
 package com.myapps.playnation.login;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,12 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-=======
->>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +31,14 @@ public class LoginActivity extends Activity {
 	private EditText password;
 	DataConnector con;
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		if (android.os.Build.VERSION.SDK_INT > 10) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		con = DataConnector.getInst(getApplicationContext());
@@ -44,12 +46,8 @@ public class LoginActivity extends Activity {
 		password = (EditText) findViewById(R.id.username_logIn);
 		Button logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
-<<<<<<< HEAD
-		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);		
-=======
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 
->>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		logButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -65,16 +63,12 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-<<<<<<< HEAD
-		/*
-=======
 
->>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		logGuestButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				logOnlineGuest();
 			}
-		});*/
+		});
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -255,14 +249,9 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean checkCredentials() {
-<<<<<<< HEAD
-		//String userName = username.getText().toString();
-	//	String passWord = password.getText().toString();
-=======
 		String userName = username.getText().toString();
 		String passWord = password.getText().toString();
 
->>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 		// if (con != null)
 		// return con.checkUsernameAndPassword(userName, passWord);
 		return con.checkLogin(userName, passWord);

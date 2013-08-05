@@ -1534,11 +1534,6 @@ containing a value of this type.
     }
     public static final class style {
         /** 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
@@ -1547,6 +1542,8 @@ containing a value of this type.
          */
         public static final int AppBaseTheme=0x7f0b0083;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
@@ -1560,13 +1557,18 @@ containing a value of this type.
         public static final int HeaderStyle=0x7f0b0089;
         public static final int HomeStyle=0x7f0b0088;
         /**  ActionBar styles 
+ ActionBar styles 
          */
         public static final int MyActionBar=0x7f0b0080;
         /**  ActionBar tabs text 
  The textColor property is backward compatible with the Support Library 
+ ActionBar tabs text 
+ The textColor property is backward compatible with the Support Library 
          */
         public static final int MyActionBarTabText=0x7f0b0082;
         /**  ActionBar title text 
+ The textColor property is backward compatible with the Support Library 
+ ActionBar title text 
  The textColor property is backward compatible with the Support Library 
          */
         public static final int MyActionBarTitleText=0x7f0b0081;

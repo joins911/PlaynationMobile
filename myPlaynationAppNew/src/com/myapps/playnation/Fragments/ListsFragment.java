@@ -72,26 +72,6 @@ public class ListsFragment extends Fragment {
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
 
-<<<<<<< HEAD
-	//	Button but = (Button) rootView.findViewById(R.id.showMoreButton);
-	/*	but.setOnClickListener(new OnClickListener(){
-			public void onClick(View v)
-			{
-=======
-		Button but = (Button) rootView.findViewById(R.id.showMoreButton);
-		but.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
->>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
-				((MyBaseAdapter) mList.getAdapter()).showMore();
-				((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
-				// Sets the index to the last item of the list.
-				mList.setSelection(((BaseAdapter) mList.getAdapter())
-						.getCount() - 1);
-				Log.i("onClick showMore", "ListsFragment");
-			}
-		});*/
-		mList.setOnScrollListener(new OnScrollListener(){
-=======
 		// Button but = (Button) rootView.findViewById(R.id.showMoreButton);
 		/*
 		 * but.setOnClickListener(new OnClickListener(){ public void
@@ -106,7 +86,6 @@ public class ListsFragment extends Fragment {
 		 * "ListsFragment"); } });
 		 */
 		mList.setOnScrollListener(new OnScrollListener() {
->>>>>>> 5ebb3ee809555665ed098b74e89aa33fdb525a27
 
 			private int currentFirstVisibleItem;
 			private int currentVisibleItemCount;
