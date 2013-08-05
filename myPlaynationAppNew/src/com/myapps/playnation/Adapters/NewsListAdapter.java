@@ -93,8 +93,8 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter{
 	@Override
 	public void showMore() {
 		if (showMore)
-			if (count + 10 <= newsFeedsLists.size())
-				count = count + 10;
+			if (count + 5 <= newsFeedsLists.size())
+				count = count + 5;
 			else {
 				count = newsFeedsLists.size();
 				showMore = false;

@@ -1,8 +1,12 @@
 package com.myapps.playnation.Operations;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +23,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -33,6 +41,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -55,9 +64,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	 final String ServerIp ="87.55.208.165:1337";
+	final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	//final String ServerIp = "10.0.2.2";
+	// final String ServerIp = "10.0.2.2";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -65,6 +74,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	public final SimpleDateFormat dataTemplate = new SimpleDateFormat(
 			"MMM dd,yyyy HH:mm", Locale.getDefault());
 	private static JSONArray json;
+	private boolean connStatus;
 	private static ArrayList<Bundle> searchArray;
 	private static ArrayList<Bundle> arrayChildren = new ArrayList<Bundle>();
 
@@ -75,7 +85,11 @@ public class DataConnector extends SQLiteOpenHelper {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 		url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
-
+		new CheckConnectionTask(){
+		    protected void onPostExecute(Boolean result) {
+		       connStatus = result;
+		       }
+		  }.execute();	
 	}
 
 	/**
@@ -2373,6 +2387,58 @@ public class DataConnector extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeSubscriptionTable);
 		onCreate(db);
 	}
+
+	// Still have to work on the Querry
+	public boolean checkUsernameAndPassword(String userName, String passWord) {
+		SQLiteDatabase sql = this.getReadableDatabase();
+		sql = getReadableDatabase();
+		String selectQuery = "Select * FROM " + Keys.gamesTable;
+		// + userName;
+		ArrayList<String> list = null;
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		if (cursor != null) {
+			list = new ArrayList<String>();
+			cursor.moveToFirst();
+			if (!cursor.isAfterLast()) {
+				do {
+					list.add(cursor.getString(cursor
+							.getColumnIndex(Keys.USERNAME)));
+				} while (cursor.moveToNext());
+			}
+		}
+		cursor.close();
+		sql.close();
+		if (list != null)
+			for (int i = 0; i <= list.size(); i++)
+				if (list.get(i).equals(passWord))
+					return true;
+		return false;
+	}
+
+	public boolean checkConnection() {
+
+		return connStatus;	
+	}
+
+	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try {
+				 URL serverURL = new URL(url);
+			        URLConnection urlconn = serverURL.openConnection();
+			        urlconn.setConnectTimeout(5000);
+			        urlconn.connect();
+			        return true;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+
+	}
+
 }
 
 /*

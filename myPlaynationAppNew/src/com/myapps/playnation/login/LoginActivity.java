@@ -2,16 +2,24 @@ package com.myapps.playnation.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.main.MainActivity;
 
@@ -19,35 +27,97 @@ public class LoginActivity extends Activity {
 	private ProgressDialog progressDialog;
 	private int progressbarStatus = 0;
 	public LoadViewTask task;
+	private EditText username;
+	private EditText password;
 	DataConnector con;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
+		con = DataConnector.getInst(getApplicationContext());
+		username = (EditText) findViewById(R.id.username_logIn);
+		password = (EditText) findViewById(R.id.password_logIn);
+		Button logButton = (Button) findViewById(R.id.btnLogin);
+		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+		
+		logButton.setOnClickListener(new View.OnClickListener() {
 
+			public void onClick(View v) {
+				if (checkServerStatus())
+					if (checkCredentials()) {
+						logOnlineUser();
+					} else
+						Toast.makeText(getApplicationContext(),
+								"Incorrect Username or Password",
+								Toast.LENGTH_LONG).show();
+				else {
+					logOfflineUser();
+				}
+			}
+		});
+		
+		logGuestButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				logOnlineGuest();
+			}
+		});
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
 				// Switching to Register screen
-				Intent i = new Intent(getApplicationContext(),
-						RegisterActivity.class);
-				startActivity(i);
+				if (con.checkConnection()) {
+					Intent i = new Intent(getApplicationContext(),
+							RegisterActivity.class);
+					startActivity(i);
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Server can not be reached", Toast.LENGTH_SHORT)
+							.show();
+				}
 			}
 		});
+		
+		if (!isNetworkAvailable()) {
+			Toast.makeText(
+					getApplicationContext(),
+					"There is no internet connection available. Offline Mode(Ignore login).",
+					Toast.LENGTH_SHORT).show();
+			logButton.setText(getResources().getString(
+					R.string.loginOfflineString));
+			registerScreen.setText(getResources().getString(
+					R.string.registerOfflineDesc));
+			logGuestButton.setVisibility(View.GONE);
+		}
 
-		Button logButton = (Button) findViewById(R.id.btnLogin);
-		logButton.setOnClickListener(new View.OnClickListener() {
+	}
 
-			public void onClick(View v) {
-				if (checkCredentials())
-					task = new LoadViewTask();
-				task.execute();
-			}
-		});
+	private void logOnlineUser() {
+		// Login as User XXX
+		startMainActivity(Configurations.appStateOnUser);
+	}
+
+	private void logOfflineUser() {
+		//Log Offline WIthout Comments posibility + ???		
+		Toast.makeText(getApplicationContext(), "Server could not be reached", Toast.LENGTH_LONG).show();
+	}
+
+	private void logOnlineGuest() {
+		// Login as Guest
+		startMainActivity(Configurations.appStateOnGuest);
+	}
+
+	private void logOfflineGuest() {
+		//Log Offline WIthout Home
+		startMainActivity(Configurations.appStateOffGuest);
+	}
+	
+	private void startMainActivity(int appState)
+	{
+		task = new LoadViewTask(appState);
+		task.execute();
 	}
 
 	@Override
@@ -60,11 +130,12 @@ public class LoginActivity extends Activity {
 	class LoadViewTask extends AsyncTask<Void, Integer, Void> {
 
 		String tableName;
-		int stateId;
+		int appState;
 		Intent mInt;
 
-		private LoadViewTask() {
+		private LoadViewTask(int appState) {
 			con = DataConnector.getInst(getApplicationContext());
+			this.appState = appState;
 		}
 
 		// Before running code in separate thread
@@ -120,6 +191,7 @@ public class LoginActivity extends Activity {
 				progressbarStatus += 20;
 				progressDialog.setProgress(progressbarStatus);
 				mInt = new Intent(getApplicationContext(), MainActivity.class);
+				mInt.putExtra(Keys.AppState, appState);
 			}
 			return null;
 		}
@@ -146,7 +218,36 @@ public class LoginActivity extends Activity {
 		finish();
 	}
 
+	private boolean checkServerStatus() {
+		if (isNetworkAvailable()) {
+			return con.checkConnection();
+		}
+		return false;
+	}
+
+	private boolean isNetworkAvailable() {
+		boolean haveConnectedWifi = false;
+		boolean haveConnectedMobile = false;
+
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] mNetInfo = cm.getAllNetworkInfo();
+		for (NetworkInfo ni : mNetInfo) {
+			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+				if (ni.isConnected())
+					haveConnectedWifi = true;
+			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+				if (ni.isConnected())
+					haveConnectedMobile = true;
+		}
+		return haveConnectedWifi || haveConnectedMobile;
+	}
+
 	public boolean checkCredentials() {
+		String userName = username.getText().toString();
+		String passWord = password.getText().toString();
+		// if (con != null)
+		// return con.checkUsernameAndPassword(userName, passWord);
 		return true;
+		// return true;
 	}
 }

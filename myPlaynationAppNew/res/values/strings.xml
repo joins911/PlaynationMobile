@@ -13,11 +13,14 @@
 	<string name="blogString">Blog</string>
 	<string name="buttonString_comment">Send</string>
 	<!-- Login+Register -->
-	<string name="loginString">Login</string>
+	<string name="loginString">Login</string>	
+	<string name="loginGuestString">Login as Guest</string>
+	<string name="loginOfflineString">Login as Guest Offline</string>
 	<string name="emailString">Email</string>
 	<string name="passwordString">Password</string>
 	<string name="registerString">Register</string>
 	<string name="registerDesc">New to Playnation? Register here</string>
+	<string name="registerOfflineDesc">Login details not required in Offline Mode</string>
 	<string name="nameString">Full Name</string>
 	<string name="registerButtonString">Register New Account</string>
 	<string name="loginButtonString">Already have an account! Login here</string>

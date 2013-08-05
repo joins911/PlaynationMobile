@@ -55,8 +55,8 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter{
 
 	public void showMore() {
 		if (showMore)
-			if (count + 10 <= groupsDataCollection.size())
-				count = count + 10;
+			if (count + 5 <= groupsDataCollection.size())
+				count = count + 5;
 			else {
 				count = groupsDataCollection.size();
 				showMore = false;

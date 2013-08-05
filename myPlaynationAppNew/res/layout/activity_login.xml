@@ -43,12 +43,14 @@
 			android:orientation="vertical"
 			android:padding="10dip" >
 			<!-- Email Label -->
+
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/emailString"
 				android:textColor="#372c24" />
 			<EditText
+			    android:id="@+id/password_logIn"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="20dip"
@@ -62,6 +64,7 @@
 				android:text="@string/passwordString"
 				android:textColor="#372c24" />
 			<EditText
+			    android:id="@+id/username_logIn"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dip"
@@ -75,6 +78,14 @@
 				android:layout_marginTop="10dip"
 				android:text="@string/loginString" />
 			<!-- Link to Registration Screen -->
+
+			<Button
+			    android:id="@+id/btnGuestLogin"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:text="@string/loginGuestString" />
+
 			<TextView
 				android:id="@+id/link_to_register"
 				android:layout_width="fill_parent"

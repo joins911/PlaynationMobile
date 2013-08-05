@@ -85,8 +85,8 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter{
 	@Override
 	public void showMore() {
 		if (showMore)
-			if (count + 10 <= tempList.size())
-				count = count + 10;
+			if (count + 5 <= tempList.size())
+				count = count + 5;
 			else {
 				count = tempList.size();
 				showMore = false;

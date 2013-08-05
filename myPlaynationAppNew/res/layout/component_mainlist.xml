@@ -31,11 +31,4 @@
 		android:listSelector="@drawable/list_selector" >
 	</ListView>
 
-	<Button
-	    android:id="@+id/showMoreButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center"
-	    android:text="@string/showMoreString" />
-
 </LinearLayout>

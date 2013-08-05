@@ -65,8 +65,8 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	public void showMore()
 	{
 		if (showMore)
-			if (count + 10 <= gamesDataCollection.size())
-				count = count + 10;
+			if (count + 5 <= gamesDataCollection.size())
+				count = count + 5;
 			else {
 				count = gamesDataCollection.size();
 				showMore = false;

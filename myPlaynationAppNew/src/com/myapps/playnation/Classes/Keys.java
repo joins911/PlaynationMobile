@@ -268,7 +268,10 @@ public final class Keys {
 	public final static String OrderByPopularity = "Popularity";
 	public final static String OrderByRating = "Rating";
 	public final static String OrderByDateAdded = "Date";
-
 	public final static String companysubNewsTAB = "Company";
 	public final static String gamesubNewsTAB = "GAME";
+	public static final String AppState = "ApplicationState";
+	
+	//Aplication States
+	
 }

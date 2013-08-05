@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -43,6 +45,8 @@ public class ListsFragment extends Fragment {
 	private ViewFlipper flipper = null;
 	private ListView mList;
 
+	
+	
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
 		// setRetainInstance(true);
@@ -70,14 +74,46 @@ public class ListsFragment extends Fragment {
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
-		Button but = (Button) rootView.findViewById(R.id.showMoreButton);
-		but.setOnClickListener(new OnClickListener(){
+	//	Button but = (Button) rootView.findViewById(R.id.showMoreButton);
+	/*	but.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
 			{
 				((MyBaseAdapter) mList.getAdapter()).showMore();
 				((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
 				Log.e("onClick showMore","ListsFragment");
 			}
+		});*/
+		mList.setOnScrollListener(new OnScrollListener(){
+
+			private int currentFirstVisibleItem;
+			private int currentVisibleItemCount;
+			private int currentScrollState;
+			private boolean isLoading;
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				 currentFirstVisibleItem = firstVisibleItem;
+				 currentVisibleItemCount = visibleItemCount;
+				
+			}
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				this.currentScrollState = scrollState;
+			    this.isScrollCompleted();
+				
+			}
+			private void isScrollCompleted() {
+			    if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE) {
+			        /*** In this way I detect if there's been a scroll which has completed ***/
+			        /*** do the work for load more date! ***/
+			        if(((MyBaseAdapter) mList.getAdapter()).canShowMore()){
+			             ((MyBaseAdapter) mList.getAdapter()).showMore();
+						 ((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+			        }
+			    }
+			}
+			
 		});
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
