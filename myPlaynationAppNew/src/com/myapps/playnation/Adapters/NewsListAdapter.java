@@ -19,12 +19,12 @@ import com.myapps.playnation.Classes.NewsFeedItem;
 import com.myapps.playnation.main.ISectionAdapter;
 
 @SuppressWarnings("rawtypes")
-public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter{
+public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
 	private List<NewsFeedItem> newsFeedsLists;
 	ISectionAdapter context;
-	int count;
-	boolean showMore=true;
+	int count = 10;
+	boolean showMore = true;
 
 	@SuppressWarnings("unchecked")
 	public NewsListAdapter(Activity context, List<NewsFeedItem> items) {
@@ -39,9 +39,9 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter{
 	@SuppressLint("SimpleDateFormat")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		View row = convertView;
-		final NewsFeedItem item = newsFeedsLists.get(position);
+		NewsFeedItem item = newsFeedsLists.get(position);
+
 		if (item != null) {
 			if (item.isSection()) {
 				DataSection ds = (DataSection) item;
@@ -77,7 +77,11 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter{
 
 	@Override
 	public int getCount() {
-		return count;
+		if (newsFeedsLists.size() <= count) {
+			return newsFeedsLists.size();
+		} else {
+			return count;
+		}
 	}
 
 	@Override

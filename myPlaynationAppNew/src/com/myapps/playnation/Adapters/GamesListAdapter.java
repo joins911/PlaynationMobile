@@ -57,21 +57,20 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		return 0;
 	}
 
-	public boolean canShowMore()
-	{
+	public boolean canShowMore() {
 		return showMore;
 	}
-	
-	public void showMore()
-	{
+
+	public void showMore() {
 		if (showMore)
-			if (count + 10 <= gamesDataCollection.size())
+			if (count + 10 <= gamesDataCollection.size()) {
 				count = count + 10;
-			else {
+			} else {
 				count = gamesDataCollection.size();
 				showMore = false;
 			}
 	}
+
 	/**
 	 * @param position
 	 *            : The position of the View within the list

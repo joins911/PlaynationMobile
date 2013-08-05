@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter{
+public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	LayoutInflater inflater;
 	ImageView thumb_image;
 	ArrayList<Bundle> groupsDataCollection;
@@ -62,7 +62,7 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter{
 				showMore = false;
 			}
 	}
-	
+
 	public boolean canShowMore() {
 		return showMore;
 	}

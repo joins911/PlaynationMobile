@@ -55,12 +55,6 @@ public class PlayerGamesFragment extends Fragment {
 					long arg3) {
 
 				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
-				// args.putString(Keys.Segment, Keys.HomeGamesTable);
-				// args.putString(Keys.GAMENAME, mapEntry.get(Keys.GAMENAME));
-				// args.putString(Keys.GAMEDESC, mapEntry.get(Keys.GAMEDESC));
-				// args.putString(Keys.GAMEDATE, mapEntry.get(Keys.GAMEDATE));
-				// args.putString(Keys.RATING, mapEntry.get(Keys.RATING));
-				// args.putString(Keys.ID_GAME, mapEntry.get(Keys.ID_GAME));
 				mCallback.setPageAndTab(Keys.GamesSTATE, 3, args);
 			}
 		});

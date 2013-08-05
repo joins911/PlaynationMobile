@@ -24,7 +24,8 @@ public final class Keys {
 	public static final String GAMEPROCCOMPANY = "GameCompany";
 	public static final String GAMEisDeveloper = "isDeveloper";
 	public static final String GAMEisDistributor = "isDistributor";
-	public static final String GAMECompanyDistributor = "GameDistributor";
+	public static final String GAMECompanyDeveloper = "Developer";
+	public static final String GAMECompanyDistributor = "Distributor";
 	public static final String GAMELILDBTABLENAME = "GAMEINFOTABLE";
 
 	public static final int commentsID = 2;
