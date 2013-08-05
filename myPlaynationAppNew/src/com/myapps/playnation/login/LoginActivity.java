@@ -10,7 +10,9 @@ import android.net.NetworkInfo;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,8 +42,7 @@ public class LoginActivity extends Activity {
 		password = (EditText) findViewById(R.id.password_logIn);
 		Button logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
-		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
-		
+		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);		
 		logButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -57,12 +58,12 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-		
+		/*
 		logGuestButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				logOnlineGuest();
 			}
-		});
+		});*/
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -243,8 +244,8 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean checkCredentials() {
-		String userName = username.getText().toString();
-		String passWord = password.getText().toString();
+		//String userName = username.getText().toString();
+	//	String passWord = password.getText().toString();
 		// if (con != null)
 		// return con.checkUsernameAndPassword(userName, passWord);
 		return true;

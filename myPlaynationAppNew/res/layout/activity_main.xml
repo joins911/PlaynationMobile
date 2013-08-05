@@ -19,7 +19,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:onClick="onGames_click"
-			android:text="@string/gamesString" />
+			android:text="@string/gamesString" />		
 		<Button
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

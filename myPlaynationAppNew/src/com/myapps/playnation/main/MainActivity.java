@@ -1,16 +1,23 @@
 package com.myapps.playnation.main;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.SpinnerAdapter;
@@ -18,7 +25,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.FlyOutContainer;
 
-public class MainActivity extends FragmentActivity implements ISectionAdapter {
+public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	// protected MyApp mMyApp;
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,6 +44,7 @@ public class MainActivity extends FragmentActivity implements ISectionAdapter {
 	 */
 	ViewPager mViewPager;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +53,7 @@ public class MainActivity extends FragmentActivity implements ISectionAdapter {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		getSupportActionBar().setTitle("Playnation Mobile");
 		con = DataConnector.getInst(getApplicationContext());
 		this.setContentView(R.layout.component_games_desc_layout);
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
@@ -137,8 +146,50 @@ public class MainActivity extends FragmentActivity implements ISectionAdapter {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
+		getMenuInflater().inflate(R.menu.barmenu, menu);
+
+	    MenuItem searchMenuItem = menu.findItem(R.id.menu_search);
+	    SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+
+
+	    searchView.setOnQueryTextListener(new OnQueryTextListener(){
+
+	    	String total="";
+			@Override
+			public boolean onQueryTextChange(String arg0) {
+				
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String arg0) {				
+				total = total + arg0;
+				Toast.makeText(getApplicationContext(), total, Toast.LENGTH_SHORT).show();
+				return false;
+				
+			}	    	
+	    });
+	    return super.onCreateOptionsMenu(menu);	    
 	}
+	
+	@Override
+	  public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case R.id.menu_icon:
+	      Toast.makeText(this, "Menu Item icon selected", Toast.LENGTH_SHORT)
+	          .show();
+	      break;
+	    case R.id.menu_search:
+	      Toast.makeText(this, "Menu item search selected", Toast.LENGTH_SHORT)
+	          .show();
+	      break;
+
+	    default:
+	      break;
+	    }
+
+	    return true;
+	  } 
 
 	public void onHome_click(View v) {
 		toggleMenu(Keys.HomeSTATE);

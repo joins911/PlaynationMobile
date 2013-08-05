@@ -9,4 +9,5 @@
     <color name="headerColor">#6B6B6B</color>
 	<color name="listTitleColor">#000000</color>
 	<color name="TextViewColor">#000000</color>
+	<color name="actionbar_text">#000000</color>
 </resources>

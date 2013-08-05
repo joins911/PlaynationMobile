@@ -64,15 +64,10 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-<<<<<<< HEAD
 	final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
 	// final String ServerIp = "10.0.2.2";
-=======
-	// final String ServerIp = "87.55.208.165:1337";
-	// final String ServerIp = "192.168.1.11:1337";
-	final String ServerIp = "10.0.2.2";
->>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
+
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -91,11 +86,30 @@ public class DataConnector extends SQLiteOpenHelper {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 		url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
-		new CheckConnectionTask(){
-		    protected void onPostExecute(Boolean result) {
-		       connStatus = result;
-		       }
-		  }.execute();	
+		new CheckConnectionTask().execute();
+	}
+
+	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try {
+				URL serverURL = new URL(url);
+				URLConnection urlconn = serverURL.openConnection();
+				urlconn.setConnectTimeout(5000);
+				urlconn.connect();
+				return true;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
+
+		protected void onPostExecute(Boolean result) {
+			connStatus = result;
+		}
+
 	}
 
 	/**
@@ -1208,51 +1222,35 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	}
 
-	public Bitmap getPicture() throws JSONException {
-		InputStream is = null;
-		String result = "";
-		String url = "http://192.168.1.10:1337/test/getPicture.php";
-		// http post
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(url);
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-
-		} catch (Exception e) {
-			Log.e("DataConnector ",
-					"getPic()  Error in http connection " + e.toString());
-		}
-
-		// convert response to string
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			result = sb.toString();
-
-		} catch (Exception e) {
-			Log.e("DataConnector",
-					"getPic() Error converting result " + e.toString());
-		}
-
-		// jArray = new JSONObj7ect(result);
-
-		String mThumbnail = result;// jArray.getString(0);
-		byte[] decodedString = Base64.decode(mThumbnail, Base64.DEFAULT);
-		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,
-				decodedString.length);
-		return decodedByte;
-		// ImageView mReportImage = (ImageView) findViewById(R.id.imageView1);
-		// mReportImage.setImageBitmap(decodedByte);
-	}
-
+	/*
+	 * public Bitmap getPicture() throws JSONException { InputStream is = null;
+	 * String result = ""; String url =
+	 * "http://192.168.1.10:1337/test/getPicture.php"; // http post try {
+	 * HttpClient httpclient = new DefaultHttpClient(); HttpPost httppost = new
+	 * HttpPost(url); HttpResponse response = httpclient.execute(httppost);
+	 * HttpEntity entity = response.getEntity(); is = entity.getContent();
+	 * 
+	 * } catch (Exception e) { Log.e("DataConnector ",
+	 * "getPic()  Error in http connection " + e.toString()); }
+	 * 
+	 * // convert response to string try { BufferedReader reader = new
+	 * BufferedReader(new InputStreamReader( is, "iso-8859-1"), 8);
+	 * StringBuilder sb = new StringBuilder(); String line = null; while ((line
+	 * = reader.readLine()) != null) { sb.append(line + "\n"); } is.close();
+	 * result = sb.toString();
+	 * 
+	 * } catch (Exception e) { Log.e("DataConnector",
+	 * "getPic() Error converting result " + e.toString()); }
+	 * 
+	 * // jArray = new JSONObj7ect(result);
+	 * 
+	 * String mThumbnail = result;// jArray.getString(0); byte[] decodedString =
+	 * Base64.decode(mThumbnail, Base64.DEFAULT); Bitmap decodedByte =
+	 * BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+	 * return decodedByte; // ImageView mReportImage = (ImageView)
+	 * findViewById(R.id.imageView1); //
+	 * mReportImage.setImageBitmap(decodedByte); }
+	 */
 	public void getQuerry(String tableName) {
 		String result = "";
 		if (!lilDb.containsKey(tableName)) {
@@ -2393,27 +2391,12 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	public boolean checkConnection() {
-
-		return connStatus;	
-	}
-
-	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			try {
-				 URL serverURL = new URL(url);
-			        URLConnection urlconn = serverURL.openConnection();
-			        urlconn.setConnectTimeout(5000);
-			        urlconn.connect();
-			        return true;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (!connStatus) {
+			new CheckConnectionTask().execute();
 			return false;
-		}
 
+		}
+		return true;
 	}
 
 }

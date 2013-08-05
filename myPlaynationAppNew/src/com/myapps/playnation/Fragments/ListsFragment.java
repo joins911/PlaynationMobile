@@ -74,7 +74,7 @@ public class ListsFragment extends Fragment {
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
-<<<<<<< HEAD
+
 	//	Button but = (Button) rootView.findViewById(R.id.showMoreButton);
 	/*	but.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
@@ -298,6 +298,11 @@ public class ListsFragment extends Fragment {
 		//
 		// }
 		// });
+	}
+	
+	public ListView getList()
+	{
+		return mList;
 	}
 
 	private void initializeCompanies(ListView list) {

@@ -101,4 +101,6 @@
 	<string name="title_item_detail">Item Detail</string>
 	<string name="subViewText">Please Select Item</string>
 	<string name="showMoreString">Show More</string>
+	<string name="searchString">Search</string>
+	<string name="iconString">Playnation</string>
 </resources>
