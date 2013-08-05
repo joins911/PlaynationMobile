@@ -41,12 +41,15 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		count = 10;
 	}
 
-	public ArrayList<Bundle> getGamesList() {
+	public ArrayList<Bundle> getList() {
 		return gamesDataCollection;
 	}
 
 	public int getCount() {
-		return count;
+		if (gamesDataCollection.size() >= count)
+			return count;
+		else
+			return gamesDataCollection.size();
 	}
 
 	public Object getItem(int arg0) {

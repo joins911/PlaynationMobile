@@ -64,11 +64,10 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		logGuestButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				logOnlineGuest();
-			}
-		});
+		/*
+		 * logGuestButton.setOnClickListener(new View.OnClickListener() { public
+		 * void onClick(View v) { logOnlineGuest(); } });
+		 */
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -249,12 +248,12 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean checkCredentials() {
-		String userName = username.getText().toString();
-		String passWord = password.getText().toString();
+		// String userName = username.getText().toString();
+		// String passWord = password.getText().toString();
 
 		// if (con != null)
 		// return con.checkUsernameAndPassword(userName, passWord);
-		return con.checkLogin(userName, passWord);
-		// return true;
+		// return con.checkLogin(userName, passWord);
+		return true;
 	}
 }

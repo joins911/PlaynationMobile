@@ -43,6 +43,7 @@ public class ListsFragment extends Fragment {
 	private ISectionAdapter mCallback;
 	private ViewFlipper flipper = null;
 	private ListView mList;
+	private ArrayList<Bundle> mListBundle;
 
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
@@ -148,9 +149,9 @@ public class ListsFragment extends Fragment {
 		// list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
-
+		mListBundle = results;
 		GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
-				results);
+				mListBundle);
 		list.setAdapter(bindingData);
 
 		list.setOnItemClickListener(new OnItemClickListener() {
@@ -171,15 +172,16 @@ public class ListsFragment extends Fragment {
 		// list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
-
+		mListBundle = results;
 		GroupsListAdapter bindingData = new GroupsListAdapter(getActivity(),
-				results);
+				mListBundle);
 		list.setAdapter(bindingData);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				tabletOrPhoneControll(Keys.GroupsSTATE, results.get(position));
+				tabletOrPhoneControll(Keys.GroupsSTATE,
+						mListBundle.get(position));
 			}
 		});
 	}
@@ -189,10 +191,10 @@ public class ListsFragment extends Fragment {
 		list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
-
+		mListBundle = results;
 		NewsListAdapter bindingData = new NewsListAdapter(getActivity(),
 				HelperClass.createHeaderListView(HelperClass
-						.queryNewsList(results)));
+						.queryNewsList(mListBundle)));
 		list.setAdapter(bindingData);
 		list.setOnItemClickListener(new OnItemClickListener() {
 
@@ -239,16 +241,17 @@ public class ListsFragment extends Fragment {
 
 		final ArrayList<Bundle> results = con.queryPlayerFriendsSearch(edit
 				.getText());
+		mListBundle = results;
 		list = (ListView) rootView.findViewById(R.id.mainList);
 		if (results != null) {
 			FriendsListAdapter bindingData = new FriendsListAdapter(
-					getActivity(), results);
+					getActivity(), mListBundle);
 			list.setAdapter(bindingData);
 			list.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					tabletOrPhoneControll(Keys.PlayersSTATE,
-							results.get(position));
+							mListBundle.get(position));
 				}
 			});
 		}
@@ -262,16 +265,17 @@ public class ListsFragment extends Fragment {
 			public void onClick(View v) {
 				final ArrayList<Bundle> results = con
 						.queryPlayerFriendsSearch(edit.getText());
-				ListView list = (ListView) rootView.findViewById(R.id.mainList);
+				mList = (ListView) rootView.findViewById(R.id.mainList);
 				if (results != null) {
+					mListBundle = results;
 					FriendsListAdapter bindingData = new FriendsListAdapter(
-							getActivity(), results);
-					list.setAdapter(bindingData);
-					list.setOnItemClickListener(new OnItemClickListener() {
+							getActivity(), mListBundle);
+					mList.setAdapter(bindingData);
+					mList.setOnItemClickListener(new OnItemClickListener() {
 						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
 							tabletOrPhoneControll(Keys.PlayersSTATE,
-									results.get(position));
+									mListBundle.get(position));
 						}
 					});
 
@@ -299,10 +303,19 @@ public class ListsFragment extends Fragment {
 		// }
 		// });
 	}
-	
-	public ListView getList()
-	{
+
+	public ListView getList() {
 		return mList;
+	}
+
+	public void setListBundle(ArrayList<Bundle> bund) {
+		mListBundle.clear();
+		mListBundle.addAll(bund);
+		((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+	}
+
+	public ArrayList<Bundle> getListBundle() {
+		return mListBundle;
 	}
 
 	private void initializeCompanies(ListView list) {
@@ -310,9 +323,9 @@ public class ListsFragment extends Fragment {
 		list = (ListView) rootView.findViewById(R.id.mainList);
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
-
+		mListBundle = results;
 		CompanyListAdapter bindingData = new CompanyListAdapter(getActivity(),
-				results);
+				mListBundle);
 		list.setAdapter(bindingData);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -323,7 +336,7 @@ public class ListsFragment extends Fragment {
 						Keys.companysubNewsTAB);
 
 				tabletOrPhoneControll(Keys.CompaniesSTATE,
-						results.get(position));
+						mListBundle.get(position));
 			}
 		});
 	}

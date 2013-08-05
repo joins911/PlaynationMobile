@@ -9,6 +9,7 @@ public final class Keys {
 	public static final String gamesTable = "game";
 	// The name of the Keys for the HashMap List ( coincides with the names of
 	// the Database columnNames )
+	public final static String Name = "GameName";
 	public final static String ID_GAME = "ID_GAME";
 	public static final String GAMENAME = "GameName";
 	public static final String GAMETYPE = "GameType";
@@ -272,7 +273,7 @@ public final class Keys {
 	public final static String companysubNewsTAB = "Company";
 	public final static String gamesubNewsTAB = "GAME";
 	public static final String AppState = "ApplicationState";
-	
-	//Aplication States
-	
+
+	// Aplication States
+
 }

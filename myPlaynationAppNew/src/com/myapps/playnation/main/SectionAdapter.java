@@ -53,6 +53,10 @@ public class SectionAdapter extends FragmentPagerAdapter {
 			currFragments.add(null);
 	}
 
+	public ArrayList<WrapperFragment> getFragments() {
+		return currFragments;
+	}
+
 	/**
 	 * 
 	 * 

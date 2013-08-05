@@ -16,7 +16,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.main.ISectionAdapter;
 
-public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter{
+public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
 	private ArrayList<Bundle> companiesList;
 	private ISectionAdapter context;
@@ -71,12 +71,18 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter{
 				count = companiesList.size();
 				showMore = false;
 			}
-		
+
 	}
 
 	@Override
 	public boolean canShowMore() {
 		return showMore;
+	}
+
+	@Override
+	public ArrayList<Bundle> getList() {
+		// TODO Auto-generated method stub
+		return companiesList;
 	}
 
 }

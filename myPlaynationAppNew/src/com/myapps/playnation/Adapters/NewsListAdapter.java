@@ -1,10 +1,12 @@
 package com.myapps.playnation.Adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,5 +111,11 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 	public boolean canShowMore() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<Bundle> getList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

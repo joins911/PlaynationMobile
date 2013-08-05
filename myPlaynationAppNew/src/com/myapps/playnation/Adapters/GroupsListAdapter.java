@@ -42,7 +42,10 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	}
 
 	public int getCount() {
-		return count;
+		if (groupsDataCollection.size() >= count)
+			return count;
+		else
+			return groupsDataCollection.size();
 	}
 
 	public Object getItem(int arg0) {
@@ -124,5 +127,11 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	static class ViewHolder {
 		TextView tvGameName, tvGameType, tvGameDate;
 		// ImageView tvImage;
+	}
+
+	@Override
+	public ArrayList<Bundle> getList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

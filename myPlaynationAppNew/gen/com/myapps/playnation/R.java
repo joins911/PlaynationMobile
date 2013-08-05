@@ -1533,13 +1533,6 @@ containing a value of this type.
         public static final int website=0x7f0a0049;
     }
     public static final class style {
-        /** 
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
-         */
         public static final int AppBaseTheme=0x7f0b0083;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 

@@ -75,6 +75,12 @@ public class WrapperFragment extends Fragment {
 
 	}
 
+	public ListsFragment getListFragment() {
+		if (mFragments instanceof ListsFragment)
+			return (ListsFragment) mFragments;
+		return null;
+	}
+
 	public void switchBack() {
 		if (mFragments == null) {
 			Bundle args = new Bundle();

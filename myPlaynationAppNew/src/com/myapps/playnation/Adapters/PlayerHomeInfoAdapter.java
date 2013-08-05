@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter{
+public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflater;
 	private ArrayList<Bundle> tempList;
 	private int count;
-	private boolean showMore=true;
+	private boolean showMore = true;
 
 	public PlayerHomeInfoAdapter(Context context, ArrayList<Bundle> list) {
 		this.inflater = (LayoutInflater) context
@@ -96,6 +96,12 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter{
 	@Override
 	public boolean canShowMore() {
 		return showMore;
+	}
+
+	@Override
+	public ArrayList<Bundle> getList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

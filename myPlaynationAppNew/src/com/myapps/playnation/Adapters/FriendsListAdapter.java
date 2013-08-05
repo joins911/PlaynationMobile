@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 
-public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter{
+public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflater;
 	private ArrayList<Bundle> generalList;
 	private int count;
-	private boolean showMore=true;
+	private boolean showMore = true;
 
 	public FriendsListAdapter(Context context, ArrayList<Bundle> list) {
 		this.generalList = list;
@@ -95,12 +95,18 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter{
 				count = generalList.size();
 				showMore = false;
 			}
-		
+
 	}
 
 	@Override
-	public boolean canShowMore() {		
+	public boolean canShowMore() {
 		return showMore;
+	}
+
+	@Override
+	public ArrayList<Bundle> getList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
