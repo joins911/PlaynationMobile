@@ -1102,10 +1102,11 @@ public class DataConnector extends SQLiteOpenHelper {
 	 * @param separeteID
 	 * @return boolean
 	 */
-	public boolean checkRowExist(String tableName, String separeteID) {
+	public boolean checkRowExist(String tableName, String separeteID,
+			String anotherID) {
 		SQLiteDatabase sql = getReadableDatabase();
-		Cursor cursor = sql.rawQuery(
-				HelperClass.sqliteQueryStrings(tableName, separeteID), null);
+		Cursor cursor = sql.rawQuery(HelperClass.sqliteQueryStringsChecker(
+				tableName, separeteID, anotherID), null);
 		if (cursor.getCount() != 0) {
 			return true;
 		} else {
@@ -1449,12 +1450,14 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (jsonArray != null)
 			for (int i = 0; i < jsonArray.length(); i++) {
-				if (!checkRowExist(Keys.companyTable, ""))
-					try {
-						ContentValues map = new ContentValues();
-						map.put(Keys.EventID_COMPANY, jsonArray
-								.getJSONObject(i).getInt(Keys.EventID_COMPANY)
-								+ "");
+
+				try {
+					ContentValues map = new ContentValues();
+					String ID = jsonArray.getJSONObject(i).getInt(
+							Keys.EventID_COMPANY)
+							+ "";
+					if (!checkRowExist(Keys.companyTable, ID, "")) {
+						map.put(Keys.EventID_COMPANY, ID);
 						map.put(Keys.CompanyName, jsonArray.getJSONObject(i)
 								.getString(Keys.CompanyName));
 						map.put(Keys.CompanyEmployees,
@@ -1499,11 +1502,11 @@ public class DataConnector extends SQLiteOpenHelper {
 								jsonArray.getJSONObject(i).getString(
 										Keys.CompanySocialRating));
 
-						// arrayQueryValues.add(map);
 						sql.insert(Keys.companyTable, null, map);
-					} catch (Exception e) {
-						Log.e("Fetching Company", "Error Company" + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Company", "Error Company" + e);
+				}
 			}
 		// lilDb.put(Keys.companyTable, arrayQueryValues);
 		sql.close();
@@ -1518,12 +1521,13 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeEventTable, playerID))
-					try {
-						ContentValues map = new ContentValues();
-						map.put(Keys.ID_EVENT,
-								json.getJSONObject(i).getInt(Keys.ID_EVENT)
-										+ "");
+
+				try {
+					ContentValues map = new ContentValues();
+					String ID = json.getJSONObject(i).getInt(Keys.ID_EVENT)
+							+ "";
+					if (!checkRowExist(Keys.HomeEventTable, ID, playerID)) {
+						map.put(Keys.ID_EVENT, ID);
 						map.put(Keys.EventID_COMPANY, json.getJSONObject(i)
 								.getInt(Keys.EventID_COMPANY) + "");
 						map.put(Keys.ID_GAME,
@@ -1561,12 +1565,11 @@ public class DataConnector extends SQLiteOpenHelper {
 						map.put(Keys.EventIsExpired, json.getJSONObject(i)
 								.getInt(Keys.EventIsExpired) + "");
 
-						// if (!arrayChildren.contains(map))
-						// arrayChildren.add(map);
 						sql.insert(Keys.HomeEventTable, null, map);
-					} catch (Exception e) {
-						Log.e("Fetching Events", "Error Events" + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Events", "Error Events" + e);
+				}
 			}
 		sql.close();
 		// lilDb.put(Keys.HomeEventTable, arrayChildren);
@@ -1578,11 +1581,12 @@ public class DataConnector extends SQLiteOpenHelper {
 				Keys.HomeFriendsTable, "0");
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeFriendsTable, playerID))
-					try {
+
+				try {
+					String ID = json.getJSONObject(i).getString(Keys.ID_PLAYER);
+					if (!checkRowExist(Keys.HomeFriendsTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
-						map.put(Keys.ID_PLAYER, json.getJSONObject(i)
-								.getString(Keys.ID_PLAYER));
+						map.put(Keys.ID_PLAYER, ID);
 						map.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getString(Keys.ID_OWNER));
 						map.put(Keys.CITY,
@@ -1602,9 +1606,10 @@ public class DataConnector extends SQLiteOpenHelper {
 						map.put(Keys.Age,
 								json.getJSONObject(i).getString(Keys.Age));
 						sql.insert(Keys.HomeFriendsTable, null, map);
-					} catch (Exception e) {
-						Log.e("Fetching Friends", "Error Friends" + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Friends", "Error Friends" + e);
+				}
 			}
 		}
 		sql.close();
@@ -1618,13 +1623,12 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeGamesTable, playerID))
-					try {
-						ContentValues m = new ContentValues();
 
-						String id_GAME = json.getJSONObject(i).getInt(
-								Keys.ID_GAME)
-								+ "";
+				try {
+					String ID = json.getJSONObject(i).getInt(Keys.ID_GAME) + "";
+					if (!checkRowExist(Keys.HomeGamesTable, ID, playerID)) {
+						ContentValues m = new ContentValues();
+						String id_GAME = ID;
 						m.put(Keys.ID_GAME, id_GAME);
 						m.put(Keys.RATING,
 								json.getJSONObject(i).getString(Keys.RATING));
@@ -1665,9 +1669,7 @@ public class DataConnector extends SQLiteOpenHelper {
 										.getInt(Keys.GamePostCount) + "");
 						m.put(Keys.GamesSubscriptionTime, json.getJSONObject(i)
 								.getString(Keys.GamesSubscriptionTime));
-						// HashMap<String, String> map = getGameInfo(id_GAME,
-						// gameType)
-						// .get(0);
+
 						m.put(Keys.GAMETYPENAME, json.getJSONObject(i)
 								.getString(Keys.GAMETYPENAME));
 						m.put(Keys.GAMEPLATFORM, json.getJSONObject(i)
@@ -1684,10 +1686,10 @@ public class DataConnector extends SQLiteOpenHelper {
 								Keys.GAMETYPE));
 
 						sql.insert(Keys.HomeGamesTable, null, m);
-
-					} catch (Exception e) {
-						Log.e("Fetching Games", "Error Games" + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Games", "Error Games" + e);
+				}
 			}
 		sql.close();
 	}
@@ -1699,12 +1701,12 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeGroupTable, playerID))
-					try {
+				try {
+					String ID = json.getJSONObject(i).getInt(Keys.ID_GROUP)
+							+ "";
+					if (!checkRowExist(Keys.HomeGroupTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						m.put(Keys.ID_GROUP,
-								json.getJSONObject(i).getInt(Keys.ID_GROUP)
-										+ "");
+						m.put(Keys.ID_GROUP, ID);
 						m.put(Keys.ID_PLAYER,
 								json.getJSONObject(i).getInt(Keys.ID_PLAYER)
 										+ "");
@@ -1730,9 +1732,10 @@ public class DataConnector extends SQLiteOpenHelper {
 						m.put(Keys.GruopCreatorName, json.getJSONObject(i)
 								.getString(Keys.PLAYERNICKNAME));
 						sql.insert(Keys.HomeGroupTable, null, m);
-					} catch (Exception e) {
-						Log.e("Fetching Group", "Error Group " + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Group", "Error Group " + e);
+				}
 			}
 		sql.close();
 	}
@@ -1744,12 +1747,12 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeMsgTable, playerID))
-					try {
+				try {
+					String ID = json.getJSONObject(i).getInt(Keys.ID_MESSAGE)
+							+ "";
+					if (!checkRowExist(Keys.HomeMsgTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
-						map.put(Keys.ID_MESSAGE,
-								json.getJSONObject(i).getInt(Keys.ID_MESSAGE)
-										+ "");
+						map.put(Keys.ID_MESSAGE, ID);
 						map.put(Keys.MessageID_CONVERSATION,
 								json.getJSONObject(i).getInt(
 										Keys.MessageID_CONVERSATION)
@@ -1770,9 +1773,10 @@ public class DataConnector extends SQLiteOpenHelper {
 								dataTemplate));
 
 						sql.insert(Keys.HomeMsgTable, null, map);
-					} catch (Exception e) {
-						Log.e("Fetching Msg", "Error Msg" + e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Msg", "Error Msg" + e);
+				}
 			}
 		sql.close();
 	}
@@ -1785,11 +1789,12 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				if (!checkRowExist(Keys.HomeSubscriptionTable, playerID))
-					try {
+
+				try {
+					String ID = json.getJSONObject(i).getInt(Keys.ID_ITEM) + "";
+					if (!checkRowExist(Keys.HomeSubscriptionTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						m.put(Keys.ID_ITEM,
-								json.getJSONObject(i).getInt(Keys.ID_ITEM) + "");
+						m.put(Keys.ID_ITEM, ID);
 						m.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getInt(Keys.ID_OWNER)
 										+ "");
@@ -1803,10 +1808,10 @@ public class DataConnector extends SQLiteOpenHelper {
 								dataTemplate));
 
 						sql.insert(Keys.HomeSubscriptionTable, null, m);
-					} catch (Exception e) {
-						Log.e("Fetching Subscription", "Error Subscription "
-								+ e);
 					}
+				} catch (Exception e) {
+					Log.e("Fetching Subscription", "Error Subscription " + e);
+				}
 			}
 		sql.close();
 	}
@@ -1834,27 +1839,30 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				// if (!checkRowExist(Keys.HomeWallTable, playerID))
+				//
 				try {
-					ContentValues m = new ContentValues();
-					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
-							.getString(Keys.WallPosterDisplayName) + "");
-					m.put(Keys.ID_WALLITEM,
-							json.getJSONObject(i).getInt(Keys.ID_WALLITEM) + "");
-					m.put(Keys.ID_OWNER,
-							json.getJSONObject(i).getInt(Keys.ID_OWNER) + "");
-					m.put(Keys.ItemType,
-							json.getJSONObject(i).getString(Keys.ItemType));
-					m.put(Keys.WallLastActivityTime, json.getJSONObject(i)
-							.getString(Keys.WallLastActivityTime));
-					m.put(Keys.WallMessage, returnUnserializedText(json
-							.getJSONObject(i).getString(Keys.WallMessage)));
-					m.put(Keys.WallOwnerType,
-							json.getJSONObject(i).getString(Keys.WallOwnerType));
-					m.put(Keys.WallPostingTime, json.getJSONObject(i)
-							.getString(Keys.WallPostingTime));
-					sql.insert(Keys.HomeWallTable, null, m);
-					// list.add(m);
+					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
+							+ "";
+					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
+						ContentValues m = new ContentValues();
+						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
+								.getString(Keys.WallPosterDisplayName) + "");
+						m.put(Keys.ID_WALLITEM, ID);
+						m.put(Keys.ID_OWNER,
+								json.getJSONObject(i).getInt(Keys.ID_OWNER)
+										+ "");
+						m.put(Keys.ItemType,
+								json.getJSONObject(i).getString(Keys.ItemType));
+						m.put(Keys.WallLastActivityTime, json.getJSONObject(i)
+								.getString(Keys.WallLastActivityTime));
+						m.put(Keys.WallMessage, returnUnserializedText(json
+								.getJSONObject(i).getString(Keys.WallMessage)));
+						m.put(Keys.WallOwnerType, json.getJSONObject(i)
+								.getString(Keys.WallOwnerType));
+						m.put(Keys.WallPostingTime, json.getJSONObject(i)
+								.getString(Keys.WallPostingTime));
+						sql.insert(Keys.HomeWallTable, null, m);
+					}
 				} catch (Exception e) {
 					Log.e("HomeWallFrag ", " querryPlayerWall() Error " + e);
 				}
@@ -1870,30 +1878,36 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				// if (!checkRowExist(Keys.HomeWallRepliesTable, playerID))
+				//
 				try {
-					ContentValues m = new ContentValues();
-					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
-							.getString(Keys.WallPosterDisplayName) + "");
-					m.put(Keys.ID_WALLITEM,
-							json.getJSONObject(i).getInt(Keys.ID_WALLITEM) + "");
-					m.put(Keys.ID_ORGOWNER,
-							json.getJSONObject(i).getInt(Keys.ID_ORGOWNER) + "");
-					m.put(Keys.PLAYERAVATAR,
-							json.getJSONObject(i).getString(Keys.PLAYERAVATAR)
-									+ "");
-					m.put(Keys.WallLastActivityTime, HelperClass.convertTime(
-							Integer.parseInt(json.getJSONObject(i).getString(
-									Keys.WallLastActivityTime)), dataTemplate));
-					m.put(Keys.WallMessage,
-							json.getJSONObject(i).getString(Keys.WallMessage));
-					m.put(Keys.WallOwnerType,
-							json.getJSONObject(i).getString(Keys.WallOwnerType));
-					m.put(Keys.WallPostingTime, HelperClass.convertTime(
-							Integer.parseInt(json.getJSONObject(i).getString(
-									Keys.WallPostingTime)), dataTemplate));
+					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
+							+ "";
+					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem, ID)) {
+						ContentValues m = new ContentValues();
+						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
+								.getString(Keys.WallPosterDisplayName) + "");
+						m.put(Keys.ID_WALLITEM, ID);
+						m.put(Keys.ID_ORGOWNER,
+								json.getJSONObject(i).getInt(Keys.ID_ORGOWNER)
+										+ "");
+						m.put(Keys.PLAYERAVATAR, json.getJSONObject(i)
+								.getString(Keys.PLAYERAVATAR) + "");
+						m.put(Keys.WallLastActivityTime, HelperClass
+								.convertTime(Integer.parseInt(json
+										.getJSONObject(i).getString(
+												Keys.WallLastActivityTime)),
+										dataTemplate));
+						m.put(Keys.WallMessage, json.getJSONObject(i)
+								.getString(Keys.WallMessage));
+						m.put(Keys.WallOwnerType, json.getJSONObject(i)
+								.getString(Keys.WallOwnerType));
+						m.put(Keys.WallPostingTime, HelperClass.convertTime(
+								Integer.parseInt(json.getJSONObject(i)
+										.getString(Keys.WallPostingTime)),
+								dataTemplate));
 
-					sql.insert(Keys.HomeWallRepliesTable, null, m);
+						sql.insert(Keys.HomeWallRepliesTable, null, m);
+					}
 				} catch (Exception e) {
 					Log.e("Fetching Wall Replies",
 							"Fetching WallReplies: Error" + e);
@@ -1910,24 +1924,30 @@ public class DataConnector extends SQLiteOpenHelper {
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-				// if (!checkRowExist(Keys.HomeMsgRepliesTable, playerID))
+				//
 				try {
-					ContentValues map = new ContentValues();
-					map.put(Keys.ID_MESSAGE,
-							json.getJSONObject(i).getInt(Keys.ID_MESSAGE) + "");
-					map.put(Keys.MessageID_CONVERSATION, json.getJSONObject(i)
-							.getInt(Keys.MessageID_CONVERSATION) + "");
-					map.put(Keys.PLAYERNICKNAME, json.getJSONObject(i)
-							.getString(Keys.PLAYERNICKNAME));
-					map.put(Keys.PLAYERAVATAR,
-							json.getJSONObject(i).getString(Keys.PLAYERAVATAR));
+					String ID = json.getJSONObject(i).getInt(Keys.ID_MESSAGE)
+							+ "";
+					if (!checkRowExist(Keys.HomeMsgRepliesTable, wallitem, ID)) {
+						ContentValues map = new ContentValues();
+						map.put(Keys.ID_MESSAGE, ID);
+						map.put(Keys.MessageID_CONVERSATION,
+								json.getJSONObject(i).getInt(
+										Keys.MessageID_CONVERSATION)
+										+ "");
+						map.put(Keys.PLAYERNICKNAME, json.getJSONObject(i)
+								.getString(Keys.PLAYERNICKNAME));
+						map.put(Keys.PLAYERAVATAR, json.getJSONObject(i)
+								.getString(Keys.PLAYERAVATAR));
 
-					map.put(Keys.MessageText, returnUnserializedText(json
-							.getJSONObject(i).getString(Keys.MessageText)));
-					map.put(Keys.MessageTime, HelperClass.convertTime(
-							Integer.parseInt(json.getJSONObject(i).getString(
-									Keys.MessageTime)), dataTemplate));
-					sql.insert(Keys.HomeMsgRepliesTable, null, map);
+						map.put(Keys.MessageText, returnUnserializedText(json
+								.getJSONObject(i).getString(Keys.MessageText)));
+						map.put(Keys.MessageTime, HelperClass.convertTime(
+								Integer.parseInt(json.getJSONObject(i)
+										.getString(Keys.MessageTime)),
+								dataTemplate));
+						sql.insert(Keys.HomeMsgRepliesTable, null, map);
+					}
 				} catch (Exception e) {
 					Log.e("Fetching MSG Replies", "Fetching MSGReplies Error"
 							+ e);
