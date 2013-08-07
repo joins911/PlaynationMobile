@@ -31,14 +31,12 @@ import org.json.JSONException;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -46,6 +44,7 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.CommentInfo;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Classes.LastIDs;
 import com.myapps.playnation.Classes.UserComment;
 
 /**
@@ -59,9 +58,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	final String ServerIp = "87.55.208.165:1337";
+	// final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	// final String ServerIp = "10.0.2.2";
+	final String ServerIp = "10.0.2.2";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -102,7 +101,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		protected void onPostExecute(Boolean result) {
 			connStatus = result;
-		}		
+		}
 	}
 
 	/**
@@ -124,54 +123,55 @@ public class DataConnector extends SQLiteOpenHelper {
 		return gameTypes;
 	}
 
-	/**
-	 * Returns HashMap with companyName,join date. If the company is not
-	 * distributor returns map of companyName and the other company from the
-	 * list.
-	 * 
-	 * @return
-	 */
-	public HashMap<String, String> returnGameDistributorDeveloperInfo(
-			String id_game) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		JSONArray json = getArrayFromQuerryWithPostVariable("",
-				Keys.GAMEPROCCOMPANY, id_game);
-		if (json != null) {
-			for (int i = 0; i < json.length(); i++) {
-				try {
-					int isDistributor = json.getJSONObject(i).getInt(
-							Keys.GAMEisDistributor);
-					int isDeveloper = json.getJSONObject(i).getInt(
-							Keys.GAMEisDeveloper);
-					if (isDistributor == 1) {
-						map.put(Keys.GAMECompanyDistributor, json
-								.getJSONObject(i).getString(Keys.CompanyName));
-					} else if (isDeveloper == 1) {
-						map.put(Keys.CompanyName, json.getJSONObject(i)
-								.getString(Keys.CompanyName));
-						map.put(Keys.CompanyFounded, json.getJSONObject(i)
-								.getString(Keys.CompanyFounded));
-					} else if (isDeveloper == 1 && isDistributor == 1) {
-						map.put(Keys.CompanyName, json.getJSONObject(i)
-								.getString(Keys.CompanyName));
-						map.put(Keys.CompanyFounded, json.getJSONObject(i)
-								.getString(Keys.CompanyFounded));
-						map.put(Keys.GAMECompanyDistributor, json
-								.getJSONObject(i).getString(Keys.CompanyName));
-					}
-
-				} catch (Exception e) {
-					Log.e("Fetching GameCompanyInfo", "Error GameCompanyInfo"
-							+ e);
-				}
-			}
-		} else if (json == null) {
-			map.put(Keys.GAMECompanyDistributor, "PlayNation");
-			map.put(Keys.CompanyName, "PlayNation");
-			map.put(Keys.CompanyFounded, "2011-12-21");
-		}
-		return map;
-	}
+	// /**
+	// * Returns HashMap with companyName,join date. If the company is not
+	// * distributor returns map of companyName and the other company from the
+	// * list.
+	// *
+	// * @return
+	// */
+	// // NOT REFERENCE AND NOT USED.MAYBE DELETE
+	// public HashMap<String, String> returnGameDistributorDeveloperInfo(
+	// String id_game) {
+	// HashMap<String, String> map = new HashMap<String, String>();
+	// JSONArray json = getArrayFromQuerryWithPostVariable("",
+	// Keys.GAMEPROCCOMPANY, id_game);
+	// if (json != null) {
+	// for (int i = 0; i < json.length(); i++) {
+	// try {
+	// int isDistributor = json.getJSONObject(i).getInt(
+	// Keys.GAMEisDistributor);
+	// int isDeveloper = json.getJSONObject(i).getInt(
+	// Keys.GAMEisDeveloper);
+	// if (isDistributor == 1) {
+	// map.put(Keys.GAMECompanyDistributor, json
+	// .getJSONObject(i).getString(Keys.CompanyName));
+	// } else if (isDeveloper == 1) {
+	// map.put(Keys.CompanyName, json.getJSONObject(i)
+	// .getString(Keys.CompanyName));
+	// map.put(Keys.CompanyFounded, json.getJSONObject(i)
+	// .getString(Keys.CompanyFounded));
+	// } else if (isDeveloper == 1 && isDistributor == 1) {
+	// map.put(Keys.CompanyName, json.getJSONObject(i)
+	// .getString(Keys.CompanyName));
+	// map.put(Keys.CompanyFounded, json.getJSONObject(i)
+	// .getString(Keys.CompanyFounded));
+	// map.put(Keys.GAMECompanyDistributor, json
+	// .getJSONObject(i).getString(Keys.CompanyName));
+	// }
+	//
+	// } catch (Exception e) {
+	// Log.e("Fetching GameCompanyInfo", "Error GameCompanyInfo"
+	// + e);
+	// }
+	// }
+	// } else if (json == null) {
+	// map.put(Keys.GAMECompanyDistributor, "PlayNation");
+	// map.put(Keys.CompanyName, "PlayNation");
+	// map.put(Keys.CompanyFounded, "2011-12-21");
+	// }
+	// return map;
+	// }
 
 	@SuppressLint("DefaultLocale")
 	public void writeTempNewsTab(String id_game, String gameType) {
@@ -359,10 +359,8 @@ public class DataConnector extends SQLiteOpenHelper {
 			temp.put(Keys.GAMEPLAYERSCOUNT, jsonArray.getJSONObject(i)
 					.getString(Keys.GAMEPLAYERSCOUNT));
 			String id_GAME = jsonArray.getJSONObject(i).getString(Keys.ID_GAME);
+			LastIDs.setLastIDGames(Integer.parseInt(id_GAME));
 			temp.put(Keys.ID_GAME, id_GAME);
-
-			// HashMap<String, String> map = getGameInfo(id_GAME,
-			// gameType).get(0);
 			temp.put(Keys.GAMETYPENAME,
 					jsonArray.getJSONObject(i).getString(Keys.GAMETYPENAME));
 			temp.put(Keys.GAMEPLATFORM,
@@ -434,8 +432,10 @@ public class DataConnector extends SQLiteOpenHelper {
 					.parseInt(jsonArray.getJSONObject(i).getString(
 							Keys.GROUPDATE)), new SimpleDateFormat(
 					"EEEE,MMMM d,yyyy h:mm,a", Locale.getDefault())));
-			temp.put(Keys.ID_GROUP,
-					jsonArray.getJSONObject(i).getString(Keys.ID_GROUP));
+			String ID_Groups = jsonArray.getJSONObject(i).getString(
+					Keys.ID_GROUP);
+			temp.put(Keys.ID_GROUP, ID_Groups);
+			LastIDs.setLastIDGroups(Integer.parseInt(ID_Groups));
 			String creator = jsonArray.getJSONObject(i).getString(
 					Keys.PLAYERNICKNAME);
 			temp.put(Keys.GruopCreatorName, creator);
@@ -451,8 +451,10 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ContentValues temp = new ContentValues();
-			temp.put(Keys.NEWSCOLID_NEWS,
-					jsonArray.getJSONObject(i).getString(Keys.NEWSCOLID_NEWS));
+			String ID_News = jsonArray.getJSONObject(i).getString(
+					Keys.NEWSCOLID_NEWS);
+			temp.put(Keys.NEWSCOLID_NEWS, ID_News);
+			LastIDs.setLastIDNews(Integer.parseInt(ID_News));
 			temp.put(Keys.NEWSCOLNEWSTEXT, jsonArray.getJSONObject(i)
 					.getString(Keys.NEWSCOLNEWSTEXT));
 			temp.put(Keys.NEWSCOLINTROTEXT, jsonArray.getJSONObject(i)
@@ -1467,8 +1469,10 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = jsonArray.getJSONObject(i).getInt(
 							Keys.EventID_COMPANY)
 							+ "";
+
 					if (!checkRowExist(Keys.companyTable, ID, "")) {
 						map.put(Keys.EventID_COMPANY, ID);
+						LastIDs.setLastIDCompanies(Integer.parseInt(ID));
 						map.put(Keys.CompanyName, jsonArray.getJSONObject(i)
 								.getString(Keys.CompanyName));
 						map.put(Keys.CompanyEmployees,
@@ -1538,6 +1542,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_EVENT)
 							+ "";
 					if (!checkRowExist(Keys.HomeEventTable, ID, playerID)) {
+						LastIDs.setLastHomeIDEvents(Integer.parseInt(ID));
 						map.put(Keys.ID_EVENT, ID);
 						map.put(Keys.EventID_COMPANY, json.getJSONObject(i)
 								.getInt(Keys.EventID_COMPANY) + "");
@@ -1597,6 +1602,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getString(Keys.ID_PLAYER);
 					if (!checkRowExist(Keys.HomeFriendsTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
+						LastIDs.setLastIDHomeFriends(Integer.parseInt(ID));
 						map.put(Keys.ID_PLAYER, ID);
 						map.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getString(Keys.ID_OWNER));
@@ -1639,8 +1645,8 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_GAME) + "";
 					if (!checkRowExist(Keys.HomeGamesTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						String id_GAME = ID;
-						m.put(Keys.ID_GAME, id_GAME);
+						LastIDs.setLastIDHomeGames(Integer.parseInt(ID));
+						m.put(Keys.ID_GAME, ID);
 						m.put(Keys.RATING,
 								json.getJSONObject(i).getString(Keys.RATING));
 						m.put(Keys.GAMEESRB,
@@ -1661,15 +1667,14 @@ public class DataConnector extends SQLiteOpenHelper {
 						m.put(Keys.GAMEDESC,
 								json.getJSONObject(i).getString(Keys.GAMEDESC)
 										+ "");
-
 						m.put(Keys.GameID_GAMETYPE, json.getJSONObject(i)
 								.getInt(Keys.GameID_GAMETYPE) + "");
 						String gameType = json.getJSONObject(i).getString(
 								Keys.GAMETYPE)
 								+ "";
 						m.put(Keys.GAMETYPE, gameType);
-						m.put(Keys.GameTypeName, json.getJSONObject(i)
-								.getString(Keys.GameTypeName) + "");
+						m.put(Keys.GAMETYPENAME, json.getJSONObject(i)
+								.getString(Keys.GAMETYPENAME) + "");
 						m.put(Keys.GameisPlaying,
 								json.getJSONObject(i)
 										.getInt(Keys.GameisPlaying) + "");
@@ -1681,8 +1686,8 @@ public class DataConnector extends SQLiteOpenHelper {
 						m.put(Keys.GamesSubscriptionTime, json.getJSONObject(i)
 								.getString(Keys.GamesSubscriptionTime));
 
-						m.put(Keys.GAMETYPENAME, json.getJSONObject(i)
-								.getString(Keys.GAMETYPENAME));
+						// m.put(Keys.GAMETYPENAME, json.getJSONObject(i)
+						// .getString(Keys.GAMETYPENAME));
 						m.put(Keys.GAMEPLATFORM, json.getJSONObject(i)
 								.getString(Keys.GAMEPLATFORM));
 						m.put(Keys.GAMECompanyDistributor,
@@ -1717,6 +1722,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeGroupTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
+						LastIDs.setLastIDHomeGroups(Integer.parseInt(ID));
 						m.put(Keys.ID_GROUP, ID);
 						m.put(Keys.ID_PLAYER,
 								json.getJSONObject(i).getInt(Keys.ID_PLAYER)
@@ -1763,6 +1769,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeMsgTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
+						LastIDs.setLastIDHomeMSg(Integer.parseInt(ID));
 						map.put(Keys.ID_MESSAGE, ID);
 						map.put(Keys.MessageID_CONVERSATION,
 								json.getJSONObject(i).getInt(
@@ -1805,6 +1812,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_ITEM) + "";
 					if (!checkRowExist(Keys.HomeSubscriptionTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
+						LastIDs.setLastIDHomeSubs(Integer.parseInt(ID));
 						m.put(Keys.ID_ITEM, ID);
 						m.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getInt(Keys.ID_OWNER)
@@ -1856,6 +1864,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
+						LastIDs.setLastIDHomeWall(Integer.parseInt(ID));
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");
 						m.put(Keys.ID_WALLITEM, ID);
@@ -1894,6 +1903,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
 					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem, ID)) {
+						LastIDs.setLastIDHomeWallRep(Integer.parseInt(ID));
 						ContentValues m = new ContentValues();
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");
@@ -1941,6 +1951,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeMsgRepliesTable, wallitem, ID)) {
 						ContentValues map = new ContentValues();
+						LastIDs.setLastIDHomeMSgRep(Integer.parseInt(ID));
 						map.put(Keys.ID_MESSAGE, ID);
 						map.put(Keys.MessageID_CONVERSATION,
 								json.getJSONObject(i).getInt(
@@ -1970,6 +1981,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	// -----------------------------------------------------------------
 
 	public void queryPlayerInfo(String playerID) {
+		SQLiteDatabase sql = this.getWritableDatabase();
 		json = getArrayFromQuerryWithPostVariable(playerID, Keys.PlayerTable,
 				"0");
 
@@ -1978,34 +1990,35 @@ public class DataConnector extends SQLiteOpenHelper {
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				try {
-					Bundle map = new Bundle();
-					map.putString(Keys.ID_PLAYER, json.getJSONObject(i)
-							.getString(Keys.ID_PLAYER));
-					map.putString(Keys.CITY,
+					ContentValues map = new ContentValues();
+					map.put(Keys.ID_PLAYER,
+							json.getJSONObject(i).getString(Keys.ID_PLAYER));
+					map.put(Keys.CITY,
 							json.getJSONObject(i).getString(Keys.CITY));
-					map.putString(Keys.COUNTRY, json.getJSONObject(i)
-							.getString(Keys.COUNTRY));
-					map.putString(Keys.PLAYERNICKNAME, json.getJSONObject(i)
+					map.put(Keys.COUNTRY,
+							json.getJSONObject(i).getString(Keys.COUNTRY));
+					map.put(Keys.PLAYERNICKNAME, json.getJSONObject(i)
 							.getString(Keys.PLAYERNICKNAME));
-					map.putString(Keys.PLAYERAVATAR, json.getJSONObject(i)
-							.getString(Keys.PLAYERAVATAR));
-					map.putString(Keys.FirstName, json.getJSONObject(i)
-							.getString(Keys.FirstName));
-					map.putString(Keys.LastName, json.getJSONObject(i)
-							.getString(Keys.LastName));
-					map.putString(Keys.LastName, json.getJSONObject(i)
-							.getString(Keys.LastName));
-					map.putString(Keys.Age,
-							json.getJSONObject(i).getString(Keys.Age));
-					map.putString(Keys.Email,
+					map.put(Keys.PLAYERAVATAR,
+							json.getJSONObject(i).getString(Keys.PLAYERAVATAR));
+					map.put(Keys.FirstName,
+							json.getJSONObject(i).getString(Keys.FirstName));
+					map.put(Keys.LastName,
+							json.getJSONObject(i).getString(Keys.LastName));
+					map.put(Keys.LastName,
+							json.getJSONObject(i).getString(Keys.LastName));
+					map.put(Keys.Age, json.getJSONObject(i).getString(Keys.Age));
+					map.put(Keys.Email,
 							json.getJSONObject(i).getString(Keys.Email));
-					setPlayer(map);
-					arrayChildren.add(map);
+					// setPlayer(map);
+					// arrayChildren.add(map);
+					sql.insert(Keys.PlayerTable, null, map);
 				} catch (Exception e) {
 					Log.e("Fetching Info", "Error " + e);
 				}
 			}
-		lilDb.put(Keys.PlayerTable, arrayChildren);
+		// lilDb.put(Keys.PlayerTable, arrayChildren);
+		sql.close();
 	}
 
 	public View populatePlayerGeneralInfo(View v, String nameT) {
@@ -2095,21 +2108,21 @@ public class DataConnector extends SQLiteOpenHelper {
 	// }
 
 	// NOT NEEDED OR USED STILL NOT SURE TO BE REMOVED
-	public String queryGroupCreator(String idCreator) {
-		json = getArrayFromQuerryWithPostVariable(idCreator, Keys.PlayerTable,
-				"0");
-		String name = "";
-		// // Print the data to the console
-		if (json != null)
-			for (int i = 0; i < json.length(); i++) {
-				try {
-					name = json.getJSONObject(i).getString(Keys.PLAYERNICKNAME);
-				} catch (Exception e) {
-					Log.e("Fetching Creator", "Error Creator" + e);
-				}
-			}
-		return name;
-	}
+	// public String queryGroupCreator(String idCreator) {
+	// json = getArrayFromQuerryWithPostVariable(idCreator, Keys.PlayerTable,
+	// "0");
+	// String name = "";
+	// // // Print the data to the console
+	// if (json != null)
+	// for (int i = 0; i < json.length(); i++) {
+	// try {
+	// name = json.getJSONObject(i).getString(Keys.PLAYERNICKNAME);
+	// } catch (Exception e) {
+	// Log.e("Fetching Creator", "Error Creator" + e);
+	// }
+	// }
+	// return name;
+	// }
 
 	public String returnEventPrivacy(int index) {
 		if (index == 0) {
@@ -2126,7 +2139,45 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	public Bundle getPlayer() {
-		return mPlayer;
+		String selectQuery = HelperClass.sqliteQueryStrings(Keys.PlayerTable,
+				"");
+		SQLiteDatabase sql = getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		Bundle returnBundle = null;
+		if (cursor != null) {
+			cursor.moveToFirst();
+			if (!cursor.isAfterLast()) {
+				do {
+					returnBundle = new Bundle();
+					returnBundle.putString(Keys.ID_PLAYER, cursor
+							.getString(cursor.getColumnIndex(Keys.ID_PLAYER)));
+					returnBundle.putString(Keys.CITY,
+							cursor.getString(cursor.getColumnIndex(Keys.CITY)));
+					returnBundle.putString(Keys.COUNTRY, cursor
+							.getString(cursor.getColumnIndex(Keys.COUNTRY)));
+					returnBundle.putString(Keys.PLAYERNICKNAME, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.PLAYERNICKNAME)));
+					returnBundle.putString(Keys.PLAYERAVATAR,
+							cursor.getString(cursor
+									.getColumnIndex(Keys.PLAYERAVATAR)));
+					returnBundle.putString(Keys.FirstName, cursor
+							.getString(cursor.getColumnIndex(Keys.FirstName)));
+					returnBundle.putString(Keys.LastName, cursor
+							.getString(cursor.getColumnIndex(Keys.LastName)));
+					returnBundle.putString(Keys.LastName, cursor
+							.getString(cursor.getColumnIndex(Keys.LastName)));
+					returnBundle.putString(Keys.Age,
+							cursor.getString(cursor.getColumnIndex(Keys.Age)));
+					returnBundle
+							.putString(Keys.Email, cursor.getString(cursor
+									.getColumnIndex(Keys.Email)));
+				} while (cursor.moveToNext());
+			}
+			cursor.close();
+			sql.close();
+		}
+		return returnBundle;
 	}
 
 	public ArrayList<Bundle> getArrayChildren() {
@@ -2193,10 +2244,10 @@ public class DataConnector extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 
 		String cREATE_PWall = "CREATE TABLE " + Keys.HomeWallTable + " ("
-				+ Keys.ID_WALLITEM + " INTEGER PRIMARY KEY, " + Keys.ID_OWNER
+				+ Keys.ID_WALLITEM + " INTEGER PRIMARY KEY, "
+				+ Keys.WallPosterDisplayName + " TEXT, " + Keys.ID_OWNER
 				+ " INTEGER, " + Keys.ItemType + " TEXT, "
-				+ Keys.WallLastActivityTime + " TEXT, "
-				+ Keys.WallPosterDisplayName + " TEXT, " + Keys.WallMessage
+				+ Keys.WallLastActivityTime + " TEXT, " + Keys.WallMessage
 				+ " TEXT, " + Keys.WallOwnerType + " TEXT, "
 				+ Keys.WallPostingTime + " TEXT" + ");";
 		db.execSQL(cREATE_PWall);
@@ -2213,19 +2264,18 @@ public class DataConnector extends SQLiteOpenHelper {
 		db.execSQL(cREATE_gamesTable);
 
 		String cREATE_HomeGamesTable = "CREATE TABLE " + Keys.HomeGamesTable
-				+ " (" + Keys.ID_GAME + " INTEGER PRIMARY KEY,"
-				+ Keys.GameComments + " TEXT," + Keys.ID_PLAYER + " INTEGER,"
-				+ Keys.GAMENAME + " TEXT," + Keys.GAMEDATE + " TEXT, "
-				+ Keys.RATING + " TEXT, " + Keys.GAMEESRB + " TEXT, "
-				+ Keys.GAMEURL + " TEXT, " + Keys.GAMEPLAYERSCOUNT + " TEXT, "
-				+ Keys.GamesSubscriptionTime + " TEXT," + Keys.GAMEDESC
-				+ " TEXT," + Keys.GameID_GAMETYPE + " INTEGER," + Keys.GAMETYPE
-				+ " TEXT," + Keys.GameisPlaying + " INTEGER,"
-				+ Keys.GamesisSubscribed + " INTEGER," + Keys.GamePostCount
-				+ " INTEGER," + Keys.GAMETYPENAME + " TEXT, "
-				+ Keys.GAMEPLATFORM + " TEXT, " + Keys.GAMECompanyDistributor
-				+ " TEXT, " + Keys.CompanyFounded + " TEXT, "
-				+ Keys.CompanyName + " TEXT" + ");";
+				+ " (" + Keys.ID_GAME + " INTEGER PRIMARY KEY," + Keys.RATING
+				+ " TEXT," + Keys.GAMEESRB + " TEXT," + Keys.GAMEURL + " TEXT,"
+				+ Keys.GAMEPLAYERSCOUNT + " TEXT, " + Keys.GAMEDATE + " TEXT, "
+				+ Keys.ID_PLAYER + " INTEGER," + Keys.GameComments + " TEXT, "
+				+ Keys.GAMENAME + " TEXT," + Keys.GAMEDESC + " TEXT,"
+				+ Keys.GameID_GAMETYPE + " INTEGER," + Keys.GAMETYPE + " TEXT,"
+				+ Keys.GAMETYPENAME + " TEXT, " + Keys.GameisPlaying
+				+ " INTEGER," + Keys.GamesisSubscribed + " INTEGER,"
+				+ Keys.GamePostCount + " INTEGER," + Keys.GamesSubscriptionTime
+				+ " TEXT," + Keys.GAMEPLATFORM + " TEXT, "
+				+ Keys.GAMECompanyDistributor + " TEXT, " + Keys.CompanyFounded
+				+ " TEXT, " + Keys.CompanyName + " TEXT" + ");";
 		db.execSQL(cREATE_HomeGamesTable);
 
 		String cREATE_groupsTable = "CREATE TABLE " + Keys.groupsTable + " ("
@@ -2269,40 +2319,40 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		String cREATE_HomeEventTable = "CREATE TABLE " + Keys.HomeEventTable
 				+ " (" + Keys.ID_EVENT + " INTEGER PRIMARY KEY,"
-				+ Keys.EventID_COMPANY + " INTEGER," + Keys.ID_PLAYER
-				+ " INTEGER," + Keys.ID_GAME + " INTEGER," + Keys.ID_GROUP
+				+ Keys.EventID_COMPANY + " INTEGER," + Keys.ID_GAME
+				+ " INTEGER," + Keys.ID_PLAYER + " INTEGER," + Keys.ID_GROUP
 				+ " INTEGER," + Keys.EventID_TEAM + " INTEGER,"
-				+ Keys.EventIMAGEURL + " TEXT," + Keys.EventInviteLevel
-				+ " TEXT," + Keys.EventIsPublic + " INTEGER," + Keys.EventType
-				+ " TEXT," + Keys.EventIsExpired + " INTEGER,"
-				+ Keys.EventDescription + " TEXT," + Keys.EventDuration
+				+ Keys.EventIMAGEURL + " TEXT," + Keys.EventDescription
+				+ " TEXT," + Keys.EventDuration + " TEXT," + Keys.EventHeadline
 				+ " TEXT," + Keys.EventTime + " TEXT," + Keys.EventLocation
-				+ " TEXT," + Keys.EventHeadline + " TEXT);";
+				+ " TEXT," + Keys.EventInviteLevel + " INTEGER,"
+				+ Keys.EventIsPublic + " TEXT," + Keys.EventType + " TEXT,"
+				+ Keys.EventIsExpired + " TEXT);";
 		db.execSQL(cREATE_HomeEventTable);
 
 		String cREATE_HomeFriendsTable = "CREATE TABLE "
 				+ Keys.HomeFriendsTable + " (" + Keys.ID_PLAYER
 				+ " INTEGER PRIMARY KEY," + Keys.ID_OWNER + " INTEGER,"
 				+ Keys.CITY + " TEXT," + Keys.COUNTRY + " TEXT,"
-				+ Keys.FirstName + " TEXT," + Keys.LastName + " TEXT,"
-				+ Keys.Age + " TEXT," + Keys.PLAYERNICKNAME + " TEXT,"
-				+ Keys.Email + " TEXT," + Keys.PLAYERAVATAR + " TEXT);";
+				+ Keys.PLAYERNICKNAME + " TEXT," + Keys.Email + " TEXT,"
+				+ Keys.PLAYERAVATAR + " TEXT," + Keys.FirstName + " TEXT,"
+				+ Keys.LastName + " TEXT," + Keys.Age + " TEXT);";
 		db.execSQL(cREATE_HomeFriendsTable);
 
 		String cREATE_HomeGroupTable = "CREATE TABLE " + Keys.HomeGroupTable
 				+ " (" + Keys.ID_GROUP + " INTEGER PRIMARY KEY,"
-				+ Keys.GROUPNAME + " TEXT," + Keys.ID_PLAYER + " INTEGER,"
-				+ Keys.GROUPDESC + " TEXT," + Keys.GruopCreatorName + " TEXT,"
-				+ Keys.GROUPTYPE + " TEXT," + Keys.GROUPTYPE2 + " TEXT,"
-				+ Keys.GROUPDATE + " TEXT," + Keys.GAMENAME + " TEXT,"
-				+ Keys.GroupMemberCount + " TEXT," + Keys.PLAYERNICKNAME
-				+ " TEXT," + Keys.EventIMAGEURL + " TEXT);";
+				+ Keys.ID_PLAYER + " INTEGER," + Keys.GROUPNAME + " TEXT,"
+				+ Keys.GROUPDESC + " TEXT," + Keys.GROUPTYPE + " TEXT,"
+				+ Keys.GROUPTYPE2 + " TEXT," + Keys.GAMENAME + " TEXT,"
+				+ Keys.GroupMemberCount + " TEXT," + Keys.EventIMAGEURL
+				+ " TEXT," + Keys.GROUPDATE + " TEXT," + Keys.GruopCreatorName
+				+ " TEXT," + Keys.PLAYERNICKNAME + " TEXT);";
 		db.execSQL(cREATE_HomeGroupTable);
 
 		String cREATE_HomeWallRepliesTable = "CREATE TABLE "
 				+ Keys.HomeWallRepliesTable + " (" + Keys.ID_WALLITEM
-				+ " INTEGER PRIMARY KEY," + Keys.ID_ORGOWNER + " INTEGER,"
-				+ Keys.WallPosterDisplayName + " TEXT," + Keys.PLAYERAVATAR
+				+ " INTEGER PRIMARY KEY," + Keys.WallPosterDisplayName
+				+ " TEXT," + Keys.ID_ORGOWNER + " INTEGER," + Keys.PLAYERAVATAR
 				+ " TEXT," + Keys.WallLastActivityTime + " TEXT,"
 				+ Keys.WallMessage + " TEXT," + Keys.WallOwnerType + " TEXT,"
 				+ Keys.WallPostingTime + " TEXT);";
@@ -2334,10 +2384,15 @@ public class DataConnector extends SQLiteOpenHelper {
 				+ Keys.CompanyNewsCount + " INTEGER," + Keys.CompanyEventCount
 				+ " INTEGER," + Keys.CompanyGameCount + " INTEGER,"
 				+ Keys.CompanySocialRating + " TEXT);";
-		// String totalSQL = cREATE_PWall + cREATE_newsTable +
-		// cREATE_groupsTable
-		// + cREATE_gamesTable + cREATE_companyTable;
 		db.execSQL(cREATE_companyTable);
+
+		String cREATE_PlayerTable = "CREATE TABLE " + Keys.PlayerTable + " ("
+				+ Keys.ID_PLAYER + " INTEGER PRIMARY KEY," + Keys.CITY
+				+ " TEXT," + Keys.COUNTRY + " TEXT," + Keys.PLAYERNICKNAME
+				+ " TEXT," + Keys.PLAYERAVATAR + " TEXT," + Keys.FirstName
+				+ " TEXT," + Keys.LastName + " TEXT," + Keys.Age + " TEXT,"
+				+ Keys.Email + " TEXT);";
+		db.execSQL(cREATE_PlayerTable);
 
 	}
 
@@ -2384,11 +2439,10 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	public boolean checkConnection() {
-		if (!connStatus) 
+		if (!connStatus)
 			new CheckConnectionTask().execute();
 		return connStatus;
 	}
-
 
 	public JSONArray registerPlayerMobileQuery(String nickname, String email,
 			String password) {
@@ -2417,10 +2471,11 @@ public class DataConnector extends SQLiteOpenHelper {
 		return null;
 	}
 
-	public boolean checkLogin(String nick, String pass) {
+	public boolean checkLogin(String nick, String pass, SharedPreferences pref) {
 		String result = "";
 		String temp = url;
 		url += "Login.php";
+
 		JSONArray jArray = null;
 		boolean results = false;
 		// http post
@@ -2466,6 +2521,11 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		if (jArray != null) {
 			// Put return ID_PLAYER should be set into Keys.TEMPLAYERID
+			SharedPreferences.Editor editPref = pref.edit();
+			editPref.putString(Keys.USERNAME, nick);
+			editPref.putString(Keys.Password, pass);
+			editPref.putBoolean(Keys.ActiveSession, true);
+			editPref.commit();
 			results = true;
 		} else {
 			results = false;

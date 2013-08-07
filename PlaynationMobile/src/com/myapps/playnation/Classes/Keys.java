@@ -1,6 +1,10 @@
 package com.myapps.playnation.Classes;
 
 public final class Keys {
+	public static final String UserName = "UserName";
+	public static final String Password = "Password";
+	public static final String ActiveSession = "ActiveSession";
+
 	// ID is used by the DataConnector class to know which table to search for
 	// same principle
 	// as table name but needed int for Switch { (case): }
@@ -248,7 +252,6 @@ public final class Keys {
 	public final static String companyTable = "Companies";
 
 	// ArrayGameType
-	public final static String GameTypeName = "GameTypeName";
 
 	public final static String CompanyName = "CompanyName";
 	public final static String CompanyAddress = "CompanyAddress";

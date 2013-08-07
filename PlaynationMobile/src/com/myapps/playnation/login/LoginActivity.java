@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,7 @@ public class LoginActivity extends Activity {
 	private EditText username;
 	private EditText password;
 	DataConnector con;
+	private SharedPreferences prefrence;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -39,9 +43,27 @@ public class LoginActivity extends Activity {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		// UserLoginPreferences
+		prefrence = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		Log.i("ActiveSession",
+				"" + prefrence.getBoolean(Keys.ActiveSession, false));
+		// Setting the activesession to be true so that it wont wait for button
+		// press on login
+		SharedPreferences.Editor edit = prefrence.edit();
+		edit.putBoolean(Keys.ActiveSession, true);
+		// edit.clear();
+		edit.commit();
+		// To unset sharepref. comment the activesession line and put
+
+		if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
+			logOnlineUser();
+		}
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		con = DataConnector.getInst(getApplicationContext());
+
 		username = (EditText) findViewById(R.id.password_logIn);
 		password = (EditText) findViewById(R.id.username_logIn);
 		Button logButton = (Button) findViewById(R.id.btnLogin);
@@ -253,7 +275,7 @@ public class LoginActivity extends Activity {
 
 		// if (con != null)
 		// return con.checkUsernameAndPassword(userName, passWord);
-		// return con.checkLogin(userName, passWord);
+		// return con.checkLogin(userName, passWord, prefrence);
 		return true;
 	}
 }

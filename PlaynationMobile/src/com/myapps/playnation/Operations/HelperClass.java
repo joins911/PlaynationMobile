@@ -117,6 +117,9 @@ public class HelperClass {
 			return "SELECT * FROM " + tableName + " Where " + Keys.ID_WALLITEM
 					+ "=" + Keys.TEMPLAYERID + " " + Keys.ID_OWNER + "="
 					+ separeteID + " Order By PostingTime desc;";
+		} else if (tableName.equals(Keys.PlayerTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
+					+ Keys.TEMPLAYERID + ";";
 		}
 		return "SELECT * FROM " + tableName + ";";
 	}
