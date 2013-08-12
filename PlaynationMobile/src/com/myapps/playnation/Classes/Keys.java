@@ -136,6 +136,7 @@ public final class Keys {
 	public final static String POSTID_PLAYER = "id";
 	public final static String POSTWallItem = "wallitem";
 	public final static String POSTTableName = "tableName";
+	public final static String POSTLASTID = "lastID";
 	public final static String POSTorderByColumn = "orderbyColumn";
 
 	/*
@@ -164,6 +165,7 @@ public final class Keys {
 	public final static String Email = "EMail";
 	public final static String Age = "DateOfBirth";
 	public final static String Author = "Author";
+	public final static String whoIsPlayingTable = "WhoIsPlaying";
 
 	// Notification json and map identifiers
 	public final static String ID_NOTIFICATION = "ID_NOTIFICATION";

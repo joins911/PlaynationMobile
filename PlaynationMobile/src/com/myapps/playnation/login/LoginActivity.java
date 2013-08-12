@@ -22,8 +22,11 @@ import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Classes.LastIDs;
 import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
+import com.myapps.playnation.Operations.ServiceClass;
 import com.myapps.playnation.main.MainActivity;
 
 public class LoginActivity extends Activity {
@@ -32,18 +35,25 @@ public class LoginActivity extends Activity {
 	public LoadViewTask task;
 	private EditText username;
 	private EditText password;
+	private Button logButton;
 	DataConnector con;
 	private SharedPreferences prefrence;
 
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		startService(new Intent(this, ServiceClass.class));
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+<<<<<<< HEAD
 		con = DataConnector.getInst(getApplicationContext());
+||||||| merged common ancestors
+=======
+
+>>>>>>> 7330953f3993167eef4a808f834ebc3e050ee16a
 		// UserLoginPreferences
 		prefrence = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
@@ -72,22 +82,28 @@ public class LoginActivity extends Activity {
 
 		username = (EditText) findViewById(R.id.password_logIn);
 		password = (EditText) findViewById(R.id.username_logIn);
-		Button logButton = (Button) findViewById(R.id.btnLogin);
+		logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 
 		logButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				if (checkServerStatus())
-					if (checkCredentials()) {
-						logOnlineUser();
-					} else
-						Toast.makeText(getApplicationContext(),
-								"Incorrect Username or Password",
-								Toast.LENGTH_LONG).show();
-				else {
-					logOfflineUser();
+				logButton.setError(null);
+				if (HelperClass.EmailPassNickCheck(username, password, null)) {
+					if (checkServerStatus())
+						if (checkCredentials()) {
+							logOnlineUser();
+						} else {
+							logButton
+									.setError("Incorrect UserName or Password!");
+							Toast.makeText(getApplicationContext(),
+									"Incorrect Username or Password",
+									Toast.LENGTH_LONG).show();
+						}
+					else {
+						logOfflineUser();
+					}
 				}
 			}
 		});
@@ -193,31 +209,25 @@ public class LoginActivity extends Activity {
 				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.gamesTable)) {
 					con.getArrayFromQuerryWithPostVariable("", Keys.gamesTable,
-							"");
+							"", LastIDs.getLastIDGames());
 				}
 				progressbarStatus += 40;
 				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.companyTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
-							Keys.companyTable, "");
+							Keys.companyTable, "", LastIDs.getLastIDCompanies());
 				}
 				progressbarStatus += 20;
 				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.groupsTable)) {
 					con.getArrayFromQuerryWithPostVariable("",
-							Keys.groupsTable, "");
+							Keys.groupsTable, "", LastIDs.getLastIDGroups());
 				}
 				progressbarStatus += 20;
 				progressDialog.setProgress(progressbarStatus);
 				if (!con.checkDBTableExits(Keys.newsTable)) {
 					con.getArrayFromQuerryWithPostVariable("", Keys.newsTable,
-							"");
-				}
-				progressbarStatus += 20;
-				progressDialog.setProgress(progressbarStatus);
-				if (!con.checkDBTableExits(Keys.companyTable)) {
-					con.getArrayFromQuerryWithPostVariable("",
-							Keys.companyTable, "");
+							"", LastIDs.getLastIDNews());
 				}
 				progressbarStatus += 20;
 				progressDialog.setProgress(progressbarStatus);

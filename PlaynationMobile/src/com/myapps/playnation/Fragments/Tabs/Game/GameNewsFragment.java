@@ -83,7 +83,8 @@ public class GameNewsFragment extends Fragment {
 						edit.putString(Keys.Author, feed.getKey_Author());
 						edit.putString(Keys.NEWSCOLPOSTINGTIME,
 								format.format(feed.getKey_NewsDate().getTime()));
-						mCallback.setPageAndTab(Keys.NewsSTATE, 3, edit);
+
+						mCallback.setPageAndTab(Keys.NewsSTATE, 2, edit);
 					}
 				}
 			});

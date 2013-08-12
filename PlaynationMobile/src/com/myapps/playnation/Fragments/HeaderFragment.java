@@ -105,7 +105,6 @@ public class HeaderFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-
 					getChildFragmentManager()
 							.beginTransaction()
 							.replace(android.R.id.tabcontent,

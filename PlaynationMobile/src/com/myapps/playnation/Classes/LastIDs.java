@@ -1,20 +1,20 @@
 package com.myapps.playnation.Classes;
 
 public final class LastIDs {
-	private static int lastIDNews;
-	private static int lastIDHomeEvents;
-	private static int lastIDHomeSubs;
-	private static int lastIDGames;
-	private static int lastIDCompanies;
-	private static int lastIDFriends;
-	private static int lastIDGroups;
-	private static int lastIDHomeMSg;
-	private static int lastIDHomeWall;
-	private static int lastIDHomeMSgRep;
-	private static int lastIDHomeWallRep;
-	private static int lastIDHomeGroups;
-	private static int lastIDHomeGames;
-	private static int lastIDHomeFriends;
+	private static int lastIDNews = 0;
+	private static int lastIDHomeEvents = 0;
+	private static int lastIDHomeSubs = 0;
+	private static int lastIDGames = 0;
+	private static int lastIDCompanies = 0;
+	private static int lastIDFriends = 0;
+	private static int lastIDGroups = 0;
+	private static int lastIDHomeMSg = 0;
+	private static int lastIDHomeWall = 0;
+	private static int lastIDHomeMSgRep = 0;
+	private static int lastIDHomeWallRep = 0;
+	private static int lastIDHomeGroups = 0;
+	private static int lastIDHomeGames = 0;
+	private static int lastIDHomeFriends = 0;
 
 	public static int getLastIDNews() {
 		return lastIDNews;

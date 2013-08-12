@@ -30,7 +30,11 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 
 	@Override
 	public int getCount() {
-		return count;
+		if (tempList.size() <= count) {
+			return tempList.size();
+		} else {
+			return count;
+		}
 	}
 
 	@Override
@@ -60,8 +64,10 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 		TextView txPlCountry = (TextView) view.findViewById(R.id.txPlCountry);
 		TextView txEdit = (TextView) view.findViewById(R.id.txtEdit);
 		txEdit.setVisibility(View.GONE);
+		Bundle mapEntry = null;
+		if (tempList != null)
+			mapEntry = tempList.get(arg0);
 
-		Bundle mapEntry = tempList.get(arg0);
 		if (mapEntry != null) {
 			playerIcon.setImageResource(R.drawable.person);
 			playerIcon.setContentDescription(mapEntry

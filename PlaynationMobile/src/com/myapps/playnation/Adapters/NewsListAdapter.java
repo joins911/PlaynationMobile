@@ -110,7 +110,7 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 	@Override
 	public boolean canShowMore() {
 		// TODO Auto-generated method stub
-		return false;
+		return showMore;
 	}
 
 	@Override

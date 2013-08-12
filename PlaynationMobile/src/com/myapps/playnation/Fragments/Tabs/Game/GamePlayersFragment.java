@@ -1,19 +1,38 @@
 package com.myapps.playnation.Fragments.Tabs.Game;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.myapps.playnation.R;
-import com.myapps.playnation.Adapters.HomeListViewAdapter;
+import com.myapps.playnation.Adapters.PlayerHomeInfoAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.main.ISectionAdapter;
 
 public class GamePlayersFragment extends Fragment {
-	DataConnector con;
+	private DataConnector con;
+	private ISectionAdapter mCallback;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		// This makes sure that the container activity has implemented
+		// the callback interface. If not, it throws an exception
+		try {
+			mCallback = (ISectionAdapter) getActivity();
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnHeadlineSelectedListener");
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,10 +44,22 @@ public class GamePlayersFragment extends Fragment {
 		ListView mListView = (ListView) view
 				.findViewById(R.id.generalPlayerListView);
 
-		con.queryPlayerFriends(Keys.TEMPLAYERID);
-		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
-				.getTable(Keys.HomeFriendsTable, ""), this));
+		Bundle args = getArguments();
 
+		con.queryWhoIsPlaying(args.getString(Keys.ID_GAME));
+
+		mListView
+				.setAdapter(new PlayerHomeInfoAdapter(getActivity(), con
+						.getTable(Keys.whoIsPlayingTable,
+								args.getString(Keys.ID_GAME))));
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Bundle args = (Bundle) parent.getItemAtPosition(position);
+
+				mCallback.setPageAndTab(Keys.PlayersSTATE, 5, args);
+			}
+		});
 		return view;
 	}
 }

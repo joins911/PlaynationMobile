@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 
 public class RegisterActivity extends Activity {
 	private EditText registerName;
@@ -40,8 +41,11 @@ public class RegisterActivity extends Activity {
 					String nickname = registerName.getText().toString();
 					String email = registerEmail.getText().toString();
 					String password = registerPassword.getText().toString();
-					con.registerPlayerMobileQuery(nickname, email, password);
-					finish();
+					if (HelperClass.EmailPassNickCheck(registerEmail,
+							registerPassword, registerName)) {
+						con.registerPlayerMobileQuery(nickname, email, password);
+						finish();
+					}
 				}
 			}
 		});
