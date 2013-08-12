@@ -28,11 +28,12 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 		this.companiesList = items;
 		inflator = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		count = 10;
 	}
 
 	@Override
 	public int getCount() {
-		return companiesList.size();
+		return count;
 	}
 
 	@Override

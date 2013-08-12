@@ -46,10 +46,10 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	}
 
 	public int getCount() {
-		if (gamesDataCollection.size() >= count)
-			return count;
-		else
-			return gamesDataCollection.size();
+		// if (gamesDataCollection.size() >= count)
+		return count;
+		// else
+		// return gamesDataCollection.size();
 	}
 
 	public Object getItem(int arg0) {

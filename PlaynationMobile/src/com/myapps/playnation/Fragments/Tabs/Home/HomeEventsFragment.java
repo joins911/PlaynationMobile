@@ -47,9 +47,9 @@ public class HomeEventsFragment extends Fragment {
 		ListView mListView = (ListView) view
 				.findViewById(R.id.generalPlayerListView);
 
-		if (!con.checkDBTableExits(Keys.HomeEventTable)) {
+		if (!con.checkDBTableExits(Keys.HomeEventTable))
 			con.queryPlayerEvents(Keys.TEMPLAYERID, getActivity());
-		}
+
 		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
 				.getTable(Keys.HomeEventTable, ""), this));
 		/*

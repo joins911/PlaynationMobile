@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.myapps.playnation.R;
@@ -110,16 +113,18 @@ public class HelperClass {
 			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
 					+ Keys.TEMPLAYERID + ";";
 		} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
+			return "SELECT * FROM " + tableName + " Where " + Keys.ID_WALLITEM
+					+ "=" + separeteID + " Order By PostingTime desc;";
+		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
 			return "SELECT * FROM " + tableName + " Where "
 					+ Keys.MessageID_CONVERSATION + "=" + separeteID
 					+ " Order By MessageTime desc;";
-		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
-			return "SELECT * FROM " + tableName + " Where " + Keys.ID_WALLITEM
-					+ "=" + Keys.TEMPLAYERID + " " + Keys.ID_OWNER + "="
-					+ separeteID + " Order By PostingTime desc;";
 		} else if (tableName.equals(Keys.PlayerTable)) {
 			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
 					+ Keys.TEMPLAYERID + ";";
+		} else if (tableName.equals(Keys.whoIsPlayingTable)) {
+			return "SELECT * FROM " + tableName + " Where ID_GAME="
+					+ separeteID + ";";
 		}
 		return "SELECT * FROM " + tableName + ";";
 	}
@@ -127,53 +132,89 @@ public class HelperClass {
 	public static String sqliteQueryStringsChecker(String tableName,
 			String separeteID, String anotherID) {
 		if (tableName.equals(Keys.HomeWallTable)) {
-			return "SELECT * FROM " + tableName + " WHERE ID_WALLITEM="
-					+ separeteID + " and " + Keys.ID_OWNER + "="
-					+ Keys.TEMPLAYERID + " Order by " + Keys.WallPostingTime
-					+ " desc;";
+			return "SELECT * FROM " + tableName + " WHERE ID_WALLITEM=? and "
+					+ Keys.ID_OWNER + "=" + Keys.TEMPLAYERID + " Order by "
+					+ Keys.WallPostingTime + " desc;";
 		} else if (tableName.equals(Keys.newsTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_NEWS="
-					+ separeteID + " Order by " + Keys.NEWSCOLPOSTINGTIME
-					+ " desc;";
+			return "SELECT * FROM " + tableName + " Where ID_NEWS=? Order by "
+					+ Keys.NEWSCOLPOSTINGTIME + " desc;";
 		} else if (tableName.equals(Keys.gamesTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_GAME="
-					+ separeteID + ";";
+			return "SELECT * FROM " + tableName + " Where ID_GAME=?;";
 		} else if (tableName.equals(Keys.companyTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_COMPANY="
-					+ separeteID + ";";
+			return "SELECT * FROM " + tableName + " Where ID_COMPANY=?;";
 		} else if (tableName.equals(Keys.HomeSubscriptionTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_ITEM="
-					+ separeteID + ";";
+			return "SELECT * FROM " + tableName + " Where ID_ITEM=?;";
 		} else if (tableName.equals(Keys.groupsTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_GROUP="
-					+ separeteID + ";";
+			return "SELECT * FROM " + tableName + " Where ID_GROUP=?;";
 		} else if (tableName.equals(Keys.HomeMsgTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_MESSAGE="
-					+ separeteID + " and " + Keys.ID_PLAYER + "="
-					+ Keys.TEMPLAYERID + ";";
+			return "SELECT * FROM " + tableName + " Where ID_MESSAGE=? and "
+					+ Keys.ID_PLAYER + "=" + Keys.TEMPLAYERID + ";";
 		} else if (tableName.equals(Keys.HomeEventTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_EVENT="
-					+ separeteID + " and ID_PLAYER=" + Keys.TEMPLAYERID + ";";
+			return "SELECT * FROM " + tableName
+					+ " Where ID_EVENT=? and ID_PLAYER=" + Keys.TEMPLAYERID
+					+ ";";
 		} else if (tableName.equals(Keys.HomeFriendsTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
-					+ separeteID + " and ID_OWNER=" + Keys.TEMPLAYERID + ";";
+			return "SELECT * FROM " + tableName
+					+ " Where ID_PLAYER=? and ID_OWNER=" + Keys.TEMPLAYERID
+					+ ";";
 		} else if (tableName.equals(Keys.HomeGamesTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_GAME="
-					+ separeteID + " and ID_PLAYER=" + Keys.TEMPLAYERID + ";";
+			return "SELECT * FROM " + tableName
+					+ " Where ID_GAME=? and ID_PLAYER=" + Keys.TEMPLAYERID
+					+ ";";
 		} else if (tableName.equals(Keys.HomeGroupTable)) {
-			return "SELECT * FROM " + tableName + " Where ID_GROUP="
-					+ separeteID + " and ID_PLAYER=" + Keys.TEMPLAYERID + ";";
+			return "SELECT * FROM " + tableName
+					+ " Where ID_GROUP=? and ID_PLAYER=" + Keys.TEMPLAYERID
+					+ ";";
 		} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
 			return "SELECT * FROM " + tableName + " Where ID_WALLITEM="
-					+ anotherID + " and " + Keys.MessageID_CONVERSATION + "="
-					+ separeteID + " Order By MessageTime desc;";
+					+ anotherID + " and " + Keys.ID_ORGOWNER
+					+ "=? Order By PostingTime desc;";
 		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
 			return "SELECT * FROM " + tableName + " Where ID_MESSAGE="
-					+ anotherID + " and " + Keys.ID_WALLITEM + "="
-					+ Keys.TEMPLAYERID + " " + Keys.ID_OWNER + "=" + separeteID
-					+ " Order By PostingTime desc;";
+					+ anotherID + " and " + Keys.MessageID_CONVERSATION
+					+ "=? Order By MessageTime desc;";
+		} else if (tableName.equals(Keys.newsTempTable)) {
+			return "SELECT * FROM " + tableName
+					+ " Where ID_NEWS=? and ID_OWNER=" + anotherID + ";";
+		} else if (tableName.equals(Keys.companyTempTable)) {
+			return "SELECT * FROM " + tableName
+					+ " Where ID_NEWS=? and ID_OWNER=" + anotherID + ";";
+		} else if (tableName.equals(Keys.whoIsPlayingTable)) {
+			return "SELECT * FROM " + tableName
+					+ " Where ID_GAME=? and ID_PLAYER=" + anotherID + ";";
 		}
 		return "";
+	}
+
+	public static boolean EmailPassNickCheck(EditText email, EditText password,
+			EditText nick) {
+
+		if (email.getText().toString().trim().equals("")) {
+			email.setError("Empty email please revise!");
+			return false;
+		} else if (password.getText().toString().trim().equals("")) {
+			password.setError("Empty password please revise!");
+			return false;
+		} else if (nick != null) {
+			if (nick.getText().toString().trim().equals("")) {
+				nick.setError("Empty name please revise!");
+				return false;
+			}
+		} else if (!EmailValidation(email)) {
+			email.setError("Incorrect Email please revise!");
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean EmailValidation(EditText email) {
+		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher;
+		matcher = pattern.matcher(email.getText().toString());
+
+		return matcher.matches();
 	}
 
 	public static String getDate(String integer) {
@@ -301,7 +342,6 @@ public class HelperClass {
 		for (int i = 0; i < result.size(); i++) {
 			try {
 				NewsFeed feed = new NewsFeed();
-
 				feed.setKey_NewsFeedID(Integer.valueOf(result.get(i).getString(
 						Keys.NEWSCOLID_NEWS)));
 				feed.setKey_NewsText(result.get(i).getString(
@@ -309,6 +349,7 @@ public class HelperClass {
 				feed.setKey_NewsIntroText(result.get(i).getString(
 						Keys.NEWSCOLINTROTEXT));
 				feed.setKey_Author(result.get(i).getString(Keys.Author));
+
 				feed.setKey_NewsFeedID(Integer.parseInt(result.get(i)
 						.getString(Keys.NEWSCOLID_NEWS)));
 				feed.setKey_NewsTitle(result.get(i).getString(
@@ -317,7 +358,7 @@ public class HelperClass {
 						.get(i).getString(Keys.NEWSCOLPOSTINGTIME))));
 				newsFeedList.add(feed);
 			} catch (Exception e) {
-				Log.e("ListsFragments ", " queryNewsList Error " + e);
+				Log.e("HelperClass ", " queryNewsList Error " + e);
 			}
 		}
 		return newsFeedList;
