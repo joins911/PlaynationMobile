@@ -6,4 +6,11 @@
 	<dimen name="button_header_margins">3dp</dimen>
 	<dimen name="TabHostSize">19dp</dimen>
 	<dimen name="textviewInfoTempSize">10sp</dimen>
+	
+	<dimen name="TitleTextSize">16sp</dimen>
+	<dimen name="subTitleTextSize">13sp</dimen>
+	<dimen name="NormalTextSize">12sp</dimen>
+	
+	<dimen name="specialTextSize">10sp</dimen>
+	
 </resources>

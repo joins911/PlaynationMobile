@@ -150,10 +150,11 @@ public class ListsFragment extends Fragment {
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 		mListBundle = results;
-		GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
-				mListBundle);
-		list.setAdapter(bindingData);
-
+		if (mListBundle != null) {
+			GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
+					mListBundle);
+			list.setAdapter(bindingData);
+		}
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -173,9 +174,11 @@ public class ListsFragment extends Fragment {
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 		mListBundle = results;
-		GroupsListAdapter bindingData = new GroupsListAdapter(getActivity(),
-				mListBundle);
-		list.setAdapter(bindingData);
+		if (mListBundle != null) {
+			GroupsListAdapter bindingData = new GroupsListAdapter(
+					getActivity(), mListBundle);
+			list.setAdapter(bindingData);
+		}
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -192,10 +195,12 @@ public class ListsFragment extends Fragment {
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 		mListBundle = results;
-		NewsListAdapter bindingData = new NewsListAdapter(getActivity(),
-				HelperClass.createHeaderListView(HelperClass
-						.queryNewsList(mListBundle)));
-		list.setAdapter(bindingData);
+		if (mListBundle != null) {
+			NewsListAdapter bindingData = new NewsListAdapter(getActivity(),
+					HelperClass.createHeaderListView(HelperClass
+							.queryNewsList(mListBundle)));
+			list.setAdapter(bindingData);
+		}
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@SuppressLint("SimpleDateFormat")
@@ -242,11 +247,11 @@ public class ListsFragment extends Fragment {
 		final ArrayList<Bundle> results = con.queryPlayerFriendsSearch(edit
 				.getText());
 		mListBundle = results;
-		list = (ListView) rootView.findViewById(R.id.mainList);
-		if (results != null) {
+		if (mListBundle != null) {
 			FriendsListAdapter bindingData = new FriendsListAdapter(
 					getActivity(), mListBundle);
 			list.setAdapter(bindingData);
+
 			list.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
@@ -254,35 +259,35 @@ public class ListsFragment extends Fragment {
 							mListBundle.get(position));
 				}
 			});
-		}
 
-		// Players ListView initialized twice Could cause bugs later on. NEEDS
-		// TO CHANGE!
+			// Players ListView initialized twice Could cause bugs later on.
+			// NEEDS
+			// TO CHANGE!
 
-		Button btn = (Button) rootView.findViewById(R.id.button1);
-		btn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				final ArrayList<Bundle> results = con
-						.queryPlayerFriendsSearch(edit.getText());
-				mList = (ListView) rootView.findViewById(R.id.mainList);
-				if (results != null) {
-					mListBundle = results;
-					FriendsListAdapter bindingData = new FriendsListAdapter(
-							getActivity(), mListBundle);
-					mList.setAdapter(bindingData);
-					mList.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							tabletOrPhoneControll(Keys.PlayersSTATE,
-									mListBundle.get(position));
-						}
-					});
+			Button btn = (Button) rootView.findViewById(R.id.button1);
+			btn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					final ArrayList<Bundle> results = con
+							.queryPlayerFriendsSearch(edit.getText());
+					mList = (ListView) rootView.findViewById(R.id.mainList);
+					if (results != null) {
+						mListBundle = results;
+						FriendsListAdapter bindingData = new FriendsListAdapter(
+								getActivity(), mListBundle);
+						mList.setAdapter(bindingData);
+						mList.setOnItemClickListener(new OnItemClickListener() {
+							public void onItemClick(AdapterView<?> parent,
+									View view, int position, long id) {
+								tabletOrPhoneControll(Keys.PlayersSTATE,
+										mListBundle.get(position));
+							}
+						});
 
+					}
 				}
-			}
-		});
-
+			});
+		}
 		// GroupsListAdapter bindingData = new GroupsListAdapter(getActivity(),
 		// results);
 		// list.setAdapter(bindingData);
@@ -324,9 +329,11 @@ public class ListsFragment extends Fragment {
 		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
 		rs.setVisibility(View.GONE);
 		mListBundle = results;
-		CompanyListAdapter bindingData = new CompanyListAdapter(getActivity(),
-				mListBundle);
-		list.setAdapter(bindingData);
+		if (mListBundle != null) {
+			CompanyListAdapter bindingData = new CompanyListAdapter(
+					getActivity(), mListBundle);
+			list.setAdapter(bindingData);
+		}
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {

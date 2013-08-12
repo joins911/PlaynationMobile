@@ -43,26 +43,32 @@ public class LoginActivity extends Activity {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		con = DataConnector.getInst(getApplicationContext());
 		// UserLoginPreferences
 		prefrence = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		Log.i("ActiveSession",
 				"" + prefrence.getBoolean(Keys.ActiveSession, false));
+
 		// Setting the activesession to be true so that it wont wait for button
 		// press on login
-		SharedPreferences.Editor edit = prefrence.edit();
-		edit.putBoolean(Keys.ActiveSession, true);
-		// edit.clear();
-		edit.commit();
+		if (!Configurations.isLoginEnabled) {
+			SharedPreferences.Editor edit = prefrence.edit();
+			edit.putBoolean(Keys.ActiveSession, true);
+			// edit.clear();
+			edit.commit();
+		}
 		// To unset sharepref. comment the activesession line and put
 
 		if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
-			logOnlineUser();
+			if (checkServerStatus())
+				logOnlineUser();
+			else
+				logOfflineUser();
 		}
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		con = DataConnector.getInst(getApplicationContext());
 
 		username = (EditText) findViewById(R.id.password_logIn);
 		password = (EditText) findViewById(R.id.username_logIn);
@@ -86,10 +92,12 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		/*
-		 * logGuestButton.setOnClickListener(new View.OnClickListener() { public
-		 * void onClick(View v) { logOnlineGuest(); } });
-		 */
+		logGuestButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				logOnlineUser();
+			}
+		});
+
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -130,16 +138,12 @@ public class LoginActivity extends Activity {
 		// Log Offline WIthout Comments posibility + ???
 		Toast.makeText(getApplicationContext(), "Server could not be reached",
 				Toast.LENGTH_LONG).show();
+		startMainActivity(Configurations.appStateOffUser);
 	}
 
 	private void logOnlineGuest() {
 		// Login as Guest
 		startMainActivity(Configurations.appStateOnGuest);
-	}
-
-	private void logOfflineGuest() {
-		// Log Offline WIthout Home
-		startMainActivity(Configurations.appStateOffGuest);
 	}
 
 	private void startMainActivity(int appState) {
@@ -270,12 +274,18 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean checkCredentials() {
-		// String userName = username.getText().toString();
-		// String passWord = password.getText().toString();
-
-		// if (con != null)
-		// return con.checkUsernameAndPassword(userName, passWord);
-		// return con.checkLogin(userName, passWord, prefrence);
-		return true;
+		String userName = username.getText().toString();
+		String passWord = password.getText().toString();
+		if (userName.isEmpty() || passWord.isEmpty())
+			Toast.makeText(getApplicationContext(),
+					"Please insert both username and password",
+					Toast.LENGTH_SHORT).show();
+		else {
+			// if (con != null)
+			return con.checkLogin(userName, passWord, prefrence);
+			// return con.checkUsernameAndPassword(userName, passWord);
+		}
+		//
+		return false;
 	}
 }

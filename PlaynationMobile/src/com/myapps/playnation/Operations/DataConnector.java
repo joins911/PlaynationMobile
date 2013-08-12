@@ -58,9 +58,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	// final String ServerIp = "87.55.208.165:1337";
+	final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	final String ServerIp = "10.0.2.2";
+	// final String ServerIp = "10.0.2.2";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -87,7 +87,8 @@ public class DataConnector extends SQLiteOpenHelper {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				URL serverURL = new URL(url);
+				String temp = url + "getGames.php";
+				URL serverURL = new URL(temp);
 				URLConnection urlconn = serverURL.openConnection();
 				urlconn.setConnectTimeout(5000);
 				urlconn.connect();

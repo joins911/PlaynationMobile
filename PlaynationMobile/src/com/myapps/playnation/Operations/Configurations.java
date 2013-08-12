@@ -2,11 +2,11 @@ package com.myapps.playnation.Operations;
 
 public class Configurations {
 
-	public final static int appStateOffGuest = 0;
 	public final static int appStateOffUser = 1;
 	public final static int appStateOnGuest = 2;
 	public final static int appStateOnUser = 3;
 	private int currentAdapterSection;
+	public final static boolean isLoginEnabled = true;
 
 	private static Configurations inst;
 	private int appState;
