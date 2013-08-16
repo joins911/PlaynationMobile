@@ -49,14 +49,14 @@
 				android:text="@string/emailString"
 				android:textColor="#372c24" />
 			<EditText
-				android:id="@+id/password_logIn"
+				android:id="@+id/username_logIn"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="20dip"
 				android:layout_marginTop="5dip"
 				android:inputType="textEmailAddress"
 				android:singleLine="true"
-				android:text="a@ba.com" />
+				android:text="" />
 			<!-- Password Label -->
 			<TextView
 				android:layout_width="fill_parent"
@@ -64,13 +64,13 @@
 				android:text="@string/passwordString"
 				android:textColor="#372c24" />
 			<EditText
-				android:id="@+id/username_logIn"
+				android:id="@+id/password_logIn"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dip"
 				android:inputType="textPassword"
 				android:singleLine="true"
-				android:text="1" />
+				android:text="" />
 			<!-- Login button -->
 			<Button
 				android:id="@+id/btnLogin"

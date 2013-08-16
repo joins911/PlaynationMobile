@@ -15,6 +15,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,13 +27,12 @@ import com.myapps.playnation.Classes.LastIDs;
 import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
-import com.myapps.playnation.Operations.ServiceClass;
 import com.myapps.playnation.main.MainActivity;
 
 public class LoginActivity extends Activity {
 	private ProgressDialog progressDialog;
 	private int progressbarStatus = 0;
-	public LoadViewTask task;
+	public LoadMainActivityTask task;
 	private EditText username;
 	private EditText password;
 	private Button logButton;
@@ -42,18 +42,20 @@ public class LoginActivity extends Activity {
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		startService(new Intent(this, ServiceClass.class));
+		super.onCreate(savedInstanceState);
+		con = DataConnector.getInst(getApplicationContext());
+		/*
+		 * if (checkServerStatus()) startService(new Intent(this,
+		 * ServiceClass.class));
+		 */
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
-<<<<<<< HEAD
-		con = DataConnector.getInst(getApplicationContext());
-||||||| merged common ancestors
-=======
 
->>>>>>> 7330953f3993167eef4a808f834ebc3e050ee16a
+		this.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		// UserLoginPreferences
 		prefrence = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
@@ -69,19 +71,15 @@ public class LoginActivity extends Activity {
 			edit.commit();
 		}
 		// To unset sharepref. comment the activesession line and put
+		/*
+		 * if (prefrence.getBoolean(Keys.ActiveSession, false) == true) { if
+		 * (checkServerStatus()) logOnlineUser(); else logOfflineUser(); }
+		 */
 
-		if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
-			if (checkServerStatus())
-				logOnlineUser();
-			else
-				logOfflineUser();
-		}
-
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		username = (EditText) findViewById(R.id.password_logIn);
-		password = (EditText) findViewById(R.id.username_logIn);
+		username = (EditText) findViewById(R.id.username_logIn);
+		password = (EditText) findViewById(R.id.password_logIn);
 		logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
@@ -108,11 +106,12 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		logGuestButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				logOnlineUser();
-			}
-		});
+		if (logGuestButton != null)
+			logGuestButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					logOnlineUser();
+				}
+			});
 
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
@@ -153,8 +152,8 @@ public class LoginActivity extends Activity {
 	private void logOfflineUser() {
 		// Log Offline WIthout Comments posibility + ???
 		Toast.makeText(getApplicationContext(), "Server could not be reached",
-				Toast.LENGTH_LONG).show();
-		startMainActivity(Configurations.appStateOffUser);
+				Toast.LENGTH_SHORT).show();
+		// startMainActivity(Configurations.appStateOffUser);
 	}
 
 	private void logOnlineGuest() {
@@ -163,7 +162,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void startMainActivity(int appState) {
-		task = new LoadViewTask(appState);
+		task = new LoadMainActivityTask(appState);
 		task.execute();
 	}
 
@@ -174,13 +173,13 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 	}
 
-	class LoadViewTask extends AsyncTask<Void, Integer, Void> {
+	class LoadMainActivityTask extends AsyncTask<Void, Integer, Void> {
 
 		String tableName;
 		int appState;
 		Intent mInt;
 
-		private LoadViewTask(int appState) {
+		private LoadMainActivityTask(int appState) {
 			con = DataConnector.getInst(getApplicationContext());
 			this.appState = appState;
 		}

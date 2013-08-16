@@ -70,7 +70,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	public final SimpleDateFormat dataTemplate = new SimpleDateFormat(
 			"MMM dd,yyyy HH:mm", Locale.getDefault());
 	private static JSONArray json;
-	private boolean connStatus;
+	private boolean connStatus = false;
 	private static ArrayList<Bundle> searchArray;
 	private static ArrayList<Bundle> arrayChildren = new ArrayList<Bundle>();
 
@@ -80,10 +80,10 @@ public class DataConnector extends SQLiteOpenHelper {
 	private DataConnector(Context con) {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 		// SQLiteDatabase.openOrCreateDatabase(DATABASE_NAME, null);
-
+		new CheckConnectionTask().execute();
 		url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
-		new CheckConnectionTask().execute();
+
 	}
 
 	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
@@ -117,6 +117,10 @@ public class DataConnector extends SQLiteOpenHelper {
 	public static DataConnector getInst(Context con) {
 		if (inst == null)
 			return inst = new DataConnector(con);
+		return inst;
+	}
+
+	public static DataConnector getInst() {
 		return inst;
 	}
 

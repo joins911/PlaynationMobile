@@ -100,17 +100,17 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 		 * sdf.setTimeZone(TimeZone.getTimeZone("UTC")); String formattedDate =
 		 * sdf.format(date);
 		 */
-		holder.tvGameName.setText(groupsDataCollection.get(position).getString(
-				Keys.GROUPNAME));
-		holder.tvGameType
-				.setText(groupsDataCollection.get(position).getString(
-						Keys.GROUPTYPE)
-						+ "  "
-						+ groupsDataCollection.get(position).getString(
-								Keys.GROUPTYPE2));
-		holder.tvGameDate.setText(groupsDataCollection.get(position).getString(
-				Keys.GROUPDATE));
-
+		if (groupsDataCollection != null) {
+			holder.tvGameName.setText(groupsDataCollection.get(position)
+					.getString(Keys.GROUPNAME));
+			holder.tvGameType.setText(groupsDataCollection.get(position)
+					.getString(Keys.GROUPTYPE)
+					+ "  "
+					+ groupsDataCollection.get(position).getString(
+							Keys.GROUPTYPE2));
+			holder.tvGameDate.setText(groupsDataCollection.get(position)
+					.getString(Keys.GROUPDATE));
+		}
 		// Setting an image
 		// String uri = "drawable/"+
 		// gamesDataCollection.get(position).get(KEY_ICON);

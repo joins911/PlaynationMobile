@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.myapps.playnation.R;
@@ -39,6 +40,8 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	SectionAdapter mSectionAdapter;
 	FlyOutContainer root;
 	DataConnector con;
+	private int total;
+	private boolean finished = false;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -48,37 +51,27 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		getSupportActionBar().setTitle("Playnation Mobile");
 		con = DataConnector.getInst(getApplicationContext());
-		this.setContentView(R.layout.component_games_desc_layout);
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.activity_main, null);
-
 		initializePager();
-		// initializeSearchMenu();
-
 		this.setContentView(root);
-		// mViewPager.setId(R.id.pager);
+		setSupportProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
-		/*
-		 * if (newConfig.hardKeyboardHidden ==
-		 * Configuration.HARDKEYBOARDHIDDEN_NO) { root.postInvalidate(); //
-		 * ????? mViewPager.postInvalidate(); // ??? } else if
-		 * (newConfig.hardKeyboardHidden ==
-		 * Configuration.HARDKEYBOARDHIDDEN_YES) { // handle keyboard slide in
-		 * event }
-		 */
 		this.setContentView(root);
 	}
 
@@ -112,55 +105,6 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		});
 		mViewPager.setOffscreenPageLimit(6);
 	}
-
-	/*
-	 * private void initializeSearchMenu() { EditText searchBox = (EditText)
-	 * root .findViewById(R.id.component_searchsort_searchBox);
-	 * 
-	 * final Spinner spinner = (Spinner) root
-	 * .findViewById(R.id.component_spinner); SpinnerAdapter adapter = new
-	 * SpinnerAdapter(this, android.R.layout.simple_dropdown_item_1line,
-	 * con.getGroupTypes()); spinner.setAdapter(adapter);
-	 * 
-	 * /* spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-	 * 
-	 * @Override public void onItemSelected(AdapterView<?> parent, View view,
-	 * int position, long id) { String selectedType =
-	 * spinner.getSelectedItem().toString(); if
-	 * (!selectedType.equalsIgnoreCase("All")) { searchResults.clear(); for (int
-	 * i = 0; i < results.size(); i++) { Log.e("log.MainList in for loop",
-	 * "selectedType = " + selectedType + "; results[i]" +
-	 * results.get(i).get(Keys.GROUPTYPE) + ";"); if
-	 * (results.get(i).get(Keys.GROUPTYPE) .equals(selectedType))
-	 * searchResults.add(results.get(i)); } bindingData.notifyDataSetChanged();
-	 * } else { searchResults.clear(); searchResults.addAll(results);
-	 * bindingData.notifyDataSetChanged(); } }
-	 * 
-	 * @Override public void onNothingSelected(AdapterView<?> parent) { }
-	 * 
-	 * }); searchBox.addTextChangedListener(new TextWatcher() { public void
-	 * onTextChanged(CharSequence s, int start, int before, int count) { // get
-	 * the text in the EditText String searchString =
-	 * searchBox.getText().toString(); int textLength = searchString.length();
-	 * searchResults.clear();
-	 * 
-	 * for (int i = 0; i < results.size(); i++) { String playerName =
-	 * results.get(i).get(Keys.GROUPNAME) .toString(); if (textLength <=
-	 * playerName.length()) { // compare the String in EditText with Names in
-	 * the // ArrayList //
-	 * if(searchString.equalsIgnoreCase(playerName.substring(0,textLength))) if
-	 * (playerName.contains(s)) searchResults.add((results.get(i))); } }
-	 * bindingData.notifyDataSetChanged();
-	 * 
-	 * }
-	 * 
-	 * public void beforeTextChanged(CharSequence s, int start, int count, int
-	 * after) { }
-	 * 
-	 * public void afterTextChanged(Editable s) { } });
-	 * 
-	 * }
-	 */
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -199,20 +143,17 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 
 			}
 		});
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_icon:
-			Toast.makeText(this, "Menu Item icon selected", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.menu_search:
-			Toast.makeText(this, "Menu item search selected",
-					Toast.LENGTH_SHORT).show();
-			break;
+		/*
+		 * case R.id.menu_search: Toast.makeText(this,
+		 * "Menu item search selected", Toast.LENGTH_SHORT).show(); break;
+		 */
 
 		default:
 			break;
@@ -263,9 +204,11 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				return;
 			}
 			case Keys.CompaniesSTATE: {
+				temp = searchListCompanies(args);
 				return;
 			}
 			case Keys.PlayersSTATE: {
+				// temp = searchListPlayers(args);
 				return;
 			}
 			}
@@ -292,6 +235,24 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		return results;
 	}
 
+	public ArrayList<Bundle> searchListCompanies(String args) {
+		ArrayList<Bundle> list = con.getTable(Keys.companyTable, "");
+		ArrayList<Bundle> results = new ArrayList<Bundle>();
+		for (int i = 0; i < list.size(); i++)
+			if (list.get(i).getString(Keys.CompanyName).contains(args))
+				results.add(list.get(i));
+		return results;
+	}
+
+	public ArrayList<Bundle> searchListPlayers(String args) {
+		ArrayList<Bundle> list = con.getTable(Keys.playersTable, "");
+		ArrayList<Bundle> results = new ArrayList<Bundle>();
+		for (int i = 0; i < list.size(); i++)
+			if (list.get(i).getString(Keys.PLAYERNAME).contains(args))
+				results.add(list.get(i));
+		return results;
+	}
+
 	/*
 	 * @Override public boolean onOptionsItemSelected(MenuItem item) {
 	 * 
@@ -311,7 +272,6 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	 * 
 	 * } return super.onOptionsItemSelected(item); }
 	 */
-
 	public SectionAdapter getAdapter() {
 		return this.mSectionAdapter;
 	}
@@ -338,5 +298,13 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	public void setPageAndTab(int pageIndex, int tabIndex, Bundle args) {
 		mViewPager.setCurrentItem(pageIndex);
 		mSectionAdapter.setPageAndTab(pageIndex, tabIndex, args);
+	}
+
+	public void finishTask(int viewPagerState) {
+		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
+				+ finished);
+		total = total + viewPagerState;
+		if (total == 15)
+			setSupportProgressBarIndeterminateVisibility(false);
 	}
 }

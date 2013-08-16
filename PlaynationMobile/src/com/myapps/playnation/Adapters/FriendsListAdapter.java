@@ -30,8 +30,10 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return count;
+		if (generalList.size() >= count)
+			return count;
+		else
+			return generalList.size();
 	}
 
 	@Override

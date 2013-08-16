@@ -11,7 +11,7 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>5
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
         <!-- Support library compatibility -->
         <item name="titleTextStyle">@style/MyActionBarTitleText</item>
     </style>
@@ -80,22 +80,10 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
-    <style name="ButtonBar">
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingRight">2dp</item>
-        <item name="android:paddingBottom">0dp</item>
-        <item name="android:background">@android:drawable/bottom_bar</item>
-    </style>
-
-    <style name="ButtonBarButton"></style>
-
-    <style name="ButtonFooter">
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingTop">1dp</item>
-        <item name="android:paddingRight">2dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:background">@drawable/background_pattern</item>
+    <style name="MenuButtonStyle">
+        <item name="android:background">@drawable/footer_button_selector</item>
+        <item name="android:height">@dimen/MenuButtonHeight</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="SortButtons">
@@ -103,15 +91,6 @@
         <item name="android:paddingLeft">3dp</item>
         <item name="android:paddingRight">3dp</item>
         <item name="android:height">25dp</item>
-    </style>
-
-    <style name="ButtonFooterButton">
-        <item name="android:width">75dp</item>
-        <item name="android:paddingLeft">3dp</item>
-        <item name="android:paddingRight">3dp</item>
-        <item name="android:height">38dp</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:background">@drawable/footer_button_selector</item>
     </style>
 
     <style name="TitleStyle">

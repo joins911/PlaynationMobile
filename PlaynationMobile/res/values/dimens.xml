@@ -7,6 +7,9 @@
 	<dimen name="TabHostSize">19dp</dimen>
 	<dimen name="textviewInfoTempSize">10sp</dimen>
 	
+	<dimen name="MenuButtonHeight">20dp</dimen>
+	<dimen name="MenuButtonWidth">120dp</dimen>
+	
 	<dimen name="TitleTextSize">16sp</dimen>
 	<dimen name="subTitleTextSize">13sp</dimen>
 	<dimen name="NormalTextSize">12sp</dimen>

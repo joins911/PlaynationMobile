@@ -46,10 +46,10 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	}
 
 	public int getCount() {
-		// if (gamesDataCollection.size() >= count)
-		return count;
-		// else
-		// return gamesDataCollection.size();
+		if (gamesDataCollection.size() >= count)
+			return count;
+		else
+			return gamesDataCollection.size();
 	}
 
 	public Object getItem(int arg0) {
@@ -102,13 +102,14 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		}
 
 		// Setting all values in listview
-
-		holder.tvGameName.setText(gamesDataCollection.get(position).getString(
-				Keys.GAMENAME));
-		holder.tvGameType.setText(gamesDataCollection.get(position).getString(
-				Keys.GAMETYPE));
-		holder.tvGameDate.setText(gamesDataCollection.get(position).getString(
-				Keys.GAMEDATE));
+		if (gamesDataCollection != null) {
+			holder.tvGameName.setText(gamesDataCollection.get(position)
+					.getString(Keys.GAMENAME));
+			holder.tvGameType.setText(gamesDataCollection.get(position)
+					.getString(Keys.GAMETYPE));
+			holder.tvGameDate.setText(gamesDataCollection.get(position)
+					.getString(Keys.GAMEDATE));
+		}
 		/*
 		 * For getting image try {
 		 * holder.tvImage.setImageBitmap(con.getPicture()); } catch

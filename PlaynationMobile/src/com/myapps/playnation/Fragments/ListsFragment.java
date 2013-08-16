@@ -5,20 +5,18 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
 
@@ -43,6 +41,7 @@ public class ListsFragment extends Fragment {
 	private ISectionAdapter mCallback;
 	private ViewFlipper flipper = null;
 	private ListView mList;
+	private AsyncTask<Void, Void, Void> mListTask;
 	private ArrayList<Bundle> mListBundle;
 
 	public ListsFragment() {
@@ -72,31 +71,18 @@ public class ListsFragment extends Fragment {
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
-
-		// Button but = (Button) rootView.findViewById(R.id.showMoreButton);
-		/*
-		 * but.setOnClickListener(new OnClickListener(){ public void
-		 * onClick(View v) { ======= Button but = (Button)
-		 * rootView.findViewById(R.id.showMoreButton);
-		 * but.setOnClickListener(new OnClickListener() { public void
-		 * onClick(View v) { >>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
-		 * ((MyBaseAdapter) mList.getAdapter()).showMore(); ((BaseAdapter)
-		 * mList.getAdapter()).notifyDataSetChanged(); // Sets the index to the
-		 * last item of the list. mList.setSelection(((BaseAdapter)
-		 * mList.getAdapter()) .getCount() - 1); Log.i("onClick showMore",
-		 * "ListsFragment"); } });
-		 */
 		mList.setOnScrollListener(new OnScrollListener() {
 
-			private int currentFirstVisibleItem;
+			// private int currentFirstVisibleItem;
 			private int currentVisibleItemCount;
 			private int currentScrollState;
-			private boolean isLoading;
+
+			// private boolean isLoading;
 
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				currentFirstVisibleItem = firstVisibleItem;
+				// currentFirstVisibleItem = firstVisibleItem;
 				currentVisibleItemCount = visibleItemCount;
 
 			}
@@ -128,34 +114,18 @@ public class ListsFragment extends Fragment {
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
-
-		if (Keys.GamesSTATE == mViewPagerState) {
-			initializeGames(list);
-		} else if (Keys.GroupsSTATE == mViewPagerState) {
-			initializeGroups(list);
-		} else if (Keys.NewsSTATE == mViewPagerState) {
-			initializeNews(list);
-		} else if (Keys.PlayersSTATE == mViewPagerState) {
-			initializePlayers(list);
-		} else if (Keys.CompaniesSTATE == mViewPagerState) {
-			initializeCompanies(list);
-		}
+		mListTask = new LoadListTask().execute();
 		return rootView;
 	}
 
-	private void initializeGames(ListView list) {
-		final ArrayList<Bundle> results = con.getTable(Keys.gamesTable, "");
-
-		// list = (ListView) rootView.findViewById(R.id.mainList);
-		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
-		rs.setVisibility(View.GONE);
+	private void initializeGames(final ArrayList<Bundle> results) {
 		mListBundle = results;
 		if (mListBundle != null) {
 			GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
 					mListBundle);
-			list.setAdapter(bindingData);
+			mList.setAdapter(bindingData);
 		}
-		list.setOnItemClickListener(new OnItemClickListener() {
+		mList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -168,18 +138,14 @@ public class ListsFragment extends Fragment {
 		});
 	}
 
-	private void initializeGroups(ListView list) {
-		final ArrayList<Bundle> results = con.getTable(Keys.groupsTable, "");
-		// list = (ListView) rootView.findViewById(R.id.mainList);
-		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
-		rs.setVisibility(View.GONE);
+	private void initializeGroups(final ArrayList<Bundle> results) {
 		mListBundle = results;
 		if (mListBundle != null) {
 			GroupsListAdapter bindingData = new GroupsListAdapter(
 					getActivity(), mListBundle);
-			list.setAdapter(bindingData);
+			mList.setAdapter(bindingData);
 		}
-		list.setOnItemClickListener(new OnItemClickListener() {
+		mList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -189,19 +155,15 @@ public class ListsFragment extends Fragment {
 		});
 	}
 
-	private void initializeNews(ListView list) {
-		final ArrayList<Bundle> results = con.getTable(Keys.newsTable, "");
-		list = (ListView) rootView.findViewById(R.id.mainList);
-		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
-		rs.setVisibility(View.GONE);
+	private void initializeNews(final ArrayList<Bundle> results) {
 		mListBundle = results;
 		if (mListBundle != null) {
 			NewsListAdapter bindingData = new NewsListAdapter(getActivity(),
 					HelperClass.createHeaderListView(HelperClass
 							.queryNewsList(mListBundle)));
-			list.setAdapter(bindingData);
+			mList.setAdapter(bindingData);
 		}
-		list.setOnItemClickListener(new OnItemClickListener() {
+		mList.setOnItemClickListener(new OnItemClickListener() {
 
 			@SuppressLint("SimpleDateFormat")
 			@Override
@@ -230,6 +192,44 @@ public class ListsFragment extends Fragment {
 		});
 	}
 
+	private void initializePlayers(final ArrayList<Bundle> results) {
+		mListBundle = results;
+		if (mListBundle != null) {
+			FriendsListAdapter bindingData = new FriendsListAdapter(
+					getActivity(), mListBundle);
+			mList.setAdapter(bindingData);
+
+			mList.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					tabletOrPhoneControll(Keys.PlayersSTATE,
+							mListBundle.get(position));
+				}
+			});
+		}
+	}
+
+	private void initializeCompanies(final ArrayList<Bundle> results) {
+		mListBundle = results;
+		if (mListBundle != null) {
+			CompanyListAdapter bindingData = new CompanyListAdapter(
+					getActivity(), mListBundle);
+			mList.setAdapter(bindingData);
+		}
+		mList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				con.writeTempNewsTab(
+						results.get(position).getString(Keys.EventID_COMPANY),
+						Keys.companysubNewsTAB);
+
+				tabletOrPhoneControll(Keys.CompaniesSTATE,
+						mListBundle.get(position));
+			}
+		});
+	}
+
 	private void tabletOrPhoneControll(int state, Bundle edit) {
 		if (flipper != null) {
 			flipper.setDisplayedChild(2);
@@ -238,75 +238,6 @@ public class ListsFragment extends Fragment {
 		} else {
 			mCallback.getAdapter().switchTo(state, edit);
 		}
-	}
-
-	private void initializePlayers(ListView list) {
-
-		final EditText edit = (EditText) rootView.findViewById(R.id.editText1);
-
-		final ArrayList<Bundle> results = con.queryPlayerFriendsSearch(edit
-				.getText());
-		mListBundle = results;
-		if (mListBundle != null) {
-			FriendsListAdapter bindingData = new FriendsListAdapter(
-					getActivity(), mListBundle);
-			list.setAdapter(bindingData);
-
-			list.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					tabletOrPhoneControll(Keys.PlayersSTATE,
-							mListBundle.get(position));
-				}
-			});
-
-			// Players ListView initialized twice Could cause bugs later on.
-			// NEEDS
-			// TO CHANGE!
-
-			Button btn = (Button) rootView.findViewById(R.id.button1);
-			btn.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					final ArrayList<Bundle> results = con
-							.queryPlayerFriendsSearch(edit.getText());
-					mList = (ListView) rootView.findViewById(R.id.mainList);
-					if (results != null) {
-						mListBundle = results;
-						FriendsListAdapter bindingData = new FriendsListAdapter(
-								getActivity(), mListBundle);
-						mList.setAdapter(bindingData);
-						mList.setOnItemClickListener(new OnItemClickListener() {
-							public void onItemClick(AdapterView<?> parent,
-									View view, int position, long id) {
-								tabletOrPhoneControll(Keys.PlayersSTATE,
-										mListBundle.get(position));
-							}
-						});
-
-					}
-				}
-			});
-		}
-		// GroupsListAdapter bindingData = new GroupsListAdapter(getActivity(),
-		// results);
-		// list.setAdapter(bindingData);
-		// list.setOnItemClickListener(new OnItemClickListener() {
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// Bundle args = new Bundle();
-		// args.putString(Keys.PLAYERNAME,
-		// results.get(position).get(Keys.GROUPNAME));
-		// args.putString(Keys.PLAYERTYPE,
-		// results.get(position).get(Keys.GROUPTYPE));
-		//
-		// args.putString(Keys.PLAYERDATE,
-		// results.get(position).get(Keys.GROUPDATE));
-		// mCallback.getAdapter().switchTo(Keys.PlayersSTATE, args);
-		// // getChildFragmentManager().executePendingTransactions();
-		//
-		// }
-		// });
 	}
 
 	public ListView getList() {
@@ -323,29 +254,71 @@ public class ListsFragment extends Fragment {
 		return mListBundle;
 	}
 
-	private void initializeCompanies(ListView list) {
-		final ArrayList<Bundle> results = con.getTable(Keys.companyTable, "");
-		list = (ListView) rootView.findViewById(R.id.mainList);
-		LinearLayout rs = (LinearLayout) rootView.findViewById(R.id.searchLL);
-		rs.setVisibility(View.GONE);
-		mListBundle = results;
-		if (mListBundle != null) {
-			CompanyListAdapter bindingData = new CompanyListAdapter(
-					getActivity(), mListBundle);
-			list.setAdapter(bindingData);
+	public void finishTask(int ViewPagerState) {
+		mCallback.finishTask(ViewPagerState);
+	}
+
+	class LoadListTask extends AsyncTask<Void, Void, Void> {
+
+		String tableName;
+		int appState;
+		Intent mInt;
+		Bundle mBundle;
+		ArrayList<Bundle> mResults;
+
+		private LoadListTask() {
+			con = DataConnector.getInst();
+			this.appState = appState;
 		}
-		list.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
 
-				con.writeTempNewsTab(
-						results.get(position).getString(Keys.EventID_COMPANY),
-						Keys.companysubNewsTAB);
+		// Before running code in separate thread
+		@Override
+		protected void onPreExecute() {
 
-				tabletOrPhoneControll(Keys.CompaniesSTATE,
-						mListBundle.get(position));
+		}
+
+		// The code to be executed in a background thread.
+		@Override
+		protected Void doInBackground(Void... params) {
+			// Get the current thread's token
+			if (Keys.GamesSTATE == mViewPagerState) {
+				mResults = con.getTable(Keys.gamesTable, "");
+			} else if (Keys.GroupsSTATE == mViewPagerState) {
+				mResults = con.getTable(Keys.groupsTable, "");
+			} else if (Keys.NewsSTATE == mViewPagerState) {
+				mResults = con.getTable(Keys.newsTable, "");
+			} else if (Keys.PlayersSTATE == mViewPagerState) {
+				mResults = con.queryPlayerFriendsSearch("");
+			} else if (Keys.CompaniesSTATE == mViewPagerState) {
+				mResults = con.getTable(Keys.companyTable, "");
 			}
-		});
+			return null;
+		}
+
+		// Update the progress
+		@Override
+		protected void onProgressUpdate(Void... params) {
+			// set the current progress of the progress dialog
+			// progressDialog.setProgress(values[0]);
+		}
+
+		// after executing the code in the thread
+		@Override
+		protected void onPostExecute(Void result) {
+			// close the progress dialog
+			if (Keys.GamesSTATE == mViewPagerState) {
+				initializeGames(mResults);
+			} else if (Keys.GroupsSTATE == mViewPagerState) {
+				initializeGroups(mResults);
+			} else if (Keys.NewsSTATE == mViewPagerState) {
+				initializeNews(mResults);
+			} else if (Keys.PlayersSTATE == mViewPagerState) {
+				initializePlayers(mResults);
+			} else if (Keys.CompaniesSTATE == mViewPagerState) {
+				initializeCompanies(mResults);
+			}
+			finishTask(mViewPagerState);
+		}
 	}
 
 }

@@ -33,7 +33,10 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-		return count;
+		if (companiesList.size() >= count)
+			return count;
+		else
+			return companiesList.size();
 	}
 
 	@Override
@@ -48,18 +51,20 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Bundle map = (Bundle) companiesList.get(position);
 		View v = convertView;
 		if (v == null)
 			v = inflator.inflate(R.layout.component_newslist_itemlayout, null);
+		if (companiesList != null) {
+			Bundle map = (Bundle) companiesList.get(position);
 
-		TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
-		// ImageView img = (ImageView) v.findViewById(R.id.imgPlayerAvatarLog);
-		TextView txtText = (TextView) v.findViewById(R.id.txtNickNameText);
-		txtTitle.setText(Html.fromHtml(map.getString(Keys.CompanyName)));
-		// img.setImageResource(map.get(Keys.CompanyImageURL));
-		txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
-
+			TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
+			// ImageView img = (ImageView)
+			// v.findViewById(R.id.imgPlayerAvatarLog);
+			TextView txtText = (TextView) v.findViewById(R.id.txtNickNameText);
+			txtTitle.setText(Html.fromHtml(map.getString(Keys.CompanyName)));
+			// img.setImageResource(map.get(Keys.CompanyImageURL));
+			txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
+		}
 		return v;
 	}
 

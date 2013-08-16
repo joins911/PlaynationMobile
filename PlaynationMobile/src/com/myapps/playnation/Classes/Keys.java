@@ -107,7 +107,7 @@ public final class Keys {
 
 	// Home+Players
 	public static final int HOME_TAB_COUNT = 6;
-	public static final String TAB_MESSAGES = "Messages";
+	public static final String TAB_MESSAGES = "Msges";
 	public static final String TAB_GROUPS = "Groups";
 	public static final String TAB_GAMES = "Games";
 	public static final String TAB_SUBSCRIPTION = "Subs";

@@ -19,9 +19,12 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.Tabs.Group.GroupEventsFragment;
 import com.myapps.playnation.Fragments.Tabs.Group.GroupInfoFragment;
 import com.myapps.playnation.Fragments.Tabs.Group.GroupMediaFragment;
-import com.myapps.playnation.Fragments.Tabs.Group.GroupWallFragment;
 import com.myapps.playnation.Fragments.Tabs.Group.GroupPlayersFragment;
+import com.myapps.playnation.Fragments.Tabs.Group.GroupWallFragment;
 
+/*
+ * Disabled Players,Media and Events Tabs
+ */
 public class GroupTabHostDesc extends TabHostDesc implements
 		OnTabChangeListener {
 	private FragmentTabHost mTabHost;
@@ -38,12 +41,13 @@ public class GroupTabHostDesc extends TabHostDesc implements
 				Keys.TAB_INFO, getArguments());
 		setupTab(GroupWallFragment.class, new TextView(getActivity()),
 				Keys.TAB_WALL, getArguments());
-		setupTab(GroupPlayersFragment.class, new TextView(getActivity()),
-				Keys.TAB_PLAYERS, getArguments());
-		setupTab(GroupMediaFragment.class, new TextView(getActivity()),
-				Keys.TAB_MEDIA, getArguments());
-		setupTab(GroupEventsFragment.class, new TextView(getActivity()),
-				Keys.TAB_EVENTS, getArguments());
+		/*
+		 * setupTab(GroupPlayersFragment.class, new TextView(getActivity()),
+		 * Keys.TAB_PLAYERS, getArguments()); setupTab(GroupMediaFragment.class,
+		 * new TextView(getActivity()), Keys.TAB_MEDIA, getArguments());
+		 * setupTab(GroupEventsFragment.class, new TextView(getActivity()),
+		 * Keys.TAB_EVENTS, getArguments());
+		 */
 		mTabHost.setOnTabChangedListener(this);
 		return mTabHost;
 	}
