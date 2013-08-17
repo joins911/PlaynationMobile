@@ -25,6 +25,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -41,12 +42,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.CommentInfo;
 import com.myapps.playnation.Classes.Keys;
-import com.myapps.playnation.Classes.LastIDs;
 import com.myapps.playnation.Classes.UserComment;
 
 /**
@@ -63,6 +64,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
 	// final String ServerIp = "10.0.2.2";
+	// final String ServerIp = "192.168.1.47:90";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -79,11 +81,10 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	private DataConnector(Context con) {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
-		// SQLiteDatabase.openOrCreateDatabase(DATABASE_NAME, null);
-		new CheckConnectionTask().execute();
+
 		url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
-
+		// new CheckConnectionTask().execute();
 	}
 
 	class CheckConnectionTask extends AsyncTask<Void, Integer, Boolean> {
@@ -93,6 +94,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			try {
 				String temp = url + "getGames.php";
 				URL serverURL = new URL(temp);
+
 				URLConnection urlconn = serverURL.openConnection();
 				urlconn.setConnectTimeout(5000);
 				urlconn.connect();
@@ -195,7 +197,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							Keys.NEWSCOLID_NEWS);
 					if (gameType.toLowerCase().equals("game")) {
 						if (!checkRowExist(Keys.newsTempTable, id, id_game)) {
-							System.out.println("Entered");
+
 							ContentValues temp = new ContentValues();
 							temp.put(Keys.NEWSCOLID_NEWS, id);
 							temp.put(Keys.ID_OWNER, json.getJSONObject(i)
@@ -230,7 +232,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 						}
 					} else {
-						if (!checkRowExist(Keys.companyTempTable, id_game, "")) {
+						if (!checkRowExist(Keys.companyTempTable, id, id_game)) {
 							ContentValues temp = new ContentValues();
 							temp.put(Keys.NEWSCOLID_NEWS, id);
 							temp.put(Keys.ID_OWNER, json.getJSONObject(i)
@@ -268,7 +270,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ e);
 				}
 			}
-			sql.close();
+			// //sql.close();
 		}
 	}
 
@@ -281,7 +283,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					+ " Where ID_GAME=" + id;
 		} else {
 			selectQuery = "Select * from " + Keys.companyTempTable
-					+ " Where ID_GAME=" + id;
+					+ " Where ID_GAME=" + id + "";
 		}
 
 		sql = getReadableDatabase();
@@ -314,7 +316,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// //sql.close();
 			return arrayList;
 		}
 
@@ -398,11 +400,12 @@ public class DataConnector extends SQLiteOpenHelper {
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	@SuppressLint("NewApi")
 	public void addGames(JSONArray jsonArray) throws JSONException {
+
 		SQLiteDatabase sql = this.getWritableDatabase();
 		Set<String> gameTypes = new HashSet<String>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String id_GAME = jsonArray.getJSONObject(i).getString(Keys.ID_GAME);
-			if (!checkRowExist(Keys.gamesTable, id_GAME, "")) {
+			if (checkRowExist(Keys.gamesTable, id_GAME, "") == false) {
 				ContentValues temp = new ContentValues();
 				temp.put(Keys.GAMENAME,
 						jsonArray.getJSONObject(i).getString(Keys.GAMENAME));
@@ -421,8 +424,9 @@ public class DataConnector extends SQLiteOpenHelper {
 						jsonArray.getJSONObject(i).getString(Keys.GAMEURL));
 				temp.put(Keys.GAMEPLAYERSCOUNT, jsonArray.getJSONObject(i)
 						.getString(Keys.GAMEPLAYERSCOUNT));
-
-				LastIDs.setLastIDGames(Integer.parseInt(id_GAME));
+				int id = Integer.parseInt(id_GAME);
+				if (id > getLastIDGames())
+					setLastIDGames(id);
 				temp.put(Keys.ID_GAME, id_GAME);
 				temp.put(Keys.GAMETYPENAME, jsonArray.getJSONObject(i)
 						.getString(Keys.GAMETYPENAME));
@@ -443,7 +447,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			}
 		}
 
-		sql.close();
+		// //sql.close();
 		convertGameTypes(gameTypes);
 	}
 
@@ -503,7 +507,9 @@ public class DataConnector extends SQLiteOpenHelper {
 						"EEEE,MMMM d,yyyy h:mm,a", Locale.getDefault())));
 
 				temp.put(Keys.ID_GROUP, ID_Groups);
-				LastIDs.setLastIDGroups(Integer.parseInt(ID_Groups));
+				int id = Integer.parseInt(ID_Groups);
+				if (id > getLastIDGroups())
+					setLastIDGroups(id);
 				String creator = jsonArray.getJSONObject(i).getString(
 						Keys.PLAYERNICKNAME);
 				temp.put(Keys.GruopCreatorName, creator);
@@ -513,7 +519,7 @@ public class DataConnector extends SQLiteOpenHelper {
 						Keys.GROUPTYPE));
 			}
 		}
-		sql.close();
+		// //sql.close();
 		convertGroupTypes(groupTypes);
 	}
 
@@ -527,7 +533,9 @@ public class DataConnector extends SQLiteOpenHelper {
 				ContentValues temp = new ContentValues();
 
 				temp.put(Keys.NEWSCOLID_NEWS, ID_News);
-				LastIDs.setLastIDNews(Integer.parseInt(ID_News));
+				int id = Integer.parseInt(ID_News);
+				if (id > getLastIDNews())
+					setLastIDNews(id);
 				temp.put(Keys.NEWSCOLNEWSTEXT, jsonArray.getJSONObject(i)
 						.getString(Keys.NEWSCOLNEWSTEXT));
 				temp.put(Keys.NEWSCOLINTROTEXT, jsonArray.getJSONObject(i)
@@ -546,7 +554,7 @@ public class DataConnector extends SQLiteOpenHelper {
 						SQLiteDatabase.CONFLICT_REPLACE);
 			}
 		}
-		sql.close();
+		// //sql.close();
 	}
 
 	public void jsonToArray(JSONArray jsonArray, String table)
@@ -564,9 +572,10 @@ public class DataConnector extends SQLiteOpenHelper {
 		}
 	}
 
-	public ArrayList<Bundle> getSQLitePWall(String tableName) {
+	public ArrayList<Bundle> getSQLitePWall(String tableName, String id) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, id, "",
+				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -603,15 +612,16 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// //sql.close();
 		}
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLiteNews(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
-		SQLiteDatabase sql = getReadableDatabase();
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				"0");
+		SQLiteDatabase sql = this.getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -639,16 +649,18 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
+
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLiteGame(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
-		SQLiteDatabase sql = getReadableDatabase();
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				0 + "");
+		SQLiteDatabase sql = this.getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
+
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -695,16 +707,18 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
+
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLiteGroups(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
-		SQLiteDatabase sql = getReadableDatabase();
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				0 + "");
+		SQLiteDatabase sql = this.getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
+
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -734,14 +748,14 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLiteCompanies(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -794,14 +808,14 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
 		return list;
 	}
 
-	public ArrayList<Bundle> getSQLitePMSG(String tableName) {
+	public ArrayList<Bundle> getSQLitePMSG(String tableName, String playerID) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName,
+				playerID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -832,14 +846,14 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLitePSubscription(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -864,14 +878,15 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
 
 	public ArrayList<Bundle> getSQLitePEvent(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
+				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -930,16 +945,17 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
 
-	public ArrayList<Bundle> getSQLitePFriends(String tableName) {
+	public ArrayList<Bundle> getSQLitePFriends(String tableName, String sepateID) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName,
+				sepateID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
-		Cursor cursor = sql.rawQuery(selectQuery, null);
+		Cursor cursor = sql.rawQuery(selectQuery, new String[] { sepateID });
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -972,7 +988,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
@@ -980,7 +996,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	public ArrayList<Bundle> getSQLiteWhoIsPlaying(String tableName,
 			String iD_Game) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, iD_Game);
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, iD_Game,
+				"", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -1014,16 +1031,17 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
 
-	public ArrayList<Bundle> getSQLitePGames(String tableName) {
+	public ArrayList<Bundle> getSQLitePGames(String tableName, String sep) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName, sep, "",
+				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
-		Cursor cursor = sql.rawQuery(selectQuery, null);
+		Cursor cursor = sql.rawQuery(selectQuery, new String[] { sep });
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -1096,16 +1114,17 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
 
-	public ArrayList<Bundle> getSQLitePGroup(String tableName) {
+	public ArrayList<Bundle> getSQLitePGroup(String tableName, String sepateID) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "");
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName,
+				sepateID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
-		Cursor cursor = sql.rawQuery(selectQuery, null);
+		Cursor cursor = sql.rawQuery(selectQuery, new String[] { sepateID });
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -1144,7 +1163,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
@@ -1152,8 +1171,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	public ArrayList<Bundle> getSQLitePMsgReplies(String tableName,
 			String sepateID) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass
-				.sqliteQueryStrings(tableName, sepateID);
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName,
+				sepateID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -1185,7 +1204,6 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
 		}
 		return list;
 	}
@@ -1193,10 +1211,11 @@ public class DataConnector extends SQLiteOpenHelper {
 	public ArrayList<Bundle> getSQLitePWallReplies(String tableName,
 			String sepateID) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
-		String selectQuery = HelperClass
-				.sqliteQueryStrings(tableName, sepateID);
+		String selectQuery = HelperClass.sqliteQueryStrings(tableName,
+				sepateID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
+		System.out.println("Cursor " + cursor.getCount());
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -1232,10 +1251,12 @@ public class DataConnector extends SQLiteOpenHelper {
 									.getColumnIndex(Keys.WallPostingTime)));
 
 					list.add(bundle);
+
 				} while (cursor.moveToNext());
+
 			}
 			cursor.close();
-			sql.close();
+			// sql.close();
 		}
 		return list;
 	}
@@ -1274,7 +1295,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				getQuerry(tableName);
 			} else {
 				if (tableName.equals(Keys.HomeWallTable)) {
-					return getSQLitePWall(tableName);
+					return getSQLitePWall(tableName, sepateID);
 				} else if (tableName.equals(Keys.newsTable)) {
 					return getSQLiteNews(tableName);
 				} else if (tableName.equals(Keys.groupsTable)) {
@@ -1284,17 +1305,17 @@ public class DataConnector extends SQLiteOpenHelper {
 				} else if (tableName.equals(Keys.companyTable)) {
 					return getSQLiteCompanies(tableName);
 				} else if (tableName.equals(Keys.HomeMsgTable)) {
-					return getSQLitePMSG(tableName);
+					return getSQLitePMSG(tableName, sepateID);
 				} else if (tableName.equals(Keys.HomeSubscriptionTable)) {
 					return getSQLitePSubscription(tableName);
 				} else if (tableName.equals(Keys.HomeEventTable)) {
 					return getSQLitePEvent(tableName);
 				} else if (tableName.equals(Keys.HomeFriendsTable)) {
-					return getSQLitePFriends(tableName);
+					return getSQLitePFriends(tableName, sepateID);
 				} else if (tableName.equals(Keys.HomeGamesTable)) {
-					return getSQLitePGames(tableName);
+					return getSQLitePGames(tableName, sepateID);
 				} else if (tableName.equals(Keys.HomeGroupTable)) {
-					return getSQLitePGroup(tableName);
+					return getSQLitePGroup(tableName, sepateID);
 				} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
 					return getSQLitePWallReplies(tableName, sepateID);
 				} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
@@ -1469,6 +1490,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		String result = "";
 		String temp = url;
 		url += getScriptString(tableName);
+		HttpEntity entity = null;
 		JSONArray jArray = null;
 		// http post
 		try {
@@ -1483,24 +1505,25 @@ public class DataConnector extends SQLiteOpenHelper {
 
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
+			entity = response.getEntity();
+			// is = entity.get;
 		} catch (Exception e) {
 			Log.e("log_tag HTML Conn",
 					"Error in http connection " + e.toString());
 		}
 
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
+			// BufferedReader reader = new BufferedReader(new InputStreamReader(
+			// is, "iso-8859-1"), 8);
+			// StringBuilder sb = new StringBuilder();
+			// String line = null;
+			// while ((line = reader.readLine()) != null) {
+			// sb.append(line + "\n");
+			// }
+			// is.close();
 
-			result = sb.toString();
+			// result = sb.toString();
+			result = EntityUtils.toString(entity);
 		} catch (Exception e) {
 			Log.e("DataConnector getWithPost2() ", "Error converting result "
 					+ e.toString());
@@ -1586,7 +1609,10 @@ public class DataConnector extends SQLiteOpenHelper {
 						ContentValues map = new ContentValues();
 
 						map.put(Keys.EventID_COMPANY, ID);
-						LastIDs.setLastIDCompanies(Integer.parseInt(ID));
+						int id = Integer.parseInt(ID);
+						if (id > getLastIDCompanies())
+							setLastIDCompanies(id);
+
 						map.put(Keys.CompanyName, jsonArray.getJSONObject(i)
 								.getString(Keys.CompanyName));
 						map.put(Keys.CompanyEmployees,
@@ -1639,16 +1665,15 @@ public class DataConnector extends SQLiteOpenHelper {
 				}
 			}
 		// lilDb.put(Keys.companyTable, arrayQueryValues);
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint({ "NewApi", "InlinedApi" })
 	public void queryPlayerEvents(String playerID, Context v) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeEventTable, "0", LastIDs.getLastHomeIDEvents());
-		// ArrayList<HashMap<String, String>> arrayChildren = new
-		// ArrayList<HashMap<String, String>>();
+				Keys.HomeEventTable, "0", getLastHomeIDEvents());
+
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1658,7 +1683,9 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_EVENT)
 							+ "";
 					if (!checkRowExist(Keys.HomeEventTable, ID, playerID)) {
-						LastIDs.setLastHomeIDEvents(Integer.parseInt(ID));
+						int id = Integer.parseInt(ID);
+						if (id > getLastHomeIDEvents())
+							setLastHomeIDEvents(id);
 						map.put(Keys.ID_EVENT, ID);
 						map.put(Keys.EventID_COMPANY, json.getJSONObject(i)
 								.getInt(Keys.EventID_COMPANY) + "");
@@ -1704,7 +1731,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Events", "Error Events" + e);
 				}
 			}
-		sql.close();
+		// sql.close();
 		// lilDb.put(Keys.HomeEventTable, arrayChildren);
 	}
 
@@ -1712,7 +1739,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	public void queryPlayerFriends(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeFriendsTable, "0", LastIDs.getLastIDFriends());
+				Keys.HomeFriendsTable, "0", 0);
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
 
@@ -1720,7 +1747,10 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getString(Keys.ID_PLAYER);
 					if (!checkRowExist(Keys.HomeFriendsTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
-						LastIDs.setLastIDHomeFriends(Integer.parseInt(ID));
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeFriends())
+						// setLastIDHomeFriends(id);
+
 						map.put(Keys.ID_PLAYER, ID);
 						map.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getString(Keys.ID_OWNER));
@@ -1748,7 +1778,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				}
 			}
 		}
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
@@ -1790,24 +1820,26 @@ public class DataConnector extends SQLiteOpenHelper {
 				}
 			}
 		}
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint("NewApi")
 	public void queryPlayerGames(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeGamesTable, "0", LastIDs.getLastIDHomeGames());
+				Keys.HomeGamesTable, "0", 0);
 		Set<String> gameTypes = new HashSet<String>();
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
-
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_GAME) + "";
 					if (!checkRowExist(Keys.HomeGamesTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						LastIDs.setLastIDHomeGames(Integer.parseInt(ID));
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeGames())
+						// setLastIDHomeGames(id);
+
 						m.put(Keys.ID_GAME, ID);
 						m.put(Keys.RATING,
 								json.getJSONObject(i).getString(Keys.RATING));
@@ -1870,14 +1902,14 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Games", "Error Games" + e);
 				}
 			}
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerGroup(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeGroupTable, "0", LastIDs.getLastIDHomeGroups());
+				Keys.HomeGroupTable, "0", 0);
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1886,7 +1918,10 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeGroupTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						LastIDs.setLastIDHomeGroups(Integer.parseInt(ID));
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeGroups())
+						// setLastIDHomeGroups(id);
+
 						m.put(Keys.ID_GROUP, ID);
 						m.put(Keys.ID_PLAYER,
 								json.getJSONObject(i).getInt(Keys.ID_PLAYER)
@@ -1919,14 +1954,14 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Group", "Error Group " + e);
 				}
 			}
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerMessages(String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeMsgTable, "0", LastIDs.getLastIDHomeMSg());
+				Keys.HomeMsgTable, "0", getLastIDHomeMSg());
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1935,7 +1970,10 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeMsgTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
-						LastIDs.setLastIDHomeMSg(Integer.parseInt(ID));
+						int id = Integer.parseInt(ID);
+						if (id > getLastIDHomeMSg())
+							setLastIDHomeMSg(id);
+
 						map.put(Keys.ID_MESSAGE, ID);
 						map.put(Keys.MessageID_CONVERSATION,
 								json.getJSONObject(i).getInt(
@@ -1963,7 +2001,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Msg", "Error Msg" + e);
 				}
 			}
-		sql.close();
+		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
@@ -1971,7 +2009,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		// TODO
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeSubscriptionTable, "0", LastIDs.getLastIDHomeSubs());
+				Keys.HomeSubscriptionTable, "0", getLastIDHomeSubs());
 		// // Print the data to the console
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
@@ -1980,7 +2018,10 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_ITEM) + "";
 					if (!checkRowExist(Keys.HomeSubscriptionTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						LastIDs.setLastIDHomeSubs(Integer.parseInt(ID));
+						int id = Integer.parseInt(ID);
+						if (id > getLastIDHomeSubs())
+							setLastIDHomeSubs(id);
+
 						m.put(Keys.ID_ITEM, ID);
 						m.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getInt(Keys.ID_OWNER)
@@ -2001,7 +2042,7 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Subscription", "Error Subscription " + e);
 				}
 			}
-		sql.close();
+		// sql.close();
 	}
 
 	public boolean checkDBTableExits(String tableName) {
@@ -2020,12 +2061,13 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
-	public void queryPlayerWall(String playerID) {
+	public void queryPlayerWall(String playerID, String ownerType) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeWallTable, "0", LastIDs.getLastIDHomeWall());
+				Keys.HomeWallTable, ownerType, 0);
 		// // Print the data to the console
+
 		if (json != null)
 			for (int i = 0; i < json.length(); i++) {
 				//
@@ -2034,7 +2076,10 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-						LastIDs.setLastIDHomeWall(Integer.parseInt(ID));
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeWall())
+						// setLastIDHomeWall(id);
+
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");
 						m.put(Keys.ID_WALLITEM, ID);
@@ -2055,28 +2100,30 @@ public class DataConnector extends SQLiteOpenHelper {
 								SQLiteDatabase.CONFLICT_REPLACE);
 					}
 				} catch (Exception e) {
-					Log.e("HomeWallFrag ", " querryPlayerWall() Error " + e);
+					Log.e("DataConnector ", " querryPlayerWall() Error " + e);
 				}
 			}
-		sql.close();
+		// //sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerWallReplices(String wallitem, String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeWallRepliesTable, wallitem,
-				LastIDs.getLastIDHomeWallRep());
+				Keys.HomeWallRepliesTable, wallitem, 0);
 
-		// // Print the data to the console
-		if (json != null)
+		if (json != null) {
+			System.out.println("json " + json.length());
 			for (int i = 0; i < json.length(); i++) {
-				//
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
-					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem, ID)) {
-						LastIDs.setLastIDHomeWallRep(Integer.parseInt(ID));
+					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem,
+							playerID)) {
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeWallRep())
+						// setLastIDHomeWallRep(id);
+
 						ContentValues m = new ContentValues();
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");
@@ -2108,15 +2155,15 @@ public class DataConnector extends SQLiteOpenHelper {
 							"Fetching WallReplies: Error" + e);
 				}
 			}
-		sql.close();
+		}
+		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerMSGReplices(String wallitem, String playerID) {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
-				Keys.HomeMsgRepliesTable, wallitem,
-				LastIDs.getLastIDHomeMSgRep());
+				Keys.HomeMsgRepliesTable, wallitem, 0);
 
 		// // Print the data to the console
 		if (json != null)
@@ -2125,9 +2172,13 @@ public class DataConnector extends SQLiteOpenHelper {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_MESSAGE)
 							+ "";
-					if (!checkRowExist(Keys.HomeMsgRepliesTable, wallitem, ID)) {
+					if (!checkRowExist(Keys.HomeMsgRepliesTable, wallitem,
+							playerID)) {
 						ContentValues map = new ContentValues();
-						LastIDs.setLastIDHomeMSgRep(Integer.parseInt(ID));
+						// int id = Integer.parseInt(ID);
+						// if (id > getLastIDHomeMSgRep())
+						// setLastIDHomeMSgRep(id);
+
 						map.put(Keys.ID_MESSAGE, ID);
 						map.put(Keys.MessageID_CONVERSATION,
 								json.getJSONObject(i).getInt(
@@ -2152,7 +2203,7 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ e);
 				}
 			}
-		sql.close();
+		// //sql.close();
 	}
 
 	// -----------------------------------------------------------------
@@ -2192,16 +2243,15 @@ public class DataConnector extends SQLiteOpenHelper {
 					// arrayChildren.add(map);
 					sql.insertWithOnConflict(Keys.PlayerTable, null, map,
 							SQLiteDatabase.CONFLICT_REPLACE);
+
 				} catch (Exception e) {
 					Log.e("Fetching Info", "Error " + e);
 				}
 			}
-		// lilDb.put(Keys.PlayerTable, arrayChildren);
-		sql.close();
 	}
 
-	public View populatePlayerGeneralInfo(View v, String nameT) {
-		Bundle currentPlayer = getPlayer();
+	public View populatePlayerGeneralInfo(View v, String nameT, String playerID) {
+		Bundle currentPlayer = getPlayer(playerID);
 
 		if (v != null) {
 			TextView txPlName = (TextView) v.findViewById(R.id.txPlName);
@@ -2313,9 +2363,9 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	private String[] gametypes;
 
-	public Bundle getPlayer() {
+	public Bundle getPlayer(String playerID) {
 		String selectQuery = HelperClass.sqliteQueryStrings(Keys.PlayerTable,
-				"");
+				playerID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		Bundle returnBundle = null;
@@ -2350,7 +2400,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				} while (cursor.moveToNext());
 			}
 			cursor.close();
-			sql.close();
+			// //sql.close();
 		}
 		return returnBundle;
 	}
@@ -2373,45 +2423,40 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	// STIll NEEDED TO BE FINISHED
-	public ArrayList<UserComment> getComments() {
+	public ArrayList<UserComment> getComments(String ownerId, String ownerType) {
+		queryPlayerWall(ownerId, ownerType);
 
-		/*
-		 * con = DataConnector.getInst(); ArrayList<HashMap<String,String>>
-		 * commentsTable = con.getTable(Keys.commentsTable);
-		 * ArrayList<UserComment> comments = new ArrayList<UserComment>();
-		 * for(int i=0;i<commentsTable.size();i++) {
-		 * if(commentsTable.get(i).get(
-		 * Keys.ID_OWNER).equals(getIntent().getIntExtra(Keys.ID_GAME, 0)))
-		 * comments.add(new UserComment(commentsTable.get(i).get(Keys.USERNAME),
-		 * commentsTable.get(i).get(Keys.COMMENT),null)); } this.commentsList =
-		 * comments;
-		 */
 		ArrayList<UserComment> comments = new ArrayList<UserComment>();
-		ArrayList<CommentInfo> dummy1 = new ArrayList<CommentInfo>();
-		ArrayList<CommentInfo> dummy2 = new ArrayList<CommentInfo>();
-		ArrayList<CommentInfo> dummy3 = new ArrayList<CommentInfo>();
-		dummy1.add(new CommentInfo("Claudiu", "Are you doing good?",
-				"Saturday 11:12AM, 17/10/2013"));
-		dummy1.add(new CommentInfo("Me", "Yes I am",
-				"Saturday 11:12AM, 17/10/2013"));
-		dummy1.add(new CommentInfo("Claudiu", "Good Good",
-				"Saturday 11:13AM, 17/10/2013"));
-		dummy2.add(new CommentInfo("Me", "When are you back",
-				"Saturday 11:17AM, 17/10/2013"));
-		dummy2.add(new CommentInfo("Claudiu", "Soon i hope",
-				"Saturday 11:17AM, 17/10/2013"));
-		dummy3.add(new CommentInfo("Me", "I'm sure you'll find out",
-				"Saturday 11:19AM, 17/10/2013"));
-		comments.add(new UserComment(new CommentInfo("Me",
-				"Fine good weather today", "Saturday 12:12AM, 17/10/2013"),
-				dummy1));
-		comments.add(new UserComment(new CommentInfo("OtherMe",
-				"Out for the weekend", "Saturday 12:15AM, 17/10/2013"), dummy2));
-		comments.add(new UserComment(new CommentInfo("Claudiu",
-				"Not sure what to do next", "Saturday 11:12AM, 17/10/2013"),
-				dummy3));
-		return comments;
+		ArrayList<CommentInfo> dummy1;
 
+		ArrayList<Bundle> list = getSQLitePWall(Keys.HomeWallTable, ownerId);
+
+		if (list.size() > 0)
+			for (Bundle bundle : list) {
+				queryPlayerWallReplices(bundle.getString(Keys.ID_WALLITEM),
+						ownerId);
+				ArrayList<Bundle> dum1 = getSQLitePWallReplies(
+						Keys.HomeWallRepliesTable,
+						bundle.getString(Keys.ID_WALLITEM));
+
+				dummy1 = new ArrayList<CommentInfo>();
+				if (dum1.size() > 0) {
+					for (Bundle bundle2 : dum1) {
+						String date = bundle2.getString(Keys.WallPostingTime);
+						dummy1.add(new CommentInfo(bundle2
+								.getString(Keys.WallPosterDisplayName), bundle2
+								.getString(Keys.WallMessage), date));
+					}
+
+					String date = HelperClass.convertTime(Integer
+							.parseInt(bundle.getString(Keys.WallPostingTime)),
+							dataTemplate);
+					comments.add(new UserComment(new CommentInfo(bundle
+							.getString(Keys.WallPosterDisplayName), bundle
+							.getString(Keys.WallMessage), date), dummy1));
+				}
+			}
+		return comments;
 	}
 
 	@Override
@@ -2579,6 +2624,40 @@ public class DataConnector extends SQLiteOpenHelper {
 				+ Keys.Email + " TEXT);";
 		db.execSQL(cREATE_PlayerTable);
 
+		String cREATE_LASTIDTABLE = "CREATE TABLE " + Keys.LASTIDTABLE + " ("
+				+ "_id INTEGER PRIMARY KEY autoincrement," + Keys.POSTLASTID
+				+ " INTEGER, COLNAME  TEXT);";
+		db.execSQL(cREATE_LASTIDTABLE);
+
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDNews');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeEvents');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeSubs');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDGames');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDCompanies');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDFriends');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDGroups');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeMSg');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeWall');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeMSgRep');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeWallRep');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeGroups');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeGames');");
+		db.execSQL("Insert into " + Keys.LASTIDTABLE + " (" + Keys.POSTLASTID
+				+ ", COLNAME) values(0,'lastIDHomeFriends');");
+
 	}
 
 	@Override
@@ -2596,12 +2675,12 @@ public class DataConnector extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	// Still have to work on the Querry
+	// Still have to work on the Querry MAYBE DELETE
 	public boolean checkUsernameAndPassword(String userName, String passWord) {
 		SQLiteDatabase sql = this.getReadableDatabase();
 		sql = getReadableDatabase();
 		String selectQuery = "Select * FROM " + Keys.gamesTable;
-		// + userName;
+
 		ArrayList<String> list = null;
 		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
@@ -2615,7 +2694,6 @@ public class DataConnector extends SQLiteOpenHelper {
 			}
 		}
 		cursor.close();
-		sql.close();
 		if (list != null)
 			for (int i = 0; i <= list.size(); i++)
 				if (list.get(i).equals(passWord))
@@ -2629,38 +2707,62 @@ public class DataConnector extends SQLiteOpenHelper {
 		return connStatus;
 	}
 
-	public JSONArray registerPlayerMobileQuery(String nickname, String email,
+	public boolean registerPlayerMobileQuery(String nickname, EditText email,
 			String password) {
 		String temp = url;
-		url += "registerPlayerMobile.php";
-
+		url += "chekRegisterLogin.php";
+		String result = "";
+		HttpEntity entity = null;
+		JSONArray jArray = null;
 		// http post
 		try {
 			httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(url);
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			url = temp;
-			pairs.add(new BasicNameValuePair("nickname", nickname));
-			pairs.add(new BasicNameValuePair("email", email));
+			String[] ar;
+
+			pairs.add(new BasicNameValuePair("checkCondition", "Register"));
+			if (nickname.contains(" ")) {
+				ar = nickname.split(" ");
+				pairs.add(new BasicNameValuePair("FirstName", ar[0]));
+				pairs.add(new BasicNameValuePair("LastName", ar[1]));
+			} else {
+				pairs.add(new BasicNameValuePair("FirstName", nickname));
+				pairs.add(new BasicNameValuePair("LastName", ""));
+			}
+
 			pairs.add(new BasicNameValuePair("password", password));
-
+			pairs.add(new BasicNameValuePair("email", email.getText()
+					.toString()));
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
-			httpclient.execute(httppost);
-
+			HttpResponse response = httpclient.execute(httppost);
+			entity = response.getEntity();
 		} catch (Exception e) {
 			Log.e("log_tag HTML Conn",
 					"Error in registerPlayerMobile http connection "
 							+ e.toString());
 		}
-
-		return null;
+		try {
+			result = EntityUtils.toString(entity);
+		} catch (Exception e) {
+			Log.e("DataConnector checkLogin() ",
+					"Error converting result " + e.toString());
+		}
+		if (!result.equalsIgnoreCase("")) {
+			email.setError("Duplicate Email. This email already exists.");
+			return false;
+		} else {
+			email.setError(null);
+			return true;
+		}
 	}
 
-	public boolean checkLogin(String nick, String pass, SharedPreferences pref) {
+	public boolean checkLogin(String email, String pass, SharedPreferences pref) {
 		String result = "";
 		String temp = url;
-		url += "Login.php";
-
+		url += "chekRegisterLogin.php";
+		HttpEntity entity = null;
 		JSONArray jArray = null;
 		boolean results = false;
 		// http post
@@ -2669,29 +2771,23 @@ public class DataConnector extends SQLiteOpenHelper {
 			HttpPost httppost = new HttpPost(url);
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			url = temp;
-			pairs.add(new BasicNameValuePair(Keys.POSTID_PLAYER, nick));
-			pairs.add(new BasicNameValuePair(Keys.POSTTableName, pass));
+			pairs.add(new BasicNameValuePair("checkCondition", "Login"));
+			pairs.add(new BasicNameValuePair("FirstName", ""));
+			pairs.add(new BasicNameValuePair("LastName", ""));
+			pairs.add(new BasicNameValuePair("password", pass));
+			pairs.add(new BasicNameValuePair("email", email));
 
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
+			entity = response.getEntity();
+			// is = entity.getContent();
 		} catch (Exception e) {
 			Log.e("log_tag HTML Conn", "Error in checkLogin http connection "
 					+ e.toString());
 		}
 
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			result = sb.toString();
+			result = EntityUtils.toString(entity);
 		} catch (Exception e) {
 			Log.e("DataConnector checkLogin() ",
 					"Error converting result " + e.toString());
@@ -2705,8 +2801,16 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		if (jArray != null) {
 			// Put return ID_PLAYER should be set into Keys.TEMPLAYERID
+			try {
+				Keys.TEMPLAYERID = jArray.getJSONObject(0).getString(
+						Keys.ID_PLAYER);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			SharedPreferences.Editor editPref = pref.edit();
-			editPref.putString(Keys.USERNAME, nick);
+			editPref.putString(Keys.USERNAME, email);
+			editPref.putString(Keys.ID_PLAYER, Keys.TEMPLAYERID);
 			editPref.putString(Keys.Password, pass);
 			editPref.putBoolean(Keys.ActiveSession, true);
 			editPref.commit();
@@ -2716,16 +2820,390 @@ public class DataConnector extends SQLiteOpenHelper {
 		}
 		return results;
 	}
+
+	// --------------------------------------------------------
+	public int getLastIDNews() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDNews';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDNews(int lastIDNews) {
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDNews);
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDNews'", null, SQLiteDatabase.CONFLICT_REPLACE);
+		// //sql.close();
+	}
+
+	public int getLastIDGames() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDGames';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDGames(int lastIDGames) {
+		// LastIDs.lastIDGames = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDGames);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDGames'", null, SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDCompanies() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDCompanies';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDCompanies(int lastIDCompanies) {
+		// LastIDs.lastIDCompanies = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDCompanies);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDCompanies'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDFriends() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDFriends';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDFriends(int lastIDFriends) {
+		// LastIDs.lastIDFriends = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDFriends);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDFriends'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+	}
+
+	public int getLastIDGroups() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDGroups';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDGroups(int lastIDGroups) {
+		// LastIDs.lastIDGroups = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDGroups);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDGroups'", null, SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeMSg() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeMSg';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeMSg(int lastIDHomeMSg) {
+		// LastIDs.lastIDHomeMSg = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeMSg);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeMSg'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeWall() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeWall';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeWall(int lastIDHomeWall) {
+		// LastIDs.lastIDHomeWall = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeWall);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeWall'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeGroups() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeGroups';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeGroups(int lastIDHomeGroups) {
+		// LastIDs.lastIDHomeGroups = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeGroups);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeGroups'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeGames() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeGames';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeGames(int lastIDHomeGames) {
+		// LastIDs.lastIDHomeGames = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeGames);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeGames'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeFriends() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeFriends';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeFriends(int lastIDHomeFriends) {
+		// LastIDs.lastIDHomeFriends = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeFriends);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeFriends'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastHomeIDEvents() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastHomeIDEvents';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastHomeIDEvents(int lastIDEvents) {
+		// LastIDs.lastIDHomeEvents = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDEvents);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDEvents'", null, SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeSubs() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeSubs';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeSubs(int lastIDHomeSubs) {
+		// LastIDs.lastIDHomeSubs = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeSubs);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeSubs'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeMSgRep() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeMSgRep';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeMSgRep(int lastIDHomeMSgRep) {
+		// LastIDs.lastIDHomeMSgRep = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeMSgRep);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeMSgRep'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
+
+	public int getLastIDHomeWallRep() {
+		String selectQuery = "Select * from " + Keys.LASTIDTABLE
+				+ " Where COLNAME='lastIDHomeWallRep';";
+
+		SQLiteDatabase sql = this.getReadableDatabase();
+		Cursor cursor = sql.rawQuery(selectQuery, null);
+		int returns = 0;
+		if (cursor != null && cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			returns = Integer.parseInt(cursor.getString(cursor
+					.getColumnIndex(Keys.POSTLASTID)));
+		}
+		return returns;
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public void setLastIDHomeWallRep(int lastIDHomeWallRep) {
+		// LastIDs.lastIDHomeWallRep = ;
+		SQLiteDatabase sql = this.getWritableDatabase();
+		ContentValues value = new ContentValues();
+		value.put(Keys.POSTLASTID, lastIDHomeWallRep);
+
+		sql.updateWithOnConflict(Keys.LASTIDTABLE, value,
+				"COLNAME='lastIDHomeWallRep'", null,
+				SQLiteDatabase.CONFLICT_REPLACE);
+
+	}
 }
-
-/*
- * public void execQuerry(String phpScript, ArrayList<NameValuePair> data) {
- * String temp = url; try {
- * 
- * url += phpScript; httpclient = new DefaultHttpClient(); HttpPost httppost =
- * new HttpPost(url); httppost.setEntity(new UrlEncodedFormEntity(data));
- * HttpResponse response = httpclient.execute(httppost);
- * Log.e("log.tag.httpResponse", response.toString()); } catch (Exception e) {
- * Log.e("log_tag", "Error:  " + e.toString()); } url = temp; }
- */
-

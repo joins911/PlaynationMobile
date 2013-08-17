@@ -33,11 +33,16 @@ public class HomeMessagesFragment extends Fragment {
 			con.queryPlayerMessages(Keys.TEMPLAYERID);
 
 		listParents.clear();
-		for (Bundle hashMap : con.getTable(Keys.HomeMsgTable, "")) {
-			ExpandbleParent parentItem = new ExpandbleParent();
-			parentItem.setFirstChild(hashMap);
-			listParents.add(parentItem);
-		}
+		ArrayList<Bundle> list = con.getTable(Keys.HomeMsgTable,
+				Keys.TEMPLAYERID);
+		if (list != null)
+			for (Bundle hashMap : list) {
+				if (hashMap != null) {
+					ExpandbleParent parentItem = new ExpandbleParent();
+					parentItem.setFirstChild(hashMap);
+					listParents.add(parentItem);
+				}
+			}
 
 		eListView.setAdapter(new HomExpandableAdapter(getActivity(),
 				listParents, eListView, this));

@@ -47,8 +47,9 @@ public class PlayerFriendsFragment extends Fragment {
 		Bundle args = getArguments();
 
 		con.queryPlayerFriends(args.getString(Keys.ID_PLAYER));
-		mListView.setAdapter(new PlayerHomeInfoAdapter(getActivity(), con
-				.getTable(Keys.HomeFriendsTable, "")));
+		mListView.setAdapter(new PlayerHomeInfoAdapter(getActivity(),
+				con.getTable(Keys.HomeFriendsTable,
+						args.getString(Keys.ID_PLAYER))));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {

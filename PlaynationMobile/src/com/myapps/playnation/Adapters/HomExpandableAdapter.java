@@ -239,14 +239,15 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
 		if (lastParent == groupPosition
 				|| currentFragment instanceof HomeWallFragment) {
-			con.queryPlayerWallReplices(Keys.TEMPLAYERID,
-					mapEntry.getString(Keys.ID_WALLITEM));
+			con.queryPlayerWallReplices(mapEntry.getString(Keys.ID_WALLITEM),
+					Keys.TEMPLAYERID);
 			array = con.getTable(Keys.HomeWallRepliesTable,
 					mapEntry.getString(Keys.ID_WALLITEM));
 			mParent.get(groupPosition).setArrayChildren(array);
 		} else if (currentFragment instanceof HomeMessagesFragment) {
-			con.queryPlayerMSGReplices(Keys.TEMPLAYERID,
-					mapEntry.getString(Keys.MessageID_CONVERSATION));
+			con.queryPlayerMSGReplices(
+					mapEntry.getString(Keys.MessageID_CONVERSATION),
+					Keys.TEMPLAYERID);
 			array = con.getTable(Keys.HomeMsgRepliesTable,
 					mapEntry.getString(Keys.MessageID_CONVERSATION));
 			mParent.get(groupPosition).setArrayChildren(array);

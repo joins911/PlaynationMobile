@@ -8,25 +8,6 @@
    	<color name="headlineColor">#000000</color>
     <color name="headerColor">#6B6B6B</color>
 	<color name="listTitleColor">#000000</color>
-	
-	
-	
+	<color name="TextViewColor">#000000</color>
 	<color name="actionbar_text">#000000</color>
-	
-	<!--  Light Theme Colors -->
-	<color name="LightListTitleColor">#000000</color>
-	<color name="LightListSubTitleColor">#000000</color>
-	<color name="LightTabsTextColor">#000000</color>
-	<color name="LightNormalTextColor">#000000</color>
-	
-	
-	<!--  Gray Theme Colors -->
-	<color name="GrayListTitleColor">#000000</color>
-	<color name="GrayListSubTitleColor">#000000</color>
-	<color name="GrayTabsTextColor">#000000</color>
-	<color name="GrayNormalTextColor">#000000</color>
-	
-	<!--  Dark Theme Colors -->
-	<color name="DarkListTitleColor">#000000</color>
-	
 </resources>

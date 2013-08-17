@@ -5,6 +5,8 @@ public final class Keys {
 	public static final String Password = "Password";
 	public static final String ActiveSession = "ActiveSession";
 
+	public static final String LASTIDTABLE = "LASTIDTABLE";
+
 	// ID is used by the DataConnector class to know which table to search for
 	// same principle
 	// as table name but needed int for Switch { (case): }
@@ -154,7 +156,7 @@ public final class Keys {
 	 * Who is Playing json and map identifiers
 	 */
 
-	public final static String TEMPLAYERID = "12";
+	public static String TEMPLAYERID = "12";
 	public final static String ID_PLAYER = "ID_PLAYER";
 	public final static String PLAYERNICKNAME = "DisplayName";
 	public final static String PLAYERAVATAR = "Avatar";
@@ -278,7 +280,4 @@ public final class Keys {
 	public final static String companysubNewsTAB = "Company";
 	public final static String gamesubNewsTAB = "GAME";
 	public static final String AppState = "ApplicationState";
-
-	// Aplication States
-
 }

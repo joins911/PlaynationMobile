@@ -43,8 +43,9 @@ public class RegisterActivity extends Activity {
 					String password = registerPassword.getText().toString();
 					if (HelperClass.EmailPassNickCheck(registerEmail,
 							registerPassword, registerName)) {
-						con.registerPlayerMobileQuery(nickname, email, password);
-						finish();
+						if (con.registerPlayerMobileQuery(nickname,
+								registerEmail, password))
+							finish();
 					}
 				}
 			}

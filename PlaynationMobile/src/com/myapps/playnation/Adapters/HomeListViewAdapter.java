@@ -44,13 +44,19 @@ public class HomeListViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return generalList.size();
+		if (generalList != null)
+			return generalList.size();
+		else
+			return 0;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return generalList.get(position);
+		// TODO Auto-generated method stub.
+		if (generalList != null)
+			return generalList.get(position);
+		else
+			return 0;
 	}
 
 	@Override

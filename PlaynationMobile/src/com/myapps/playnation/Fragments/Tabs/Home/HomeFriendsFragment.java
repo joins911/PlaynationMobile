@@ -34,7 +34,7 @@ public class HomeFriendsFragment extends Fragment {
 			con.queryPlayerFriends(Keys.TEMPLAYERID);
 
 		mListView.setAdapter(new PlayerHomeInfoAdapter(getActivity(), con
-				.getTable(Keys.HomeFriendsTable, "")));
+				.getTable(Keys.HomeFriendsTable, Keys.TEMPLAYERID)));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {

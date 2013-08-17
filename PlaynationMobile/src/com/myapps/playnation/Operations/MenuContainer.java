@@ -11,7 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
-public class FlyOutContainer extends LinearLayout {
+public class MenuContainer extends LinearLayout {
 
 	// References to groups contained in this view.
 	private View menu;
@@ -31,8 +31,9 @@ public class FlyOutContainer extends LinearLayout {
 	// Animation objects
 	protected Scroller menuAnimationScroller = new Scroller(this.getContext(),
 			new LinearInterpolator());
-//	protected Scroller menuAnimationScroller = new Scroller(this.getContext(),
-//			new SmoothInterpolator());
+	// protected Scroller menuAnimationScroller = new
+	// Scroller(this.getContext(),
+	// new SmoothInterpolator());
 	protected Runnable menuAnimationRunnable = new AnimationRunnable();
 	protected Handler menuAnimationHandler = new Handler();
 
@@ -41,15 +42,15 @@ public class FlyOutContainer extends LinearLayout {
 	private static final int menuAnimationPollingInterval = 16;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public FlyOutContainer(Context context, AttributeSet attrs, int defStyle) {
+	public MenuContainer(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public FlyOutContainer(Context context, AttributeSet attrs) {
+	public MenuContainer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public FlyOutContainer(Context context) {
+	public MenuContainer(Context context) {
 		super(context);
 	}
 
@@ -120,7 +121,7 @@ public class FlyOutContainer extends LinearLayout {
 		this.currentContentOffset = scrollerOffset;
 
 		this.invalidate();
-		
+
 		if (isAnimationOngoing)
 			this.menuAnimationHandler.postDelayed(this.menuAnimationRunnable,
 					menuAnimationPollingInterval);
@@ -142,21 +143,21 @@ public class FlyOutContainer extends LinearLayout {
 		}
 	}
 
-	protected class SmoothInterpolator implements Interpolator{
+	protected class SmoothInterpolator implements Interpolator {
 
 		@Override
 		public float getInterpolation(float t) {
-			return (float)Math.pow(t-1, 5) + 1;
+			return (float) Math.pow(t - 1, 5) + 1;
 		}
-		
+
 	}
-	
+
 	protected class AnimationRunnable implements Runnable {
 
 		@Override
 		public void run() {
-			FlyOutContainer.this
-					.adjustContentPosition(FlyOutContainer.this.menuAnimationScroller
+			MenuContainer.this
+					.adjustContentPosition(MenuContainer.this.menuAnimationScroller
 							.computeScrollOffset());
 		}
 

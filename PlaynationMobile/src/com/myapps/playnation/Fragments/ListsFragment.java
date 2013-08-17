@@ -41,8 +41,8 @@ public class ListsFragment extends Fragment {
 	private ISectionAdapter mCallback;
 	private ViewFlipper flipper = null;
 	private ListView mList;
-	private AsyncTask<Void, Void, Void> mListTask;
 	private ArrayList<Bundle> mListBundle;
+	private AsyncTask<Void, Void, Void> mListTask;
 
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
@@ -71,6 +71,20 @@ public class ListsFragment extends Fragment {
 		mViewPagerState = this.getArguments().getInt(Keys.ARG_POSITION);
 		ListView list = (ListView) rootView.findViewById(R.id.mainList);
 		mList = list;
+
+		// Button but = (Button) rootView.findViewById(R.id.showMoreButton);
+		/*
+		 * but.setOnClickListener(new OnClickListener(){ public void
+		 * onClick(View v) { ======= Button but = (Button)
+		 * rootView.findViewById(R.id.showMoreButton);
+		 * but.setOnClickListener(new OnClickListener() { public void
+		 * onClick(View v) { >>>>>>> 8f627546d38847a030e8026a653fbd7383c40d29
+		 * ((MyBaseAdapter) mList.getAdapter()).showMore(); ((BaseAdapter)
+		 * mList.getAdapter()).notifyDataSetChanged(); // Sets the index to the
+		 * last item of the list. mList.setSelection(((BaseAdapter)
+		 * mList.getAdapter()) .getCount() - 1); Log.i("onClick showMore",
+		 * "ListsFragment"); } });
+		 */
 		mList.setOnScrollListener(new OnScrollListener() {
 
 			// private int currentFirstVisibleItem;
@@ -114,11 +128,29 @@ public class ListsFragment extends Fragment {
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
+
 		mListTask = new LoadListTask().execute();
+		// if (Keys.GamesSTATE == mViewPagerState) {
+		// initializeGames(list);
+		// } else if (Keys.GroupsSTATE == mViewPagerState) {
+		// initializeGroups(list);
+		// } else if (Keys.NewsSTATE == mViewPagerState) {
+		// initializeNews(list);
+		// } else if (Keys.PlayersSTATE == mViewPagerState) {
+		// initializePlayers(list);
+		// } else if (Keys.CompaniesSTATE == mViewPagerState) {
+		// initializeCompanies(list);
+		// }
 		return rootView;
 	}
 
 	private void initializeGames(final ArrayList<Bundle> results) {
+		// final ArrayList<Bundle> results = con.getTable(Keys.gamesTable, "");
+
+		// list = (ListView) rootView.findViewById(R.id.mainList);
+		// LinearLayout rs = (LinearLayout)
+		// rootView.findViewById(R.id.searchLL);
+		// rs.setVisibility(View.GONE);
 		mListBundle = results;
 		if (mListBundle != null) {
 			GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
@@ -139,6 +171,11 @@ public class ListsFragment extends Fragment {
 	}
 
 	private void initializeGroups(final ArrayList<Bundle> results) {
+		// final ArrayList<Bundle> results = con.getTable(Keys.groupsTable, "");
+		// list = (ListView) rootView.findViewById(R.id.mainList);
+		// LinearLayout rs = (LinearLayout)
+		// rootView.findViewById(R.id.searchLL);
+		// rs.setVisibility(View.GONE);
 		mListBundle = results;
 		if (mListBundle != null) {
 			GroupsListAdapter bindingData = new GroupsListAdapter(
@@ -192,6 +229,12 @@ public class ListsFragment extends Fragment {
 		});
 	}
 
+	// tabletOrPhoneControll(Keys.NewsSTATE, edit);
+	// }
+	// }
+	// });
+	// }
+
 	private void initializePlayers(final ArrayList<Bundle> results) {
 		mListBundle = results;
 		if (mListBundle != null) {
@@ -209,7 +252,106 @@ public class ListsFragment extends Fragment {
 		}
 	}
 
+	// private void tabletOrPhoneControll(int state, Bundle edit) {
+	// if (flipper != null) {
+	// flipper.setDisplayedChild(2);
+	// flipper.showNext();
+	// mCallback.getAdapter().switchTo(state, edit);
+	// } else {
+	// mCallback.getAdapter().switchTo(state, edit);
+	// }
+	// }
+	//
+	// private void initializePlayers(ListView list) {
+	//
+	// final EditText edit = (EditText) rootView.findViewById(R.id.editText1);
+	//
+	// final ArrayList<Bundle> results = con.queryPlayerFriendsSearch(edit
+	// .getText());
+	// mListBundle = results;
+	// list = (ListView) rootView.findViewById(R.id.mainList);
+	// if (results != null) {
+	// FriendsListAdapter bindingData = new FriendsListAdapter(
+	// getActivity(), mListBundle);
+	// list.setAdapter(bindingData);
+	// list.setOnItemClickListener(new OnItemClickListener() {
+	// public void onItemClick(AdapterView<?> parent, View view,
+	// int position, long id) {
+	// tabletOrPhoneControll(Keys.PlayersSTATE,
+	// mListBundle.get(position));
+	// }
+	// });
+	// }
+	//
+	// // Players ListView initialized twice Could cause bugs later on. NEEDS
+	// // TO CHANGE!
+	//
+	// Button btn = (Button) rootView.findViewById(R.id.button1);
+	// btn.setOnClickListener(new OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// final ArrayList<Bundle> results = con
+	// .queryPlayerFriendsSearch(edit.getText());
+	// mList = (ListView) rootView.findViewById(R.id.mainList);
+	// if (results != null) {
+	// mListBundle = results;
+	// FriendsListAdapter bindingData = new FriendsListAdapter(
+	// getActivity(), mListBundle);
+	// mList.setAdapter(bindingData);
+	// mList.setOnItemClickListener(new OnItemClickListener() {
+	// public void onItemClick(AdapterView<?> parent,
+	// View view, int position, long id) {
+	// tabletOrPhoneControll(Keys.PlayersSTATE,
+	// mListBundle.get(position));
+	// }
+	// });
+	//
+	// }
+	// }
+	// });
+	//
+	// // GroupsListAdapter bindingData = new GroupsListAdapter(getActivity(),
+	// // results);
+	// // list.setAdapter(bindingData);
+	// // list.setOnItemClickListener(new OnItemClickListener() {
+	// // public void onItemClick(AdapterView<?> parent, View view,
+	// // int position, long id) {
+	// // Bundle args = new Bundle();
+	// // args.putString(Keys.PLAYERNAME,
+	// // results.get(position).get(Keys.GROUPNAME));
+	// // args.putString(Keys.PLAYERTYPE,
+	// // results.get(position).get(Keys.GROUPTYPE));
+	// //
+	// // args.putString(Keys.PLAYERDATE,
+	// // results.get(position).get(Keys.GROUPDATE));
+	// // mCallback.getAdapter().switchTo(Keys.PlayersSTATE, args);
+	// // // getChildFragmentManager().executePendingTransactions();
+	// //
+	// // }
+	// // });
+	// }
+
+	public ListView getList() {
+		return mList;
+	}
+
+	public void setListBundle(ArrayList<Bundle> bund) {
+		mListBundle.clear();
+		mListBundle.addAll(bund);
+		((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+	}
+
+	public ArrayList<Bundle> getListBundle() {
+		return mListBundle;
+	}
+
 	private void initializeCompanies(final ArrayList<Bundle> results) {
+		// final ArrayList<Bundle> results = con.getTable(Keys.companyTable,
+		// "");
+		// list = (ListView) rootView.findViewById(R.id.mainList);
+		// LinearLayout rs = (LinearLayout)
+		// rootView.findViewById(R.id.searchLL);
+		// rs.setVisibility(View.GONE);
 		mListBundle = results;
 		if (mListBundle != null) {
 			CompanyListAdapter bindingData = new CompanyListAdapter(
@@ -240,19 +382,19 @@ public class ListsFragment extends Fragment {
 		}
 	}
 
-	public ListView getList() {
-		return mList;
-	}
-
-	public void setListBundle(ArrayList<Bundle> bund) {
-		mListBundle.clear();
-		mListBundle.addAll(bund);
-		((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
-	}
-
-	public ArrayList<Bundle> getListBundle() {
-		return mListBundle;
-	}
+	// public ListView getList() {
+	// return mList;
+	// }
+	//
+	// public void setListBundle(ArrayList<Bundle> bund) {
+	// mListBundle.clear();
+	// mListBundle.addAll(bund);
+	// ((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+	// }
+	//
+	// public ArrayList<Bundle> getListBundle() {
+	// return mListBundle;
+	// }
 
 	public void finishTask(int ViewPagerState) {
 		mCallback.finishTask(ViewPagerState);
@@ -320,5 +462,4 @@ public class ListsFragment extends Fragment {
 			finishTask(mViewPagerState);
 		}
 	}
-
 }

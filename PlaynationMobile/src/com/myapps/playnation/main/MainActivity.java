@@ -25,7 +25,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.ListsFragment;
 import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
-import com.myapps.playnation.Operations.FlyOutContainer;
+import com.myapps.playnation.Operations.MenuContainer;
 
 public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	// protected MyApp mMyApp;
@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionAdapter mSectionAdapter;
-	FlyOutContainer root;
+	MenuContainer root;
 	DataConnector con;
 	private int total;
 	private boolean finished = false;
@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		getSupportActionBar().setTitle("Playnation Mobile");
 		con = DataConnector.getInst(getApplicationContext());
-		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+		this.root = (MenuContainer) this.getLayoutInflater().inflate(
 				R.layout.activity_main, null);
 		initializePager();
 		this.setContentView(root);
@@ -253,25 +253,6 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		return results;
 	}
 
-	/*
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) {
-	 * 
-	 * switch (item.getItemId()) {
-	 * 
-	 * case 1: Toast msg = Toast.makeText(MainActivity.this, "Menu 1",
-	 * Toast.LENGTH_LONG); this.root.toggleMenu(); // msg.show(); return true;
-	 * 
-	 * case 2:
-	 * 
-	 * mViewPager.setCurrentItem(2); return true;
-	 * 
-	 * case 3: mViewPager.beginFakeDrag(); mViewPager.fakeDragBy(-150);
-	 * mViewPager.endFakeDrag(); return true;
-	 * 
-	 * default: break;
-	 * 
-	 * } return super.onOptionsItemSelected(item); }
-	 */
 	public SectionAdapter getAdapter() {
 		return this.mSectionAdapter;
 	}

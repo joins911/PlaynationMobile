@@ -30,10 +30,14 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 
 	@Override
 	public int getCount() {
-		if (tempList.size() <= count) {
-			return tempList.size();
+		if (tempList != null) {
+			if (tempList.size() <= count) {
+				return tempList.size();
+			} else {
+				return count;
+			}
 		} else {
-			return count;
+			return 0;
 		}
 	}
 

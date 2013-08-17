@@ -48,7 +48,7 @@ public class HomeGamesFragment extends Fragment {
 			con.queryPlayerGames(Keys.TEMPLAYERID);
 
 		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
-				.getTable(Keys.HomeGamesTable, ""), this));
+				.getTable(Keys.HomeGamesTable, Keys.TEMPLAYERID), this));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

@@ -17,11 +17,11 @@
 			android:paddingTop="5dip" >
 			<!-- Logo Start -->
 			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="300dp"
+				android:layout_height="70dp"
 				android:layout_marginLeft="10dip"
 				android:contentDescription="@string/loginString"
-				android:src="@drawable/login_logo" />
+				android:src="@drawable/logo_big" />
 			<!-- Logo Ends -->
 		</LinearLayout>
 		<!-- Header Ends -->

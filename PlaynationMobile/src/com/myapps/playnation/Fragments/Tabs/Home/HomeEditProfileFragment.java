@@ -39,7 +39,7 @@ public class HomeEditProfileFragment extends Fragment {
 		EditText editEmail = (EditText) mView
 				.findViewById(R.id.txtChiledItemEmail);
 
-		Bundle map = con.getPlayer();
+		Bundle map = con.getPlayer(Keys.TEMPLAYERID);
 		// Bundle args = getArguments();
 		editFirst.setText(map.getString(Keys.FirstName));
 		editLast.setText(map.getString(Keys.LastName));

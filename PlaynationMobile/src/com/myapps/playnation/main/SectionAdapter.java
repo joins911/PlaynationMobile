@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.WrapperFragment;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 
 /**
@@ -40,8 +41,14 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		this.act = act;
 		this.enabled = true;
 		this.mContainer = pager;
+		prepareAdapter();
+
+	}
+
+	public void prepareAdapter() {
 		titles = new ArrayList<String>();
-		titles.add("Home");
+		if (Configurations.isAppState(Configurations.appStateOnUser))
+			titles.add("Home");
 		titles.add("Games");
 		titles.add("Groups");
 		titles.add("News");
@@ -49,7 +56,7 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		titles.add("Companies");
 		currFragments = new ArrayList<WrapperFragment>();
 		con = DataConnector.getInst(act);
-		for (int i = 0; i < slideCounts; i++)
+		for (int i = 0; i < titles.size(); i++)
 			currFragments.add(null);
 	}
 

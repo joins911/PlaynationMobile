@@ -27,15 +27,20 @@ public class HomeWallFragment extends Fragment {
 		con = DataConnector.getInst(getActivity());
 		Context context = getActivity();
 		if (!con.checkDBTableExits(Keys.HomeWallTable)) {
-			con.queryPlayerWall(Keys.TEMPLAYERID);
+			con.queryPlayerWall(Keys.TEMPLAYERID, "player");
 		}
 
 		listParents.clear();
-		for (Bundle hashMap : con.getTable(Keys.HomeWallTable, "")) {
-			ExpandbleParent parentItem = new ExpandbleParent();
-			parentItem.setFirstChild(hashMap);
-			listParents.add(parentItem);
-		}
+		ArrayList<Bundle> list = con.getTable(Keys.HomeWallTable,
+				Keys.TEMPLAYERID);
+		if (list != null)
+			for (Bundle hashMap : list) {
+				if (hashMap != null) {
+					ExpandbleParent parentItem = new ExpandbleParent();
+					parentItem.setFirstChild(hashMap);
+					listParents.add(parentItem);
+				}
+			}
 
 		ExpandableListView eListView = (ExpandableListView) view
 				.findViewById(R.id.fragMsgAndWallTemp_expList);

@@ -48,7 +48,7 @@ public class HomeGroupsFragment extends Fragment {
 			con.queryPlayerGroup(Keys.TEMPLAYERID);
 
 		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
-				.getTable(Keys.HomeGroupTable, ""), this));
+				.getTable(Keys.HomeGroupTable, Keys.TEMPLAYERID), this));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

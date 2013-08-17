@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
+import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
 
 public class PlayerWallFragment extends Fragment {
@@ -21,13 +22,13 @@ public class PlayerWallFragment extends Fragment {
 				container, false);
 		ExpandableListView expList = (ExpandableListView) mView
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
+		Bundle args = getArguments();
 		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
-				con.getComments());
+				con.getComments(args.getString(Keys.ID_PLAYER), "player"));
 		expList.setAdapter(expAdapter);
 		for (int i = 0; i < expAdapter.getGroupCount(); i++)
 			expList.expandGroup(i);
 		// Inflate the layout for this fragment
 		return mView;
 	}
-
 }

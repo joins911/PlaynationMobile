@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
+import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
 
 public class GameWallFragment extends Fragment {
@@ -22,7 +23,7 @@ public class GameWallFragment extends Fragment {
 		ExpandableListView expList = (ExpandableListView) mView
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
-				con.getComments());
+				con.getComments(getArguments().getString(Keys.ID_GAME), "game"));
 		expList.setAdapter(expAdapter);
 		for (int i = 0; i < expAdapter.getGroupCount(); i++)
 			expList.expandGroup(i);

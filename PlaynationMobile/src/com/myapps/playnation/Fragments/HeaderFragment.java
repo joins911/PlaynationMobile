@@ -112,7 +112,8 @@ public class HeaderFragment extends Fragment {
 
 				}
 			});
-			header = con.populatePlayerGeneralInfo(header, "Wall");
+			header = con.populatePlayerGeneralInfo(header, "Wall",
+					Keys.TEMPLAYERID);
 		} else {
 			mView = inflater.inflate(R.layout.wrapper_header_games, container,
 					false);
@@ -144,7 +145,8 @@ public class HeaderFragment extends Fragment {
 				edit.setVisibility(View.GONE);
 
 				con.queryPlayerInfo(getArguments().getString(Keys.ID_PLAYER));
-				header = con.populatePlayerGeneralInfo(header, "Wall");
+				header = con.populatePlayerGeneralInfo(header, "Wall",
+						getArguments().getString(Keys.ID_PLAYER));
 
 			}
 			if (state == Keys.CompaniesSTATE) {

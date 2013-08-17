@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,10 +22,10 @@ import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
-import com.myapps.playnation.Classes.LastIDs;
 import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
+import com.myapps.playnation.Operations.ServiceClass;
 import com.myapps.playnation.main.MainActivity;
 
 public class LoginActivity extends Activity {
@@ -42,44 +41,38 @@ public class LoginActivity extends Activity {
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		con = DataConnector.getInst(getApplicationContext());
-		/*
-		 * if (checkServerStatus()) startService(new Intent(this,
-		 * ServiceClass.class));
-		 */
+		stopService(new Intent(this, ServiceClass.class));
+		startService(new Intent(this, ServiceClass.class));
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
-
 		this.getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		// UserLoginPreferences
 		prefrence = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-		Log.i("ActiveSession",
-				"" + prefrence.getBoolean(Keys.ActiveSession, false));
+		Keys.TEMPLAYERID = prefrence.getString(Keys.ID_PLAYER, "12");
 
 		// Setting the activesession to be true so that it wont wait for button
 		// press on login
-		if (!Configurations.isLoginEnabled) {
-			SharedPreferences.Editor edit = prefrence.edit();
-			edit.putBoolean(Keys.ActiveSession, true);
-			// edit.clear();
-			edit.commit();
-		}
+		// SharedPreferences.Editor edit = prefrence.edit();
+		// edit.putBoolean(Keys.ActiveSession, true);
+		// edit.clear();
+		// edit.commit();
 		// To unset sharepref. comment the activesession line and put
-		/*
-		 * if (prefrence.getBoolean(Keys.ActiveSession, false) == true) { if
-		 * (checkServerStatus()) logOnlineUser(); else logOfflineUser(); }
-		 */
 
+		if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
+			logOnlineUser();
+		}
+
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		con = DataConnector.getInst(getApplicationContext());
 
-		username = (EditText) findViewById(R.id.username_logIn);
-		password = (EditText) findViewById(R.id.password_logIn);
+		username = (EditText) findViewById(R.id.password_logIn);
+		password = (EditText) findViewById(R.id.username_logIn);
 		logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
@@ -88,8 +81,8 @@ public class LoginActivity extends Activity {
 
 			public void onClick(View v) {
 				logButton.setError(null);
-				if (HelperClass.EmailPassNickCheck(username, password, null)) {
-					if (checkServerStatus())
+				if (HelperClass.EmailPassNickCheck(password, username, null)) {
+					if (checkServerStatus()) {
 						if (checkCredentials()) {
 							logOnlineUser();
 						} else {
@@ -99,7 +92,7 @@ public class LoginActivity extends Activity {
 									"Incorrect Username or Password",
 									Toast.LENGTH_LONG).show();
 						}
-					else {
+					} else {
 						logOfflineUser();
 					}
 				}
@@ -109,6 +102,7 @@ public class LoginActivity extends Activity {
 		if (logGuestButton != null)
 			logGuestButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+
 					logOnlineUser();
 				}
 			});
@@ -126,6 +120,7 @@ public class LoginActivity extends Activity {
 					Toast.makeText(getApplicationContext(),
 							"Server can not be reached", Toast.LENGTH_SHORT)
 							.show();
+
 				}
 			}
 		});
@@ -146,13 +141,14 @@ public class LoginActivity extends Activity {
 
 	private void logOnlineUser() {
 		// Login as User XXX
+		// Keys.TEMPLAYERID = "12";
 		startMainActivity(Configurations.appStateOnUser);
 	}
 
 	private void logOfflineUser() {
 		// Log Offline WIthout Comments posibility + ???
 		Toast.makeText(getApplicationContext(), "Server could not be reached",
-				Toast.LENGTH_SHORT).show();
+				Toast.LENGTH_LONG).show();
 		// startMainActivity(Configurations.appStateOffUser);
 	}
 
@@ -176,12 +172,11 @@ public class LoginActivity extends Activity {
 	class LoadMainActivityTask extends AsyncTask<Void, Integer, Void> {
 
 		String tableName;
-		int appState;
 		Intent mInt;
 
 		private LoadMainActivityTask(int appState) {
 			con = DataConnector.getInst(getApplicationContext());
-			this.appState = appState;
+			Configurations.setApplicationState(appState);
 		}
 
 		// Before running code in separate thread
@@ -204,34 +199,40 @@ public class LoginActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			// Get the current thread's token
 			synchronized (this) {
-				progressbarStatus += 0;
-				progressDialog.setProgress(progressbarStatus);
-				if (!con.checkDBTableExits(Keys.gamesTable)) {
-					con.getArrayFromQuerryWithPostVariable("", Keys.gamesTable,
-							"", LastIDs.getLastIDGames());
+				try {
+					progressbarStatus += 0;
+					progressDialog.setProgress(progressbarStatus);
+					if (!con.checkDBTableExits(Keys.gamesTable)) {
+						con.getArrayFromQuerryWithPostVariable("",
+								Keys.gamesTable, "", con.getLastIDGames());
+					}
+					progressbarStatus += 40;
+					progressDialog.setProgress(progressbarStatus);
+
+					if (!con.checkDBTableExits(Keys.companyTable)) {
+						con.getArrayFromQuerryWithPostVariable("",
+								Keys.companyTable, "", con.getLastIDCompanies());
+					}
+					progressbarStatus += 20;
+					progressDialog.setProgress(progressbarStatus);
+
+					if (!con.checkDBTableExits(Keys.groupsTable)) {
+						con.getArrayFromQuerryWithPostVariable("",
+								Keys.groupsTable, "", con.getLastIDGroups());
+					}
+					progressbarStatus += 20;
+					progressDialog.setProgress(progressbarStatus);
+
+					if (!con.checkDBTableExits(Keys.newsTable)) {
+						con.getArrayFromQuerryWithPostVariable("",
+								Keys.newsTable, "", con.getLastIDNews());
+					}
+					progressbarStatus += 20;
+					progressDialog.setProgress(progressbarStatus);
+
+				} catch (Exception e) {
 				}
-				progressbarStatus += 40;
-				progressDialog.setProgress(progressbarStatus);
-				if (!con.checkDBTableExits(Keys.companyTable)) {
-					con.getArrayFromQuerryWithPostVariable("",
-							Keys.companyTable, "", LastIDs.getLastIDCompanies());
-				}
-				progressbarStatus += 20;
-				progressDialog.setProgress(progressbarStatus);
-				if (!con.checkDBTableExits(Keys.groupsTable)) {
-					con.getArrayFromQuerryWithPostVariable("",
-							Keys.groupsTable, "", LastIDs.getLastIDGroups());
-				}
-				progressbarStatus += 20;
-				progressDialog.setProgress(progressbarStatus);
-				if (!con.checkDBTableExits(Keys.newsTable)) {
-					con.getArrayFromQuerryWithPostVariable("", Keys.newsTable,
-							"", LastIDs.getLastIDNews());
-				}
-				progressbarStatus += 20;
-				progressDialog.setProgress(progressbarStatus);
 				mInt = new Intent(getApplicationContext(), MainActivity.class);
-				mInt.putExtra(Keys.AppState, appState);
 			}
 			return null;
 		}
@@ -282,19 +283,12 @@ public class LoginActivity extends Activity {
 		return haveConnectedWifi || haveConnectedMobile;
 	}
 
+	@SuppressLint("NewApi")
 	public boolean checkCredentials() {
 		String userName = username.getText().toString();
 		String passWord = password.getText().toString();
-		if (userName.isEmpty() || passWord.isEmpty())
-			Toast.makeText(getApplicationContext(),
-					"Please insert both username and password",
-					Toast.LENGTH_SHORT).show();
-		else {
-			// if (con != null)
-			return con.checkLogin(userName, passWord, prefrence);
-			// return con.checkUsernameAndPassword(userName, passWord);
-		}
-		//
-		return false;
+
+		return con.checkLogin(passWord, userName, prefrence);
+
 	}
 }

@@ -9,7 +9,7 @@ public class Configurations {
 	public final static boolean isLoginEnabled = true;
 
 	private static Configurations inst;
-	private int appState;
+	private static int appState;
 
 	private Configurations() {
 	}
@@ -21,11 +21,11 @@ public class Configurations {
 			return inst;
 	}
 
-	public int getApplicationState() {
-		return this.appState;
+	public static int getApplicationState() {
+		return appState;
 	}
 
-	public void setApplicationState(int state) {
+	public static void setApplicationState(int state) {
 		appState = state;
 	}
 
@@ -37,8 +37,9 @@ public class Configurations {
 		return this.currentAdapterSection;
 	}
 
-	// private boolean isLoginCheckEnabled = false;
-	// public boolean isViewPagerSwipeEnable = false;
-	// public String serverIp = "87.55.208.165:1337";
-
+	public static boolean isAppState(int appState2) {
+		if (appState == appState2)
+			return true;
+		return false;
+	}
 }

@@ -45,9 +45,12 @@ public class PlayerGamesFragment extends Fragment {
 				.findViewById(R.id.generalPlayerListView);
 
 		Bundle args = getArguments();
+
 		con.queryPlayerGames(args.getString(Keys.ID_PLAYER));
+
 		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
-				.getTable(Keys.HomeGamesTable, ""), this));
+				.getTable(Keys.HomeGamesTable, args.getString(Keys.ID_PLAYER)),
+				this));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
