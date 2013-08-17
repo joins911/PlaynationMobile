@@ -54,12 +54,12 @@ public class WrapperFragment extends Fragment {
 	}
 
 	public void switchToHeader(Bundle args) {
-		if (mViewPagerState == 3) {
+		if (mViewPagerState == Keys.NewsSTATE) {
 			mHeaderFragment = new SelectedNewsFeed();
 			mHeaderFragment.setArguments(args);
 			canBack = true;
 
-		} else if (mViewPagerState != 0) {
+		} else if (mViewPagerState != Keys.HomeSTATE) {
 			args.putAll(getArguments());
 			mHeaderFragment = new HeaderFragment();
 			mHeaderFragment.setArguments(args);

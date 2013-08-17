@@ -191,30 +191,20 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				.get(mViewPager.getCurrentItem()).getListFragment();
 		ArrayList<Bundle> temp = null;
 		if (frag != null) {
-			switch (mViewPager.getCurrentItem()) {
-			case Keys.GamesSTATE: {
+			if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
 				temp = searchListGames(args);
-				break;
-			}
-			case Keys.GroupsSTATE: {
+			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
 				temp = searchListGroups(args);
-				break;
-			}
-			case Keys.NewsSTATE: {
-				return;
-			}
-			case Keys.CompaniesSTATE: {
+			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
+				Log.e("NewsSearch", "To Do");
+			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
 				temp = searchListCompanies(args);
-				return;
-			}
-			case Keys.PlayersSTATE: {
-				// temp = searchListPlayers(args);
-				return;
-			}
-			}
-			if (temp != null)
-				frag.setListBundle(temp);
+			// else if (mViewPager.getCurrentItem()==Keys.GamesSTATE)
+			// temp = searchListPlayers(args);
+
 		}
+		if (temp != null)
+			frag.setListBundle(temp);
 	}
 
 	public ArrayList<Bundle> searchListGames(String args) {
@@ -285,7 +275,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
 				+ finished);
 		total = total + viewPagerState;
-		if (total == 15)
+		if (total == Keys.Total)
 			setSupportProgressBarIndeterminateVisibility(false);
 	}
 }

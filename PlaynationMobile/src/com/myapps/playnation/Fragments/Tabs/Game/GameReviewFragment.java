@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
 import com.myapps.playnation.Adapters.ReviewListAdapter;
-import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
 
 //import android.widget.TextView;
@@ -39,10 +38,6 @@ public class GameReviewFragment extends Fragment {
 				.findViewById(R.id.frag_reviewTemp_reviewList);
 
 		reviewList = new ArrayList<Bundle>();
-		reviewList.add(con.getTable(Keys.gamesTable, "").get(3));
-		reviewList.add(con.getTable(Keys.gamesTable, "").get(4));
-		reviewList.add(con.getTable(Keys.gamesTable, "").get(5));
-		reviewList.add(con.getTable(Keys.gamesTable, "").get(6));
 
 		reviewsAdapter = new ReviewListAdapter(getActivity(), reviewList);
 		reviews.setAdapter(reviewsAdapter);

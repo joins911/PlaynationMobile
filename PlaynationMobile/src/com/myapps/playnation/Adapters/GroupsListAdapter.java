@@ -26,10 +26,6 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	int count;
 	boolean showMore = true;
 
-	public GroupsListAdapter() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public GroupsListAdapter(Activity act, ArrayList<Bundle> map) {
 		this.groupsDataCollection = map;
 		inflater = (LayoutInflater) act

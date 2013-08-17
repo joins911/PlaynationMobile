@@ -1,7 +1,6 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,13 +22,13 @@ import com.myapps.playnation.main.ISectionAdapter;
 @SuppressWarnings("rawtypes")
 public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
-	private List<NewsFeedItem> newsFeedsLists;
+	private ArrayList<NewsFeedItem> newsFeedsLists;
 	ISectionAdapter context;
 	int count = 10;
 	boolean showMore = true;
 
 	@SuppressWarnings("unchecked")
-	public NewsListAdapter(Activity context, List<NewsFeedItem> items) {
+	public NewsListAdapter(Activity context, ArrayList<NewsFeedItem> items) {
 		super(context, 0, items);
 		this.context = (ISectionAdapter) context;
 		this.newsFeedsLists = items;

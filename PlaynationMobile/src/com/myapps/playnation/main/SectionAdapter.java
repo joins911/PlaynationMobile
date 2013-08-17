@@ -29,7 +29,6 @@ public class SectionAdapter extends FragmentPagerAdapter {
 	ViewPager mContainer;
 	private boolean enabled;
 	private ArrayList<WrapperFragment> currFragments;
-	private final int slideCounts = 6;
 
 	/**
 	 * SectionAdapter constructor: gets the parent activity,Fragment manager and
@@ -116,7 +115,7 @@ public class SectionAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// Show 4 total pages.
-		return slideCounts;
+		return currFragments.size();
 	}
 
 	/**
