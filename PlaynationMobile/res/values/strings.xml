@@ -12,11 +12,12 @@
 	<string name="homeString">Home</string>
 	<string name="blogString">Blog</string>
 	<string name="buttonString_comment">Send</string>
+	<string name="emptyListString">No wall items. Be the first one to add one :).</string>
+    <string name="emptyNewsListString">No news present...</string>
 	<!-- Login+Register -->
 	<string name="loginString">Login</string>	
 	<string name="loginGuestString">Login as Guest</string>
 	<string name="loginOfflineString">Login as Guest Offline</string>
-	<string name="emailString">Email</string>
 	<string name="passwordString">Password</string>
 	<string name="registerString">Register</string>
 	<string name="registerDesc">New to Playnation? Register here</string>
@@ -50,8 +51,6 @@
 	<string name="Location">Location: \u0020</string>
 	<string name="Age">Age: \u0020</string>
 	<string name="Country">Country: \u0020</string>
-	<string name="Nick">Nick: \u0020 </string>
-	<string name="Email">EMail:  \u0020</string>
 	<string name="City">City:  \u0020</string>
 	<string name="DisplayName">DisplayName:  \u0020</string>
 	<string name="FirstName">FirstName:  \u0020</string>
@@ -60,11 +59,8 @@
 	<string name="DayEvent">Day Event</string>
 	<string name="Members">\u0020members</string>
 	<string name="Leader">Leader:</string>
-	<string name="Type1">Type \u00201:</string>
-	<string name="Type2">Type \u00202:</string>
 	<string name="NewsMembers">Members:</string>
 	<string name="create">Created:</string>
-	<string name="Type">Type :</string>
 	<string name="startdate">Start date:</string>
 	<string name="endDate">End Date:</string>
 	<string name="Participants">Participants:</string>
@@ -80,6 +76,13 @@
 	<string name="byDate">By Date Added</string>
 	<string name="byAlphabetically">Alphabetically</string>
 	<string name="btnEdit">Edit Info</string>
+	 <!-- Strings that dont need translation -->
+    <string name="Email">EMail:  \u0020</string>
+    <string name="Type1">Type \u00201:</string>
+    <string name="Type2">Type \u00202:</string>
+    <string name="Type">Type :</string>
+    <string name="emailString">Email</string>
+    <string name="Nick">Nick: \u0020 </string>
 	<!-- Activities titles which will never appear on screen -->
 	<string name="title_activity_main_list">MainList</string>
 	<string name="title_activity_game">GamesActivity</string>

@@ -2,14 +2,14 @@ package com.myapps.playnation.Operations;
 
 public class Configurations {
 
-	public final static int appStateOffUser = 1;
-	public final static int appStateOnGuest = 2;
-	public final static int appStateOnUser = 3;
+	public final static int appStateOffUser = 2;
+	public final static int appStateOnGuest = 1;
+	public final static int appStateOnUser = 0;
 	private int currentAdapterSection;
 	public final static boolean isLoginEnabled = true;
 
 	private static Configurations inst;
-	private int appState;
+	private static int appState;
 
 	private Configurations() {
 	}
@@ -35,6 +35,12 @@ public class Configurations {
 
 	public int getAdapterSection() {
 		return this.currentAdapterSection;
+	}
+
+	public static boolean isAppState(int appState2) {
+		if (appState == appState2)
+			return true;
+		return false;
 	}
 
 	// private boolean isLoginCheckEnabled = false;

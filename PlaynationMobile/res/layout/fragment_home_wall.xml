@@ -9,7 +9,6 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentTop="true"
-		android:background="@android:color/transparent"
 		android:paddingBottom="4dp"
 		android:paddingLeft="10dp"
 		android:paddingRight="10dp" >

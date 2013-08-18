@@ -50,19 +50,19 @@
 
         <Button
             style="@style/MenuButtonStyle"
-            android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
             android:onClick="onPlayers_click"
             android:text="@string/playerString" />
 
         <Button
             style="@style/MenuButtonStyle"
-            android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
             android:onClick="onCompanies_click"
             android:text="@string/companiesString" />
     </LinearLayout>
@@ -94,5 +94,4 @@
                 android:textColor="#fff" />
         </android.support.v4.view.ViewPager>
     </LinearLayout>
-
 </com.myapps.playnation.Operations.FlyOutContainer>

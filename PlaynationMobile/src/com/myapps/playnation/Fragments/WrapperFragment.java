@@ -24,11 +24,11 @@ public class WrapperFragment extends Fragment {
 		mViewPagerState = getArguments().getInt(Keys.ARG_POSITION);
 		Bundle args = new Bundle();
 		args.putInt(Keys.ARG_POSITION, mViewPagerState);
-		if (mViewPagerState != Keys.HomeSTATE) {
-			mFragments = new ListsFragment();
+		if (mViewPagerState == Keys.HomeSTATE) {
+			mFragments = new HeaderFragment();
 			mFragments.setArguments(args);
 		} else {
-			mFragments = new HeaderFragment();
+			mFragments = new ListsFragment();
 			mFragments.setArguments(args);
 		}
 		setRetainInstance(true);
@@ -51,12 +51,12 @@ public class WrapperFragment extends Fragment {
 	}
 
 	public void switchToHeader(Bundle args) {
-		if (mViewPagerState == 3) {
+		if (mViewPagerState == Keys.NewsSTATE) {
 			mHeaderFragment = new SelectedNewsFeed();
 			mHeaderFragment.setArguments(args);
 			canBack = true;
 
-		} else if (mViewPagerState != 0) {
+		} else if (mViewPagerState != Keys.HomeSTATE) {
 			args.putAll(getArguments());
 			mHeaderFragment = new HeaderFragment();
 			mHeaderFragment.setArguments(args);

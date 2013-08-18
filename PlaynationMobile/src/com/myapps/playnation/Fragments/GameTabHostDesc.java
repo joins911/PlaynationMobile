@@ -42,8 +42,8 @@ public class GameTabHostDesc extends TabHostDesc implements OnTabChangeListener 
 				Keys.TAB_WALL, getArguments());
 		setupTab(GameNewsFragment.class, new TextView(getActivity()),
 				Keys.TAB_NEWS, getArguments());
-		setupTab(GameReviewFragment.class, new TextView(getActivity()),
-				Keys.TAB_REVIEW, getArguments());
+		// setupTab(GameReviewFragment.class, new TextView(getActivity()),
+		// Keys.TAB_REVIEW, getArguments());
 		// setupTab(GameForumFragment.class,new
 		// TextView(getActivity()),Keys.TAB_FORUM);
 		setupTab(GamePlayersFragment.class, new TextView(getActivity()),

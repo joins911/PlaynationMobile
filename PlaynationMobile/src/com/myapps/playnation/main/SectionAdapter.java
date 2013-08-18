@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.WrapperFragment;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 
 /**
@@ -28,7 +29,6 @@ public class SectionAdapter extends FragmentPagerAdapter {
 	ViewPager mContainer;
 	private boolean enabled;
 	private ArrayList<WrapperFragment> currFragments;
-	private final int slideCounts = 6;
 
 	/**
 	 * SectionAdapter constructor: gets the parent activity,Fragment manager and
@@ -41,7 +41,8 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		this.enabled = true;
 		this.mContainer = pager;
 		titles = new ArrayList<String>();
-		titles.add("Home");
+		if (Configurations.isAppState(Configurations.appStateOnUser))
+			titles.add("Home");
 		titles.add("Games");
 		titles.add("Groups");
 		titles.add("News");
@@ -49,7 +50,7 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		titles.add("Companies");
 		currFragments = new ArrayList<WrapperFragment>();
 		con = DataConnector.getInst(act);
-		for (int i = 0; i < slideCounts; i++)
+		for (int i = 0; i < titles.size(); i++)
 			currFragments.add(null);
 	}
 
@@ -109,7 +110,7 @@ public class SectionAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// Show 4 total pages.
-		return slideCounts;
+		return currFragments.size();
 	}
 
 	/**

@@ -63,9 +63,9 @@ public class LoginActivity extends Activity {
 		// edit.commit();
 		// To unset sharepref. comment the activesession line and put
 
-		if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
-			logOnlineUser();
-		}
+		// if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
+		// logOnlineUser();
+		// }
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -92,9 +92,11 @@ public class LoginActivity extends Activity {
 									"Incorrect Username or Password",
 									Toast.LENGTH_LONG).show();
 						}
-					} else {
-						logOfflineUser();
-					}
+					} else
+						Toast.makeText(getApplicationContext(),
+								"No server Connection", Toast.LENGTH_SHORT);
+				} else {
+					logOnlineGuest();
 				}
 			}
 		});
@@ -155,6 +157,7 @@ public class LoginActivity extends Activity {
 	private void logOnlineGuest() {
 		// Login as Guest
 		startMainActivity(Configurations.appStateOnGuest);
+		Keys.changeStates();
 	}
 
 	private void startMainActivity(int appState) {
@@ -243,7 +246,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 			// set the current progress of the progress dialog
-			// progressDialog.setProgress(values[0]);
+			progressDialog.setProgress(values[0]);
 		}
 
 		// after executing the code in the thread

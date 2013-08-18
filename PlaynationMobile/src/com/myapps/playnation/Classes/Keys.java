@@ -83,12 +83,23 @@ public final class Keys {
 
 	// State used for the mainList mostly to keep track of the current selected
 	// state/tab
-	public static final int HomeSTATE = 0;
-	public static final int GamesSTATE = 1;
-	public static final int GroupsSTATE = 2;
-	public static final int NewsSTATE = 3;
-	public static final int PlayersSTATE = 4;
-	public static final int CompaniesSTATE = 5;
+	public static int HomeSTATE = 0;
+	public static int GamesSTATE = 1;
+	public static int GroupsSTATE = 2;
+	public static int NewsSTATE = 3;
+	public static int PlayersSTATE = 4;
+	public static int CompaniesSTATE = 5;
+	public static int Total = 15;
+
+	public static void changeStates() {
+		HomeSTATE = 6;
+		GamesSTATE = 0;
+		GroupsSTATE = 1;
+		NewsSTATE = 2;
+		PlayersSTATE = 3;
+		CompaniesSTATE = 4;
+		Total = 10;
+	}
 
 	public static final String ARG_POSITION = "int";
 	// EXTRA

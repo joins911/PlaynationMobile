@@ -24,6 +24,13 @@ public class GameWallFragment extends Fragment {
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
 				con.getComments(getArguments().getString(Keys.ID_GAME), "game"));
+		/*
+		 * Button commentBut = (Button) mView.findViewById(R.id.wallF_commBut);
+		 * commentBut.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { Log.i("Games Wall",
+		 * "Comment Button Pressed"); // insert the comment } });
+		 */
 		expList.setAdapter(expAdapter);
 		for (int i = 0; i < expAdapter.getGroupCount(); i++)
 			expList.expandGroup(i);
