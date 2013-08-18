@@ -34,6 +34,9 @@ public class GroupInfoFragment extends Fragment {
 		Bundle args = getArguments();
 		txtNewsTitle = (WebView) mView.findViewById(R.id.webview);
 		txtNewsText = (WebView) mView.findViewById(R.id.webview2);
+		setupWebView(txtNewsText);
+		txtNewsTitle.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
 		txtNewsTitle
 				.loadData(args.getString(Keys.GROUPNAME), "text/html", null);
 		// txtNewsText.setText(args.getString(Keys.NEWSCOLNEWSTEXT));
@@ -65,6 +68,12 @@ public class GroupInfoFragment extends Fragment {
 				.inflate(R.layout.fragment_group_info, container, false);
 		initGroup();
 		return mView;
+	}
+
+	public void setupWebView(WebView mView) {
+		mView.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
+		mView.getSettings().setLoadWithOverviewMode(true);
 	}
 
 	@Override

@@ -12,8 +12,7 @@
 	<string name="homeString">Home</string>
 	<string name="blogString">Blog</string>
 	<string name="buttonString_comment">Send</string>
-	<string name="emptyListString">No wall items. Be the first one to add one :).</string>
-    <string name="emptyNewsListString">No news present...</string>
+
 	<!-- Login+Register -->
 	<string name="loginString">Login</string>	
 	<string name="loginGuestString">Login as Guest</string>
@@ -34,6 +33,9 @@
 	<string name="ratingString">Rating</string>
 	<string name="friendsString">Friends playing this game</string>
 	<string name="descString">Game Description</string>
+	<string name="noFriendsString">You have no friends yet. Be sure to go check our website at www.playnation.eu so you can make some new friends.</string>
+	<string name="emptyListString">No wall items. Be the first one to add one :).</string>
+    <string name="emptyNewsListString">No news present...</string>
 	<!-- Extras New -->
 	<string name="fontFamilyTextView">Ariel</string>
 	<string-array name="expandbleListParents">

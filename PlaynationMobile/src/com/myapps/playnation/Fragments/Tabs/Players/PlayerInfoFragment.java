@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,7 +37,8 @@ public class PlayerInfoFragment extends Fragment {
 		TextView lblEmail = (TextView) view
 				.findViewById(R.id.list_item_text_childEmail);
 		lblEmail.setVisibility(View.GONE);
-
+		Button but = (Button) view.findViewById(R.id.saveProfileButton);
+		but.setVisibility(View.GONE);
 		Bundle args = getArguments();
 		editFirst.setText(args.getString(Keys.FirstName));
 		editLast.setText(args.getString(Keys.LastName));

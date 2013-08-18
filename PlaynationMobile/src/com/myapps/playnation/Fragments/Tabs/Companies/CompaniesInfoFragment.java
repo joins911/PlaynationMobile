@@ -22,6 +22,9 @@ public class CompaniesInfoFragment extends Fragment {
 	public void initCompany() {
 		txtNewsText = (WebView) view.findViewById(R.id.webView2);
 		txtNewsTitle = (WebView) view.findViewById(R.id.webView1);
+		setupWebView(txtNewsText);
+		txtNewsTitle.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
 		newsImage = (ImageView) view.findViewById(R.id.newsImg);
 		Bundle myIntent = getArguments();
 		TextView txtInvetationLabel = (TextView) view
@@ -65,6 +68,12 @@ public class CompaniesInfoFragment extends Fragment {
 			txtEventInvetation.setText(Uri.parse(myIntent
 					.getString(Keys.CompanyURL)) + "");
 		}
+	}
+
+	public void setupWebView(WebView mView) {
+		mView.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
+		mView.getSettings().setLoadWithOverviewMode(true);
 	}
 
 	@Override

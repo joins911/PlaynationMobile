@@ -60,6 +60,8 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		}
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		getSupportActionBar().setTitle("Playnation Mobile");
+		getSupportActionBar().setBackgroundDrawable(
+				getResources().getDrawable(R.color.background_gradient));
 		con = DataConnector.getInst(getApplicationContext());
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.activity_main, null);
@@ -197,9 +199,8 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				temp = searchListGroups(args);
 			else if (mViewPager.getCurrentItem() == Keys.NewsSTATE)
 				Log.i("NewsSearch", "To Do");
-			else if (mViewPager.getCurrentItem() == Keys.PlayersSTATE)
-				// temp = searchListPlayers(args);
-				Log.i("PlayersSearch", "To Do");
+			// else if (mViewPager.getCurrentItem() == Keys.PlayersSTATE)
+			// temp = searchListPlayers(args);
 			else if (mViewPager.getCurrentItem() == Keys.CompaniesSTATE)
 				temp = searchListCompanies(args);
 			if (temp != null)
@@ -235,7 +236,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	}
 
 	public ArrayList<Bundle> searchListPlayers(String args) {
-		ArrayList<Bundle> list = con.getTable(Keys.playersTable, "");
+		ArrayList<Bundle> list = con.queryPlayerFriendsSearch("");
 		ArrayList<Bundle> results = new ArrayList<Bundle>();
 		for (int i = 0; i < list.size(); i++)
 			if (list.get(i).getString(Keys.PLAYERNAME).contains(args))
@@ -294,7 +295,12 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
 				+ finished);
 		total = total + viewPagerState;
-		if (total == Keys.Total)
+		if (total == 0)
 			setSupportProgressBarIndeterminateVisibility(false);
+	}
+
+	public void startTask(int viewPagerState) {
+		total = total - viewPagerState;
+		setSupportProgressBarIndeterminateVisibility(true);
 	}
 }

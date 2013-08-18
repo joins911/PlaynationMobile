@@ -23,6 +23,9 @@ public class GameInfoFragment extends Fragment {
 	public void initGameInfo() {
 		txtNewsText = (WebView) view.findViewById(R.id.webview2);
 		txtNewsTitle = (WebView) view.findViewById(R.id.webview);
+		setupWebView(txtNewsText);
+		txtNewsTitle.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
 		// newsImage = (ImageView) view.findViewById(R.id.newsImg);
 		Bundle myIntent = getArguments();
 
@@ -83,6 +86,12 @@ public class GameInfoFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_game_info, container, false);
 		initGameInfo();
 		return view;
+	}
+
+	public void setupWebView(WebView mView) {
+		mView.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
+		mView.getSettings().setLoadWithOverviewMode(true);
 	}
 
 	@Override

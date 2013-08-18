@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gamesF_All_RLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_pattern2" >
 
     <TextView
-        android:id="@+id/gamesF_comment_TView"
+        android:id="@+id/wallsF_comment_TView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -15,22 +15,23 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:id="@+id/gamesF_comment_EBox"
+        android:id="@+id/wallsF_comment_EBox"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/margin"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/gamesF_comment_TView"
+        android:layout_toRightOf="@+id/wallsF_comment_TView"
         android:ems="10"
         android:inputType="textMultiLine"
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/gamesF_commB"
+        android:id="@+id/wallsF_commBut"
         style="@style/SortButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/gamesF_comment_EBox"
+        android:layout_below="@+id/wallsF_comment_EBox"
         android:onClick="button_onClick"
         android:text="@string/buttonString_comment" />
 

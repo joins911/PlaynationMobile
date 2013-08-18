@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.myapps.playnation.R;
@@ -38,7 +40,15 @@ public class HomeEditProfileFragment extends Fragment {
 
 		EditText editEmail = (EditText) mView
 				.findViewById(R.id.txtChiledItemEmail);
+		Button saveProfileB = (Button) mView
+				.findViewById(R.id.saveProfileButton);
+		saveProfileB.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				saveData();
+			}
+		});
 		Bundle map = con.getPlayer(Keys.TEMPLAYERID);
 		// Bundle args = getArguments();
 		editFirst.setText(map.getString(Keys.FirstName));
@@ -47,6 +57,11 @@ public class HomeEditProfileFragment extends Fragment {
 		editCity.setText(map.getString(Keys.CITY));
 		editCountry.setText(map.getString(Keys.COUNTRY));
 		editEmail.setText(map.getString(Keys.Email));
+	}
+
+	public void saveData() {
+		// TO DO!!
+		// inserts the changes into the database
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

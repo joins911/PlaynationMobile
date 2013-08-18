@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Fragments.Tabs.Home.HomeEditProfileFragment;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeEventsFragment;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeFriendsFragment;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeGamesFragment;
@@ -139,6 +140,14 @@ public class HomeTabHostDesc extends TabHostDesc implements OnTabChangeListener 
 		if (fm.findFragmentByTag(tabId) == null) {
 			fm.beginTransaction().replace(placeholder, frag, tabId).commit();
 		}
+	}
+
+	public void switchToEdit() {
+		getFragmentManager()
+				.beginTransaction()
+				.replace(android.R.id.tabcontent,
+						new HomeEditProfileFragment(), Keys.TAB_EDITPROFILE)
+				.commit();
 	}
 
 	@Override

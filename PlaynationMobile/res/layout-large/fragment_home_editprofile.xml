@@ -5,7 +5,7 @@
 	android:background="@drawable/tabs_my_back" >
 	<RelativeLayout
 		android:id="@+id/list_child_layout"
-		style="@style/GameStyle"
+		style="@style/DarkTheme"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerHorizontal="true"

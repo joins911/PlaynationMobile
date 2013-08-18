@@ -21,11 +21,11 @@ public class Configurations {
 			return inst;
 	}
 
-	public int getApplicationState() {
-		return this.appState;
+	public static int getApplicationState() {
+		return appState;
 	}
 
-	public void setApplicationState(int state) {
+	public static void setApplicationState(int state) {
 		appState = state;
 	}
 

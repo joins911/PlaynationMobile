@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/newsTitle"
-	style="@style/GroupsStyle"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/GrayTheme"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_height="match_parent">
+<LinearLayout 
+	android:id="@+id/newsTitle"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
 	android:orientation="vertical" >
 	<RelativeLayout
 		android:id="@+id/content"
@@ -173,4 +176,5 @@
 		android:layout_alignParentLeft="true"
 		android:layout_below="@+id/webView1"
 		android:layout_marginTop="17dp" />
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

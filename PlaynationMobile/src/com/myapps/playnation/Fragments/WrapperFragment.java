@@ -96,16 +96,20 @@ public class WrapperFragment extends Fragment {
 	}
 
 	public void switchToTab(int tabIndex, Bundle args) {
-		if (mFragments instanceof ListsFragment) {
-			this.switchToHeader(args);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (mFragments instanceof ListsFragment)
+			if (mViewPagerState == Keys.NewsSTATE) {
+				this.switchToHeader(args);
+			} else {
+				this.switchToHeader(args);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				((HeaderFragment) mHeaderFragment).switchToTab(tabIndex);
 			}
-			((HeaderFragment) mHeaderFragment).switchToTab(tabIndex);
-		} else {
+		else {
 			((HeaderFragment) mHeaderFragment).switchToTab(tabIndex);
 		}
 

@@ -4,7 +4,7 @@
 	android:layout_height="match_parent" >
 	<RelativeLayout
 		android:id="@+id/list_child_layout"
-		style="@style/GroupsStyle"
+		style="@style/GrayTheme"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" >
 		<EditText
@@ -136,5 +136,14 @@
 			android:ems="10"
 			android:inputType="textPersonName|textEmailAddress"
 			android:textAlignment="center" />
+
+		<Button
+		    android:id="@+id/saveProfileButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_below="@+id/list_item_text_childEmail"
+		    android:text="@string/btnSave" />
+
 	</RelativeLayout>
 </RelativeLayout>

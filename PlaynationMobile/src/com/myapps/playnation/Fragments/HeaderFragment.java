@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -102,16 +103,17 @@ public class HeaderFragment extends Fragment {
 					false);
 			header = mView.findViewById(R.id.include_TabHolder_Home);
 			con.queryPlayerInfo(Keys.TEMPLAYERID);
-			TextView edit = (TextView) header.findViewById(R.id.txtEdit);
+			QuickContactBadge edit = (QuickContactBadge) header
+					.findViewById(R.id.quickContactBadge1);
 			edit.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					getChildFragmentManager()
+					getFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.tabcontent,
-									new HomeEditProfileFragment()).commit();
-
+							.add(android.R.id.tabhost,
+									new HomeEditProfileFragment(),
+									"EditProfile").commit();
 				}
 			});
 			header = con.populatePlayerGeneralInfo(header, "Wall",
@@ -139,8 +141,8 @@ public class HeaderFragment extends Fragment {
 				gName.setText(getArguments().getString(Keys.GROUPNAME));
 				gType.setText(getArguments().getString(Keys.GROUPTYPE) + " "
 						+ getArguments().getString(Keys.GROUPTYPE2));
-				gRating.setText(getArguments().getString(Keys.GROUPDATE));
 				ratingTV.setText("");
+				gRating.setVisibility(View.INVISIBLE);
 				gImage.setImageResource(R.drawable.no_group_100x100);
 			}
 			if (state == Keys.PlayersSTATE) {

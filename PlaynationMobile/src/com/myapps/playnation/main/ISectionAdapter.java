@@ -9,4 +9,6 @@ public interface ISectionAdapter {
 
 	// public void menuClick();
 	public void finishTask(int viewPagerState);
+
+	public void startTask(int viewPagerState);
 }

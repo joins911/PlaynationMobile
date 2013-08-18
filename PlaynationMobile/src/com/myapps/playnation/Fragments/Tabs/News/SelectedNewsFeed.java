@@ -16,20 +16,21 @@ import com.myapps.playnation.Classes.Keys;
 public class SelectedNewsFeed extends Fragment {
 	private TextView txtNewsAuthor;
 	// private ImageView newsImage;
-	private WebView mWebView;
-	private WebView mWebView2;
 	private View mView;
 
 	public void initNews() {
-		mWebView = (WebView) mView.findViewById(R.id.webview);
-		mWebView2 = (WebView) mView.findViewById(R.id.webview2);
+		WebView mNewsTitle = (WebView) mView.findViewById(R.id.webview);
+		WebView mNewsText = (WebView) mView.findViewById(R.id.webview2);
+		setupWebView(mNewsText);
+		mNewsTitle.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
 		// newsImage = (ImageView) mView.findViewById(R.id.newsImg);
 		txtNewsAuthor = (TextView) mView.findViewById(R.id.newsAuthor);
 		Bundle args = getArguments();
-		mWebView2.loadData(args.getString(Keys.NEWSCOLNEWSTEXT), "text/html",
+		mNewsText.loadData(args.getString(Keys.NEWSCOLNEWSTEXT), "text/html",
 				null);
 
-		mWebView.loadData(args.getString(Keys.NEWSCOLHEADLINE), "text/html",
+		mNewsTitle.loadData(args.getString(Keys.NEWSCOLHEADLINE), "text/html",
 				null);
 
 		Spanned text = Html.fromHtml(args.getString(Keys.NEWSCOLPOSTINGTIME));
@@ -41,10 +42,16 @@ public class SelectedNewsFeed extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mView = inflater
-				.inflate(R.layout.fragment_news, container, false);
+		mView = inflater.inflate(R.layout.fragment_news, container, false);
 		initNews();
 		return mView;
+	}
+
+	public void setupWebView(WebView mView) {
+		mView.setBackgroundColor(getResources().getColor(
+				R.color.background_gradient));
+		mView.getSettings().setLoadWithOverviewMode(true);
+		mView.getSettings().setUseWideViewPort(true);
 	}
 
 	@Override

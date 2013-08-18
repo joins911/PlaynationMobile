@@ -122,7 +122,7 @@ public class HomeListViewAdapter extends BaseAdapter {
 			}
 		} else if (currentFragment instanceof HomeGamesFragment
 				|| currentFragment instanceof PlayerGamesFragment) {
-			view = inflater.inflate(R.layout.fragment_home_msggame, viewGroup,
+			view = inflater.inflate(R.layout.component_homemsg_elist_layout, viewGroup,
 					false);
 
 			txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);

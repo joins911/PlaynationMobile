@@ -112,8 +112,8 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 
 		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
 		if (currentFragment instanceof HomeWallFragment) {
-			view = inflater.inflate(R.layout.fragment_home_wall, viewGroup,
-					false);
+			view = inflater.inflate(R.layout.component_homewall_elist_layout,
+					viewGroup, false);
 			txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);
 			txText = (TextView) view.findViewById(R.id.txText);
 			txEDate = (TextView) view.findViewById(R.id.txEDate);
@@ -128,8 +128,8 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					+ HelperClass.convertTime(Integer.parseInt(mapEntry
 							.getString(Keys.WallPostingTime)), con.dataTemplate));
 		} else if (currentFragment instanceof HomeMessagesFragment) {
-			view = inflater.inflate(R.layout.fragment_home_msggame, viewGroup,
-					false);
+			view = inflater.inflate(R.layout.component_homemsg_elist_layout,
+					viewGroup, false);
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
 			img.setImageResource(R.drawable.msgclose);
 			txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);
@@ -165,11 +165,11 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			Bundle mapEntry = array.get(childPosition);
 			if (mapEntry != null) {
 				if (currentFragment instanceof HomeWallFragment) {
-					view = inflater.inflate(R.layout.fragment_home_wall,
+					view = inflater.inflate(
+							R.layout.component_homewall_eitem_layout,
 							viewGroup, false);
 					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
 							.findViewById(R.id.mainLayoutPlayer);
-					mainLayoutPlayer.setPadding(50, 0, 50, 0);
 
 					txEHeadline = (TextView) view
 							.findViewById(R.id.txEHeadline);
@@ -187,11 +187,11 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					txEDate.setText("Date: "
 							+ mapEntry.getString(Keys.WallPostingTime));
 				} else if (currentFragment instanceof HomeMessagesFragment) {
-					view = inflater.inflate(R.layout.fragment_home_msggame,
-							viewGroup, false);
+					view = inflater.inflate(
+							R.layout.component_homemsg_eitem_layout, viewGroup,
+							false);
 					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
 							.findViewById(R.id.mainLayoutPlayer);
-					mainLayoutPlayer.setPadding(50, 0, 50, 0);
 
 					ImageView img = (ImageView) view
 							.findViewById(R.id.imgEvent);
