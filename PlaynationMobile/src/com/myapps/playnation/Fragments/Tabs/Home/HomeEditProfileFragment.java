@@ -13,33 +13,35 @@ import android.widget.EditText;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
 
 public class HomeEditProfileFragment extends Fragment {
 	ISectionAdapter mCallback;
 	private View mView;
 	private DataConnector con;
+	EditText editFirst;
+	EditText editLast;
+	EditText editDisp;
+	EditText editCity;
+	EditText editCountry;
+	EditText editEmail;
+	Bundle map;
 
 	public void initPlayer() {
 		con = DataConnector.getInst(getActivity());
 
-		EditText editFirst = (EditText) mView
-				.findViewById(R.id.txtChiledItemFirstName);
+		editFirst = (EditText) mView.findViewById(R.id.txtChiledItemFirstName);
 
-		EditText editLast = (EditText) mView
-				.findViewById(R.id.txtChiledItemLastName);
+		editLast = (EditText) mView.findViewById(R.id.txtChiledItemLastName);
 
-		EditText editDisp = (EditText) mView
-				.findViewById(R.id.txtChiledItemDisplayName);
+		editDisp = (EditText) mView.findViewById(R.id.txtChiledItemDisplayName);
 
-		EditText editCity = (EditText) mView
-				.findViewById(R.id.txtChiledItemCity);
+		editCity = (EditText) mView.findViewById(R.id.txtChiledItemCity);
 
-		EditText editCountry = (EditText) mView
-				.findViewById(R.id.txtChiledItemCountry);
+		editCountry = (EditText) mView.findViewById(R.id.txtChiledItemCountry);
 
-		EditText editEmail = (EditText) mView
-				.findViewById(R.id.txtChiledItemEmail);
+		editEmail = (EditText) mView.findViewById(R.id.txtChiledItemEmail);
 		Button saveProfileB = (Button) mView
 				.findViewById(R.id.saveProfileButton);
 		saveProfileB.setOnClickListener(new OnClickListener() {
@@ -49,7 +51,7 @@ public class HomeEditProfileFragment extends Fragment {
 				saveData();
 			}
 		});
-		Bundle map = con.getPlayer(Keys.TEMPLAYERID);
+		map = con.getPlayer(Keys.TEMPLAYERID);
 		// Bundle args = getArguments();
 		editFirst.setText(map.getString(Keys.FirstName));
 		editLast.setText(map.getString(Keys.LastName));
@@ -60,8 +62,41 @@ public class HomeEditProfileFragment extends Fragment {
 	}
 
 	public void saveData() {
-		// TO DO!!
-		// inserts the changes into the database
+		boolean state = true;
+		editFirst.setError(null);
+		editLast.setError(null);
+		editDisp.setError(null);
+		editCity.setError(null);
+		editCountry.setError(null);
+		editEmail.setError(null);
+
+		if (HelperClass.isEmpty(editFirst)) {
+			state = false;
+			editFirst.setError("Empty First Name Field.");
+		} else if (HelperClass.isEmpty(editLast)) {
+			state = false;
+			editLast.setError("Empty Last Name Field.");
+		} else if (HelperClass.isEmpty(editCity)) {
+			state = false;
+			editCity.setError("Empty Field City.");
+		} else if (HelperClass.isEmpty(editCountry)) {
+			state = false;
+			editCountry.setError("Empty Field County.");
+		} else if (HelperClass.isEmpty(editEmail)) {
+			state = false;
+			editEmail.setError("Empty Field Email.");
+		} else if (HelperClass.isEmpty(editDisp)) {
+			state = false;
+			editDisp.setError("Empty Field Nick Name.");
+		} else if (!HelperClass.EmailValidation(editEmail)) {
+			state = false;
+			editEmail.setError("Incorrect Email.");
+		}
+
+		if (state) {
+			con.savePersonalInfo(map, editFirst, editLast, editDisp, editCity,
+					editCountry, editEmail, getActivity());
+		}
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

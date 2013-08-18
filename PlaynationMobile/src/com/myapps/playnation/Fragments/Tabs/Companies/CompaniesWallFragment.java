@@ -3,12 +3,9 @@ package com.myapps.playnation.Fragments.Tabs.Companies;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-<<<<<<< HEAD
 import android.util.Log;
-=======
 import android.util.TypedValue;
 import android.view.Gravity;
->>>>>>> Messages
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,6 +41,9 @@ public class CompaniesWallFragment extends Fragment {
 		commentBut.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				con.insertComment(commentText.getText().toString(), "company",
+						getArguments().getString(Keys.CompanyName),
+						getArguments().getString(Keys.EventID_COMPANY));
 				Log.i("Games Wall", "Comment Button Pressed"
 						+ commentText.getText().toString());
 			}

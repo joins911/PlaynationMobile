@@ -111,7 +111,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		TextView txText;
 
 		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
-<<<<<<< HEAD
+
 		if (currentFragment instanceof HomeWallFragment) {
 			view = inflater.inflate(R.layout.component_homewall_elist_layout,
 					viewGroup, false);
@@ -140,43 +140,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			txEHeadline.setText("" + mapEntry.getString(Keys.PLAYERNICKNAME));
 			txELocation.setText(mapEntry.getString(Keys.MessageTime));
 			txText.setText(mapEntry.getString(Keys.MessageText));
-=======
-		view = inflater.inflate(R.layout.fragment_home_wall, viewGroup, false);
-		if (!mParent.isEmpty()) {
-			if (currentFragment instanceof HomeWallFragment) {
-				txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);
-				txText = (TextView) view.findViewById(R.id.txText);
-				txEDate = (TextView) view.findViewById(R.id.txEDate);
-				ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-				img.setImageResource(R.drawable.no_forum_100x100);
 
-				if (mapEntry != null) {
-					txEHeadline.setText(""
-							+ mapEntry.getString(Keys.WallPosterDisplayName));
-					txText.setText(""
-							+ Html.fromHtml(mapEntry
-									.getString(Keys.WallMessage)));
-					txEDate.setText("Date: "
-							+ HelperClass.convertTime(Integer.parseInt(mapEntry
-									.getString(Keys.WallPostingTime)),
-									con.dataTemplate));
-				}
-			} else if (currentFragment instanceof HomeMessagesFragment) {
-				view = inflater.inflate(R.layout.fragment_home_msggame,
-						viewGroup, false);
-				ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-				img.setImageResource(R.drawable.msgclose);
-				txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);
-				txText = (TextView) view.findViewById(R.id.txText);
-				txELocation = (TextView) view.findViewById(R.id.txELocation);
-				if (mapEntry != null) {
-					txEHeadline.setText(""
-							+ mapEntry.getString(Keys.PLAYERNICKNAME));
-					txELocation.setText(mapEntry.getString(Keys.MessageTime));
-					txText.setText(mapEntry.getString(Keys.MessageText));
-				}
-			}
->>>>>>> Messages
 		}
 		// return the entire view
 		return view;
