@@ -6,7 +6,7 @@ public final class Keys {
 	public static final String ActiveSession = "ActiveSession";
 
 	public static final String LASTIDTABLE = "LASTIDTABLE";
-
+	public static final float testSize = 22;
 	// ID is used by the DataConnector class to know which table to search for
 	// same principle
 	// as table name but needed int for Switch { (case): }

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
 	style="@style/GrayTheme"
+=======
+	android:id="@+id/generalPlayerListViewLayout"
+	style="@style/GroupsStyle"
+>>>>>>> Messages
 	android:layout_width="match_parent"
 	android:layout_height="match_parent" >
 	<ListView

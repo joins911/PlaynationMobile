@@ -3,12 +3,17 @@ package com.myapps.playnation.Fragments.Tabs.Home;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.HomExpandableAdapter;
@@ -44,9 +49,22 @@ public class HomeWallFragment extends Fragment {
 
 		ExpandableListView eListView = (ExpandableListView) view
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
+		HomExpandableAdapter expAdapter = new HomExpandableAdapter(context,
+				listParents, eListView, this);
+		eListView.setAdapter(expAdapter);
 
-		eListView.setAdapter(new HomExpandableAdapter(context, listParents,
-				eListView, this));
+		if (expAdapter.isEmpty()) {
+			RelativeLayout rl = (RelativeLayout) view
+					.findViewById(R.id.fragMsgAndWallTemp);
+
+			TextView msgText = new TextView(getActivity());
+			msgText.setText(R.string.emptyListString);
+			msgText.setTextColor(Color.parseColor("#CFCFCF"));
+			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
+			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
+			rl.addView(msgText);
+
+		}
 		return view;
 	}
 }

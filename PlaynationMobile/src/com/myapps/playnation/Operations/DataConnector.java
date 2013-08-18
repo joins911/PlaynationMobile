@@ -62,9 +62,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	final String ServerIp = "87.55.208.165:1337";
+	// final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
-	// final String ServerIp = "10.0.2.2";
+	final String ServerIp = "10.0.2.2";
 	// final String ServerIp = "192.168.1.47:90";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
@@ -2064,7 +2064,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerWall(String playerID, String ownerType) {
 		SQLiteDatabase sql = this.getWritableDatabase();
-
+		System.out.println("Wall PlayerID " + playerID);
+		System.out.println("Wall ownerType " + ownerType);
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallTable, ownerType, 0);
 		// // Print the data to the console
@@ -2075,7 +2076,9 @@ public class DataConnector extends SQLiteOpenHelper {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
+					System.out.println("Wall wallitem " + ID);
 					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
+
 						ContentValues m = new ContentValues();
 						// int id = Integer.parseInt(ID);
 						// if (id > getLastIDHomeWall())
@@ -2112,19 +2115,16 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallRepliesTable, wallitem, 0);
-
+		System.out.println("WallRep PlayerID " + playerID);
+		System.out.println("WallRep ID_WALLITEM " + wallitem);
 		if (json != null) {
-			System.out.println("json " + json.length());
 			for (int i = 0; i < json.length(); i++) {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
+
 					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem,
 							playerID)) {
-						// int id = Integer.parseInt(ID);
-						// if (id > getLastIDHomeWallRep())
-						// setLastIDHomeWallRep(id);
-
 						ContentValues m = new ContentValues();
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");

@@ -305,6 +305,7 @@ int drawable tab_text_selector 0x7f02008e
 int drawable tabs_my_back 0x7f02008f
 int drawable tabs_my_back2 0x7f020090
 int drawable textview_layout 0x7f020091
+<<<<<<< HEAD
 int id GamesButt 0x7f0500f0
 int id GroupsButt 0x7f0500f1
 int id HomeButt 0x7f0500ef
@@ -318,6 +319,21 @@ int id TextView06 0x7f0500bf
 int id TextView07 0x7f0500be
 int id TextView08 0x7f0500ba
 int id TextView09 0x7f0500c2
+=======
+int id GamesButt 0x7f0500f1
+int id GroupsButt 0x7f0500f2
+int id HomeButt 0x7f0500f0
+int id NewsButt 0x7f0500f3
+int id TextView01 0x7f0500ac
+int id TextView02 0x7f0500bc
+int id TextView03 0x7f0500ae
+int id TextView04 0x7f0500b3
+int id TextView05 0x7f0500b0
+int id TextView06 0x7f0500b7
+int id TextView07 0x7f0500b6
+int id TextView08 0x7f0500b2
+int id TextView09 0x7f0500ba
+>>>>>>> Messages
 int id action_bar 0x7f05001a
 int id action_bar_activity_content 0x7f050015
 int id action_bar_container 0x7f050019
@@ -341,6 +357,7 @@ int id btnRegister 0x7f050054
 int id button1 0x7f050082
 int id checkbox 0x7f05002b
 int id collapseActionView 0x7f05000d
+<<<<<<< HEAD
 int id component_searchsort_RLayout 0x7f050097
 int id component_searchsort_searchBox 0x7f05009b
 int id component_sort1_button 0x7f050098
@@ -353,6 +370,20 @@ int id container_home 0x7f0500ed
 int id container_wrapper 0x7f0500e9
 int id content 0x7f0500a3
 int id contentPlayer 0x7f050075
+=======
+int id component_searchsort_RLayout 0x7f05008e
+int id component_searchsort_searchBox 0x7f050092
+int id component_sort1_button 0x7f05008f
+int id component_sort2_button 0x7f050090
+int id component_sort3_button 0x7f050091
+int id component_spinner 0x7f05008d
+int id component_spinner_TV 0x7f050093
+int id container_games 0x7f0500ec
+int id container_home 0x7f0500ee
+int id container_wrapper 0x7f0500ea
+int id content 0x7f05009a
+int id contentPlayer 0x7f0500d2
+>>>>>>> Messages
 int id default_activity_button 0x7f050026
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
@@ -363,6 +394,7 @@ int id end 0x7f050013
 int id expand_activities_button 0x7f050024
 int id expanded_menu 0x7f05002a
 int id footer 0x7f050048
+<<<<<<< HEAD
 int id footherPlayer 0x7f0500e3
 int id fragMsgAndWallTemp_expList 0x7f0500e5
 int id frag_Gmedia_TView 0x7f0500c8
@@ -371,6 +403,18 @@ int id frag_GrEvents_TView 0x7f0500ca
 int id frag_GrMedia_TView 0x7f0500cc
 int id frag_reviewTemp_reviewList 0x7f0500c9
 int id fragment1 0x7f050084
+=======
+int id footherPlayer 0x7f0500e2
+int id fragMsgAndWallTemp 0x7f0500e9
+int id fragMsgAndWallTemp_expList 0x7f0500e4
+int id frag_Ginfo_LLayout 0x7f0500aa
+int id frag_Gmedia_TView 0x7f0500c0
+int id frag_Gnews_TView 0x7f0500e7
+int id frag_GrEvents_TView 0x7f0500c2
+int id frag_GrMedia_TView 0x7f0500c4
+int id frag_reviewTemp_reviewList 0x7f0500c1
+int id fragment1 0x7f05007b
+>>>>>>> Messages
 int id gameCLH_All_LLayout 0x7f05006a
 int id gameCLH_commentString_TView 0x7f050043
 int id gameCLH_friendListArrow_pic 0x7f0500df
@@ -409,7 +453,12 @@ int id gamesDesc_descLayout_LLayout 0x7f050042
 int id gamesDesc_descriptionText_TView 0x7f050044
 int id gamesF_All_RLayout 0x7f050060
 int id gamesM_ratingString_TView 0x7f050068
+<<<<<<< HEAD
 int id generalPlayerListView 0x7f0500e4
+=======
+int id generalPlayerListView 0x7f0500e3
+int id generalPlayerListViewLayout 0x7f0500e8
+>>>>>>> Messages
 int id header 0x7f050047
 int id headerInfoPlayer 0x7f05006e
 int id headerPlayer 0x7f05006b
@@ -418,6 +467,7 @@ int id homeAsUp 0x7f050005
 int id icon 0x7f050028
 int id ifRoom 0x7f05000a
 int id image 0x7f050025
+<<<<<<< HEAD
 int id imageView1 0x7f05009d
 int id imageView3 0x7f05009e
 int id imgArrow 0x7f050090
@@ -425,6 +475,15 @@ int id imgEvent 0x7f050077
 int id imgPlayerAvatarLog 0x7f05008e
 int id include_TabHolder_Games 0x7f0500ea
 int id include_TabHolder_Home 0x7f0500ec
+=======
+int id imageView1 0x7f050094
+int id imageView3 0x7f050095
+int id imgArrow 0x7f050087
+int id imgEvent 0x7f0500d4
+int id imgPlayerAvatarLog 0x7f050085
+int id include_TabHolder_Games 0x7f0500eb
+int id include_TabHolder_Home 0x7f0500ed
+>>>>>>> Messages
 int id include_menu_search 0x7f050050
 int id infoSubContent 0x7f050076
 int id item_detail_container 0x7f050045
@@ -435,6 +494,7 @@ int id link_to_register 0x7f05004d
 int id listMode 0x7f050001
 int id list_child_layout 0x7f0500cd
 int id list_item 0x7f050027
+<<<<<<< HEAD
 int id list_item_text_childCity 0x7f0500d4
 int id list_item_text_childCountry 0x7f0500d6
 int id list_item_text_childDisplayName 0x7f0500d2
@@ -445,6 +505,18 @@ int id mainLayoutPlayer 0x7f050074
 int id mainList 0x7f05007e
 int id mainList_LLayout 0x7f05007c
 int id menu_search 0x7f0500ee
+=======
+int id list_item_text_childCity 0x7f0500cc
+int id list_item_text_childCountry 0x7f0500ce
+int id list_item_text_childDisplayName 0x7f0500ca
+int id list_item_text_childEmail 0x7f0500d0
+int id list_item_text_childFirstName 0x7f0500c7
+int id list_item_text_childLastName 0x7f0500c8
+int id mainLayoutPlayer 0x7f0500dc
+int id mainList 0x7f050075
+int id mainList_LLayout 0x7f050074
+int id menu_search 0x7f0500ef
+>>>>>>> Messages
 int id middle 0x7f050012
 int id never 0x7f050009
 int id newsAuthor 0x7f0500e6
@@ -623,6 +695,7 @@ int layout wrapper_header_games 0x7f030046
 int layout wrapper_header_home 0x7f030047
 int menu barmenu 0x7f0d0000
 int menu main 0x7f0d0001
+<<<<<<< HEAD
 int string Age 0x7f0a0031
 int string City 0x7f0a0033
 int string Country 0x7f0a0032
@@ -645,6 +718,30 @@ int string Privacy 0x7f0a0040
 int string Type 0x7f0a004f
 int string Type1 0x7f0a004d
 int string Type2 0x7f0a004e
+=======
+int string Age 0x7f0a0035
+int string City 0x7f0a0037
+int string Country 0x7f0a0036
+int string Date 0x7f0a0033
+int string DayEvent 0x7f0a003c
+int string DisplayName 0x7f0a0038
+int string Duration 0x7f0a003b
+int string Email 0x7f0a0050
+int string FirstName 0x7f0a0039
+int string GameName 0x7f0a005f
+int string Invitations 0x7f0a0045
+int string LastName 0x7f0a003a
+int string Leader 0x7f0a003e
+int string Location 0x7f0a0034
+int string Members 0x7f0a003d
+int string NewsMembers 0x7f0a003f
+int string Nick 0x7f0a0055
+int string Participants 0x7f0a0043
+int string Privacy 0x7f0a0044
+int string Type 0x7f0a0053
+int string Type1 0x7f0a0051
+int string Type2 0x7f0a0052
+>>>>>>> Messages
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
@@ -661,6 +758,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string action_settings 0x7f0a000e
 int string app_name 0x7f0a000d
 int string blogString 0x7f0a0016
+<<<<<<< HEAD
 int string btnEdit 0x7f0a004b
 int string btnSave 0x7f0a002e
 int string buttonString_comment 0x7f0a0017
@@ -728,6 +826,79 @@ int string usernameString 0x7f0a0023
 int string website 0x7f0a0046
 int style AppTheme 0x7f0b0083
 int style BlackText 0x7f0b0084
+=======
+int string btnEdit 0x7f0a004f
+int string btnSave 0x7f0a0032
+int string buttonString_comment 0x7f0a0017
+int string byAlphabetically 0x7f0a004e
+int string byDate 0x7f0a004d
+int string byPopularity 0x7f0a004b
+int string byRating 0x7f0a004c
+int string commentString 0x7f0a0029
+int string commentsString 0x7f0a002c
+int string companiesString 0x7f0a0014
+int string create 0x7f0a0040
+int string descString 0x7f0a0030
+int string descriptionButton 0x7f0a000f
+int string developers 0x7f0a0063
+int string distributors 0x7f0a0064
+int string emailString 0x7f0a0054
+int string employees 0x7f0a0048
+int string emptyFriendsListString 0x7f0a001c
+int string emptyGameListString 0x7f0a001a
+int string emptyGroupListString 0x7f0a001e
+int string emptyListString 0x7f0a0018
+int string emptyMsgListString 0x7f0a001d
+int string emptyNewsListString 0x7f0a0019
+int string emptyPlayerListString 0x7f0a001b
+int string endDate 0x7f0a0042
+int string esrbRating 0x7f0a0062
+int string fontFamilyTextView 0x7f0a0031
+int string founded 0x7f0a0047
+int string friendsString 0x7f0a002f
+int string gamedate 0x7f0a005d
+int string gamename 0x7f0a005b
+int string gamesString 0x7f0a0013
+int string gametype 0x7f0a005c
+int string groupString 0x7f0a0012
+int string headquarters 0x7f0a0046
+int string homeString 0x7f0a0015
+int string iconString 0x7f0a006a
+int string joined 0x7f0a0049
+int string loginButtonString 0x7f0a0028
+int string loginGuestString 0x7f0a0020
+int string loginOfflineString 0x7f0a0021
+int string loginString 0x7f0a001f
+int string nameString 0x7f0a0026
+int string newsString 0x7f0a0010
+int string passwordString 0x7f0a0022
+int string platforms 0x7f0a0061
+int string playerString 0x7f0a0011
+int string ratingString 0x7f0a002e
+int string ratings 0x7f0a005e
+int string registerButtonString 0x7f0a0027
+int string registerDesc 0x7f0a0024
+int string registerOfflineDesc 0x7f0a0025
+int string registerString 0x7f0a0023
+int string released 0x7f0a0060
+int string reviewString 0x7f0a002d
+int string searchString 0x7f0a0069
+int string showMoreString 0x7f0a0068
+int string startdate 0x7f0a0041
+int string subViewText 0x7f0a0067
+int string title_activity_game 0x7f0a0057
+int string title_activity_game_description 0x7f0a002b
+int string title_activity_group_description 0x7f0a005a
+int string title_activity_groups 0x7f0a0058
+int string title_activity_main_activity 0x7f0a0059
+int string title_activity_main_list 0x7f0a0056
+int string title_item_detail 0x7f0a0066
+int string title_item_list 0x7f0a0065
+int string usernameString 0x7f0a002a
+int string website 0x7f0a004a
+int style AppBaseTheme 0x7f0b0083
+int style AppTheme 0x7f0b0084
+>>>>>>> Messages
 int style CustomActionBarTheme 0x7f0b007f
 int style DarkTheme 0x7f0b0087
 int style GrayTheme 0x7f0b0086
