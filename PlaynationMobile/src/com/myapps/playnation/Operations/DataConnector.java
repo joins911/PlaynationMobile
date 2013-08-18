@@ -2451,14 +2451,12 @@ public class DataConnector extends SQLiteOpenHelper {
 								.getString(Keys.WallPosterDisplayName), bundle2
 								.getString(Keys.WallMessage), date));
 					}
-
-					String date = HelperClass.convertTime(Integer
-							.parseInt(bundle.getString(Keys.WallPostingTime)),
-							dataTemplate);
-					comments.add(new UserComment(new CommentInfo(bundle
-							.getString(Keys.WallPosterDisplayName), bundle
-							.getString(Keys.WallMessage), date), dummy1));
 				}
+				String date = HelperClass.convertTime(Integer.parseInt(bundle
+						.getString(Keys.WallPostingTime)), dataTemplate);
+				comments.add(new UserComment(new CommentInfo(bundle
+						.getString(Keys.WallPosterDisplayName), bundle
+						.getString(Keys.WallMessage), date), dummy1));
 			}
 		return comments;
 	}

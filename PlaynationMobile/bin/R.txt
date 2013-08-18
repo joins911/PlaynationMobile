@@ -609,7 +609,7 @@ int layout fragment_home_main 0x7f030039
 int layout fragment_home_msggame 0x7f03003a
 int layout fragment_home_subscrition 0x7f03003b
 int layout fragment_home_wall 0x7f03003c
-int layout fragment_news_first 0x7f03003d
+int layout fragment_news 0x7f03003d
 int layout fragment_template_emptyblack 0x7f03003e
 int layout fragment_template_news 0x7f03003f
 int layout fragment_template_tabslistview 0x7f030040

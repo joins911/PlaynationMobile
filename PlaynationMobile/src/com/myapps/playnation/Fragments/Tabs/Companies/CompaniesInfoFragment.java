@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -15,13 +16,13 @@ import com.myapps.playnation.Classes.Keys;
 public class CompaniesInfoFragment extends Fragment {
 	private WebView txtNewsTitle;
 	private WebView txtNewsText;
-	// private ImageView newsImage;
+	private ImageView newsImage;
 	private View view;
 
 	public void initCompany() {
 		txtNewsText = (WebView) view.findViewById(R.id.webView2);
 		txtNewsTitle = (WebView) view.findViewById(R.id.webView1);
-		// newsImage = (ImageView) view.findViewById(R.id.newsImg);
+		newsImage = (ImageView) view.findViewById(R.id.newsImg);
 		Bundle myIntent = getArguments();
 		TextView txtInvetationLabel = (TextView) view
 				.findViewById(R.id.textView9);
@@ -48,6 +49,7 @@ public class CompaniesInfoFragment extends Fragment {
 			txtNewsText.loadData(myIntent.getString(Keys.CompanyDesc),
 					"text/html", null);
 
+			newsImage.setImageResource(R.drawable.no_company_100x100);
 			txtEventType.setText(myIntent.getString(Keys.CompanyType));
 			String s = myIntent.getString(Keys.CompanyAddress);
 			StringBuilder sb = new StringBuilder(s);

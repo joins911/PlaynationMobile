@@ -337,7 +337,7 @@ public class HelperClass {
 
 	public static ArrayList<NewsFeedItem> queryNewsList(ArrayList<Bundle> result) {
 		ArrayList<NewsFeedItem> newsFeedList = new ArrayList<NewsFeedItem>();
-		for (int i = 95; i < result.size(); i++) {
+		for (int i = 0; i < result.size(); i++) {
 			try {
 				NewsFeed feed = new NewsFeed();
 				feed.setKey_NewsFeedID(Integer.valueOf(result.get(i).getString(

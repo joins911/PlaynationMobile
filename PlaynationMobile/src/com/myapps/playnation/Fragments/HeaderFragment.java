@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -22,6 +23,7 @@ public class HeaderFragment extends Fragment {
 	private TextView gType;
 	private TextView ratingTV;
 	private TextView gRating;
+	private ImageView gImage;
 	private int state;
 	private DataConnector con;
 	ISectionAdapter actContext;
@@ -118,17 +120,20 @@ public class HeaderFragment extends Fragment {
 			mView = inflater.inflate(R.layout.wrapper_header_games, container,
 					false);
 			header = mView.findViewById(R.id.include_TabHolder_Games);
+
 			gName = (TextView) header.findViewById(R.id.gameM_NameText_TView);
 			gType = (TextView) header.findViewById(R.id.gameM_TypeText_TView);
 			gRating = (TextView) header
 					.findViewById(R.id.gameM_RatingsNr_TView);
 			ratingTV = (TextView) header
 					.findViewById(R.id.gamesM_ratingString_TView);
+			gImage = (ImageView) header.findViewById(R.id.gameM_headerPic);
 
 			if (state == Keys.GamesSTATE) {
 				gName.setText(getArguments().getString(Keys.GAMENAME));
 				gType.setText(getArguments().getString(Keys.GAMETYPE));
 				gRating.setText(getArguments().getString(Keys.RATING));
+				gImage.setImageResource(R.drawable.no_game_100x100);
 			}
 			if (state == Keys.GroupsSTATE) {
 				gName.setText(getArguments().getString(Keys.GROUPNAME));
@@ -136,6 +141,7 @@ public class HeaderFragment extends Fragment {
 						+ getArguments().getString(Keys.GROUPTYPE2));
 				gRating.setText(getArguments().getString(Keys.GROUPDATE));
 				ratingTV.setText("");
+				gImage.setImageResource(R.drawable.no_group_100x100);
 			}
 			if (state == Keys.PlayersSTATE) {
 				mView = inflater.inflate(R.layout.wrapper_header_home,
@@ -154,6 +160,7 @@ public class HeaderFragment extends Fragment {
 				gType.setText(getArguments().getString(Keys.CompanyOwnership));
 				gRating.setText(getArguments().getString(
 						Keys.CompanySocialRating));
+				gImage.setImageResource(R.drawable.no_company_100x100);
 
 				ratingTV.setText("");
 			}

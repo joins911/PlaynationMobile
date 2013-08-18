@@ -42,7 +42,7 @@ public class SelectedNewsFeed extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mView = inflater
-				.inflate(R.layout.fragment_news_first, container, false);
+				.inflate(R.layout.fragment_news, container, false);
 		initNews();
 		return mView;
 	}
