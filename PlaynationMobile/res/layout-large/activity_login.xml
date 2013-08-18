@@ -17,13 +17,12 @@
 			android:paddingTop="5dip" >
 			<!-- Logo Start -->
 			<ImageView
-				android:layout_width="match_parent"
-				android:layout_height="80dp"
-				android:scaleType="fitCenter"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
 				android:layout_gravity="right"
 				android:layout_marginLeft="10dip"
 				android:contentDescription="@string/loginString"
-				android:src="@drawable/logo_equal" />
+				android:src="@drawable/login_logo" />
 			<!-- Logo Ends -->
 		</LinearLayout>
 		<!-- Header Ends -->
@@ -80,12 +79,6 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="10dip"
 				android:text="@string/loginString" />
-				<Button
-				android:id="@+id/btnGuestLogin"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="10dip"
-				android:text="@string/loginGuestString" />
 			<TextView
 				android:id="@+id/link_to_register"
 				android:layout_width="fill_parent"

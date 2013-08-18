@@ -73,7 +73,7 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 			mapEntry = tempList.get(arg0);
 
 		if (mapEntry != null) {
-			playerIcon.setImageResource(R.drawable.person);
+			playerIcon.setImageResource(R.drawable.no_player_100x100);
 			playerIcon.setContentDescription(mapEntry
 					.getString(Keys.PLAYERNICKNAME));
 			txPlName.setText("" + mapEntry.getString(Keys.FirstName) + " , "

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -58,11 +59,10 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 			Bundle map = (Bundle) companiesList.get(position);
 
 			TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
-			// ImageView img = (ImageView)
-			// v.findViewById(R.id.imgPlayerAvatarLog);
+			ImageView img = (ImageView) v.findViewById(R.id.imgPlayerAvatarLog);
 			TextView txtText = (TextView) v.findViewById(R.id.txtNickNameText);
 			txtTitle.setText(Html.fromHtml(map.getString(Keys.CompanyName)));
-			// img.setImageResource(map.get(Keys.CompanyImageURL));
+			img.setImageResource(R.drawable.no_company_100x100);
 			txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
 		}
 		return v;

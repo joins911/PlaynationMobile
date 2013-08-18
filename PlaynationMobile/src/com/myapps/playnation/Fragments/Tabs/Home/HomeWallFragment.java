@@ -7,10 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 import com.myapps.playnation.R;
@@ -44,24 +41,12 @@ public class HomeWallFragment extends Fragment {
 					listParents.add(parentItem);
 				}
 			}
+
 		ExpandableListView eListView = (ExpandableListView) view
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
-		View footer = inflater.inflate(R.layout.component_comment_footer, null);
-		Button commentBut = (Button) footer.findViewById(R.id.wallF_commBut);
-		EditText commentText = (EditText) footer
-				.findViewById(R.id.wallF_comment_EBox);
-		commentBut.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		eListView.setAdapter(new HomExpandableAdapter(context, listParents,
 				eListView, this));
-		eListView.addFooterView(footer);
-
 		return view;
 	}
 }

@@ -37,6 +37,7 @@
                 android:layout_marginLeft="5dp"
                 android:lines="1"
                 android:maxLines="1"
+                android:onClick="onClick_sortByAlph"
                 android:text="Name"
                 android:textSize="12sp" />
 
@@ -48,6 +49,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_toRightOf="@id/component_sort1_button"
+                android:onClick="onClick_sortBy2"
                 android:text="Rating"
                 android:textSize="12sp" />
 
@@ -58,6 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/component_sort2_button"
+                android:onClick="onClick_sortBy3"
                 android:text="Date"
                 android:textSize="12sp" />
         </RelativeLayout>

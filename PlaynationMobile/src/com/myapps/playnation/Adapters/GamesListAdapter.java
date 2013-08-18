@@ -94,8 +94,8 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.findViewById(R.id.gameList_GameType_TView);
 			holder.tvGameDate = (TextView) vi
 					.findViewById(R.id.gameList_GameDate_TView);
-			// holder.tvImage
-			// =(ImageView)vi.findViewById(R.id.gameList_GameImage);
+			holder.tvImage = (ImageView) vi
+					.findViewById(R.id.gameList_GameImage);
 			vi.setTag(holder);
 		} else {
 			holder = (ViewHolder) vi.getTag();
@@ -109,6 +109,7 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.getString(Keys.GAMETYPE));
 			holder.tvGameDate.setText(gamesDataCollection.get(position)
 					.getString(Keys.GAMEDATE));
+			holder.tvImage.setImageResource(R.drawable.no_game_100x100);
 		}
 		/*
 		 * For getting image try {

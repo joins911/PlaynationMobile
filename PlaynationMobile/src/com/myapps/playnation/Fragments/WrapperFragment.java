@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.Tabs.News.SelectedNewsFeed;
-import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.HelperClass;
 
 public class WrapperFragment extends Fragment {
@@ -25,14 +24,12 @@ public class WrapperFragment extends Fragment {
 		mViewPagerState = getArguments().getInt(Keys.ARG_POSITION);
 		Bundle args = new Bundle();
 		args.putInt(Keys.ARG_POSITION, mViewPagerState);
-		if (mViewPagerState == Keys.HomeSTATE
-				&& Configurations.isAppState(Configurations.appStateOnUser)) {
-			mFragments = new HeaderFragment();
-			mFragments.setArguments(args);
-		} else {
+		if (mViewPagerState != Keys.HomeSTATE) {
 			mFragments = new ListsFragment();
 			mFragments.setArguments(args);
-
+		} else {
+			mFragments = new HeaderFragment();
+			mFragments.setArguments(args);
 		}
 		setRetainInstance(true);
 		mFragments.setRetainInstance(true);
@@ -54,12 +51,12 @@ public class WrapperFragment extends Fragment {
 	}
 
 	public void switchToHeader(Bundle args) {
-		if (mViewPagerState == Keys.NewsSTATE) {
+		if (mViewPagerState == 3) {
 			mHeaderFragment = new SelectedNewsFeed();
 			mHeaderFragment.setArguments(args);
 			canBack = true;
 
-		} else if (mViewPagerState != Keys.HomeSTATE) {
+		} else if (mViewPagerState != 0) {
 			args.putAll(getArguments());
 			mHeaderFragment = new HeaderFragment();
 			mHeaderFragment.setArguments(args);

@@ -363,4 +363,5 @@ public class HelperClass {
 		}
 		return newsFeedList;
 	}
+
 }

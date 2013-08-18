@@ -1,6 +1,7 @@
 package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -22,13 +24,13 @@ import com.myapps.playnation.main.ISectionAdapter;
 @SuppressWarnings("rawtypes")
 public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
-	private ArrayList<NewsFeedItem> newsFeedsLists;
+	private List<NewsFeedItem> newsFeedsLists;
 	ISectionAdapter context;
 	int count = 10;
 	boolean showMore = true;
 
 	@SuppressWarnings("unchecked")
-	public NewsListAdapter(Activity context, ArrayList<NewsFeedItem> items) {
+	public NewsListAdapter(Activity context, List<NewsFeedItem> items) {
 		super(context, 0, items);
 		this.context = (ISectionAdapter) context;
 		this.newsFeedsLists = items;
@@ -63,8 +65,9 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 				row = inflator.inflate(R.layout.component_newslist_itemlayout,
 						null);
 				TextView txtTitle = (TextView) row.findViewById(R.id.txtTitle);
-				// ImageView img = (ImageView) row
-				// .findViewById(R.id.imgPlayerAvatarLog);
+				ImageView img = (ImageView) row
+						.findViewById(R.id.imgPlayerAvatarLog);
+				img.setImageResource(R.drawable.no_news_100x100);
 				TextView txtText = (TextView) row
 						.findViewById(R.id.txtNickNameText);
 				txtTitle.setText(Html.fromHtml(feed.getKey_NewsTitle()));

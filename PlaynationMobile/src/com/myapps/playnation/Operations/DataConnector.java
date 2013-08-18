@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -61,10 +62,10 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	final String ServerIp = "87.55.208.165:1337";
+	// final String ServerIp = "87.55.208.165:1337";
 	// final String ServerIp = "192.168.1.11:1337";
 	// final String ServerIp = "10.0.2.2";
-	// final String ServerIp = "192.168.1.47:90";
+	final String ServerIp = "192.168.1.47:90";
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -2258,7 +2259,8 @@ public class DataConnector extends SQLiteOpenHelper {
 			TextView txPlNick = (TextView) v.findViewById(R.id.txPlNick);
 			TextView txPlAge = (TextView) v.findViewById(R.id.txPlAge);
 			TextView txPlCountry = (TextView) v.findViewById(R.id.txPlCountry);
-
+			QuickContactBadge playerIcon = (QuickContactBadge) v
+					.findViewById(R.id.quickContactBadge1);
 			if (txPlName != null)
 				txPlName.setText("Name : " + currentPlayer.get(Keys.FirstName)
 						+ " , " + currentPlayer.get(Keys.LastName));
@@ -2275,6 +2277,8 @@ public class DataConnector extends SQLiteOpenHelper {
 			if (txPlCountry != null)
 				txPlCountry.setText("Country: "
 						+ currentPlayer.get(Keys.COUNTRY));
+			if (playerIcon != null)
+				playerIcon.setImageResource(R.drawable.no_player_100x100);
 		}
 		return v;
 	}
@@ -2713,7 +2717,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		url += "chekRegisterLogin.php";
 		String result = "";
 		HttpEntity entity = null;
-		JSONArray jArray = null;
+
 		// http post
 		try {
 			httpclient = new DefaultHttpClient();
@@ -2721,6 +2725,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			url = temp;
 			String[] ar;
+			String _email = email.getText().toString();
 
 			pairs.add(new BasicNameValuePair("checkCondition", "Register"));
 			if (nickname.contains(" ")) {
@@ -2733,8 +2738,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			}
 
 			pairs.add(new BasicNameValuePair("password", password));
-			pairs.add(new BasicNameValuePair("email", email.getText()
-					.toString()));
+			pairs.add(new BasicNameValuePair("email", _email));
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = httpclient.execute(httppost);
 			entity = response.getEntity();
@@ -2749,7 +2753,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			Log.e("DataConnector checkLogin() ",
 					"Error converting result " + e.toString());
 		}
-		if (!result.equalsIgnoreCase("")) {
+		if (result.contains("Duplicate entry")) {
 			email.setError("Duplicate Email. This email already exists.");
 			return false;
 		} else {

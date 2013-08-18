@@ -38,15 +38,6 @@ public class LoginActivity extends Activity {
 	DataConnector con;
 	private SharedPreferences prefrence;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 * 
-	 * I've commented out the checkCredential so that the Login button acts as
-	 * login for user and Login as Guests logs in as guest
-	 */
-
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -104,9 +95,6 @@ public class LoginActivity extends Activity {
 					} else {
 						logOfflineUser();
 					}
-				} else {
-					Keys.TEMPLAYERID = "12";
-					logOnlineUser();
 				}
 			}
 		});
@@ -115,7 +103,7 @@ public class LoginActivity extends Activity {
 			logGuestButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 
-					logOnlineGuest();
+					logOnlineUser();
 				}
 			});
 
@@ -167,7 +155,6 @@ public class LoginActivity extends Activity {
 	private void logOnlineGuest() {
 		// Login as Guest
 		startMainActivity(Configurations.appStateOnGuest);
-		Keys.changeStates();
 	}
 
 	private void startMainActivity(int appState) {
@@ -185,11 +172,12 @@ public class LoginActivity extends Activity {
 	class LoadMainActivityTask extends AsyncTask<Void, Integer, Void> {
 
 		String tableName;
+		int appState;
 		Intent mInt;
 
 		private LoadMainActivityTask(int appState) {
 			con = DataConnector.getInst(getApplicationContext());
-			Configurations.setApplicationState(appState);
+			this.appState = appState;
 		}
 
 		// Before running code in separate thread
@@ -246,6 +234,7 @@ public class LoginActivity extends Activity {
 				} catch (Exception e) {
 				}
 				mInt = new Intent(getApplicationContext(), MainActivity.class);
+				mInt.putExtra(Keys.AppState, appState);
 			}
 			return null;
 		}

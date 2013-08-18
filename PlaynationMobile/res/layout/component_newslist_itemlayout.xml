@@ -20,7 +20,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_below="@+id/txtTitle"
-		android:src="@drawable/crysis_cover" />
+		android:src="@drawable/no_news_100x100" />
 	<TextView
 		android:id="@+id/txtNickNameText"
 		style="@style/textviewstyle"

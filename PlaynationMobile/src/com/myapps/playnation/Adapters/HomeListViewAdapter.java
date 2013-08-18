@@ -130,7 +130,7 @@ public class HomeListViewAdapter extends BaseAdapter {
 			txText = (TextView) view.findViewById(R.id.txText);
 
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-			img.setImageResource(R.drawable.game);
+			img.setImageResource(R.drawable.no_game_100x100);
 
 			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
@@ -150,7 +150,7 @@ public class HomeListViewAdapter extends BaseAdapter {
 			txText = (TextView) view.findViewById(R.id.txText);
 
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-			img.setImageResource(R.drawable.event);
+			img.setImageResource(R.drawable.no_group_100x100);
 
 			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {

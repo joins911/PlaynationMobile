@@ -16,6 +16,7 @@
 		android:fontFamily="@string/fontFamilyTextView"
 		android:linksClickable="false"
 		android:longClickable="false"
+		android:onClick="null"
 		android:text="ssss"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:textColor="@color/headerColor" />

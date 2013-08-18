@@ -26,6 +26,10 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	int count;
 	boolean showMore = true;
 
+	public GroupsListAdapter() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public GroupsListAdapter(Activity act, ArrayList<Bundle> map) {
 		this.groupsDataCollection = map;
 		inflater = (LayoutInflater) act
@@ -80,7 +84,8 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.findViewById(R.id.gameList_GameType_TView);
 			holder.tvGameDate = (TextView) vi
 					.findViewById(R.id.gameList_GameDate_TView);
-			// holder.tvImage =(ImageView)vi.findViewById(R.id.list_image);
+			holder.tvImage = (ImageView) vi
+					.findViewById(R.id.gameList_GameImage);
 			vi.setTag(holder);
 		} else {
 			holder = (ViewHolder) vi.getTag();
@@ -106,6 +111,7 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 							Keys.GROUPTYPE2));
 			holder.tvGameDate.setText(groupsDataCollection.get(position)
 					.getString(Keys.GROUPDATE));
+			holder.tvImage.setImageResource(R.drawable.no_group_100x100);
 		}
 		// Setting an image
 		// String uri = "drawable/"+
@@ -121,6 +127,7 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	}
 
 	static class ViewHolder {
+		ImageView tvImage;
 		TextView tvGameName, tvGameType, tvGameDate;
 		// ImageView tvImage;
 	}

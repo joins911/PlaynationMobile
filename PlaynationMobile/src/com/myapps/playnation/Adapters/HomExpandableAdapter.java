@@ -118,7 +118,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			txText = (TextView) view.findViewById(R.id.txText);
 			txEDate = (TextView) view.findViewById(R.id.txEDate);
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-			img.setImageResource(R.drawable.event);
+			img.setImageResource(R.drawable.no_forum_100x100);
 
 			txEHeadline.setText(""
 					+ mapEntry.getString(Keys.WallPosterDisplayName));

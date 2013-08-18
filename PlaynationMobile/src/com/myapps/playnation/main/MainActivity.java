@@ -25,7 +25,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.ListsFragment;
 import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
-import com.myapps.playnation.Operations.MenuContainer;
+import com.myapps.playnation.Operations.FlyOutContainer;
 
 public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	// protected MyApp mMyApp;
@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionAdapter mSectionAdapter;
-	MenuContainer root;
+	FlyOutContainer root;
 	DataConnector con;
 	private int total;
 	private boolean finished = false;
@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		getSupportActionBar().setTitle("Playnation Mobile");
 		con = DataConnector.getInst(getApplicationContext());
-		this.root = (MenuContainer) this.getLayoutInflater().inflate(
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.activity_main, null);
 		initializePager();
 		this.setContentView(root);
@@ -191,20 +191,30 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				.get(mViewPager.getCurrentItem()).getListFragment();
 		ArrayList<Bundle> temp = null;
 		if (frag != null) {
-			if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
+			switch (mViewPager.getCurrentItem()) {
+			case Keys.GamesSTATE: {
 				temp = searchListGames(args);
-			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
+				break;
+			}
+			case Keys.GroupsSTATE: {
 				temp = searchListGroups(args);
-			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
-				Log.e("NewsSearch", "To Do");
-			else if (mViewPager.getCurrentItem() == Keys.GamesSTATE)
+				break;
+			}
+			case Keys.NewsSTATE: {
+				return;
+			}
+			case Keys.CompaniesSTATE: {
 				temp = searchListCompanies(args);
-			// else if (mViewPager.getCurrentItem()==Keys.GamesSTATE)
-			// temp = searchListPlayers(args);
-
+				return;
+			}
+			case Keys.PlayersSTATE: {
+				// temp = searchListPlayers(args);
+				return;
+			}
+			}
+			if (temp != null)
+				frag.setListBundle(temp);
 		}
-		if (temp != null)
-			frag.setListBundle(temp);
 	}
 
 	public ArrayList<Bundle> searchListGames(String args) {
@@ -243,6 +253,25 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		return results;
 	}
 
+	/*
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) {
+	 * 
+	 * switch (item.getItemId()) {
+	 * 
+	 * case 1: Toast msg = Toast.makeText(MainActivity.this, "Menu 1",
+	 * Toast.LENGTH_LONG); this.root.toggleMenu(); // msg.show(); return true;
+	 * 
+	 * case 2:
+	 * 
+	 * mViewPager.setCurrentItem(2); return true;
+	 * 
+	 * case 3: mViewPager.beginFakeDrag(); mViewPager.fakeDragBy(-150);
+	 * mViewPager.endFakeDrag(); return true;
+	 * 
+	 * default: break;
+	 * 
+	 * } return super.onOptionsItemSelected(item); }
+	 */
 	public SectionAdapter getAdapter() {
 		return this.mSectionAdapter;
 	}
@@ -275,7 +304,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
 				+ finished);
 		total = total + viewPagerState;
-		if (total == Keys.Total)
+		if (total == 15)
 			setSupportProgressBarIndeterminateVisibility(false);
 	}
 }
