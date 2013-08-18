@@ -128,8 +128,6 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
-			String total = "";
-
 			@Override
 			public boolean onQueryTextChange(String arg0) {
 				searchList(arg0);

@@ -14,7 +14,7 @@ public class ServiceClass extends Service {
 	private DataConnector con;
 	private Timer timer;
 
-	private static final String tag = "ServiceClass";
+	// private static final String tag = "ServiceClass";
 
 	@Override
 	public IBinder onBind(Intent intent) {

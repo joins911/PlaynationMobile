@@ -39,7 +39,7 @@ public class RegisterActivity extends Activity {
 			public void onClick(View v) {
 				if (checkServerStatus()) {
 					String nickname = registerName.getText().toString();
-					String email = registerEmail.getText().toString();
+					// String email = registerEmail.getText().toString();
 					String password = registerPassword.getText().toString();
 					if (HelperClass.EmailPassNickCheck(registerEmail,
 							registerPassword, registerName)) {

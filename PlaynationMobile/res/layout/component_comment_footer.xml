@@ -32,7 +32,6 @@
         android:layout_marginTop="@dimen/margin"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/wallsF_comment_EBox"
-        android:onClick="button_onClick"
         android:text="@string/buttonString_comment" />
 
 </RelativeLayout>
