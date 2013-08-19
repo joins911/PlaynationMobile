@@ -1269,7 +1269,6 @@ public class DataConnector extends SQLiteOpenHelper {
 
 			}
 			cursor.close();
-			// sql.close();
 		}
 		return list;
 	}
@@ -1591,16 +1590,22 @@ public class DataConnector extends SQLiteOpenHelper {
 		String result = "";
 		SerializedPhpParser spp = new SerializedPhpParser(text);
 		Object obj = spp.parse();
-		@SuppressWarnings("unchecked")
-		Map<Object, Object> map = (Map<Object, Object>) obj;
-		Set<Entry<Object, Object>> set = map.entrySet();
-		Iterator<Entry<Object, Object>> itr = set.iterator();
-		while (itr.hasNext()) {
-			Map.Entry<Object, Object> ent = (Entry<Object, Object>) itr.next();
-			if (ent.getKey().toString().equals("content")) {
-				result = ent.getValue().toString();
-			}
 
+		if (!obj.toString().contains("content=")) {
+			return obj.toString();
+		} else {
+			@SuppressWarnings("unchecked")
+			Map<Object, Object> map = (Map<Object, Object>) obj;
+			Set<Entry<Object, Object>> set = map.entrySet();
+			Iterator<Entry<Object, Object>> itr = set.iterator();
+			while (itr.hasNext()) {
+				Map.Entry<Object, Object> ent = (Entry<Object, Object>) itr
+						.next();
+				if (ent.getKey().toString().equals("content")) {
+					result = ent.getValue().toString();
+				}
+
+			}
 		}
 		return result;
 	}
@@ -2089,32 +2094,31 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
 					System.out.println("Wall wallitem " + ID);
-					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
+					// if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
 
-						ContentValues m = new ContentValues();
-						// int id = Integer.parseInt(ID);
-						// if (id > getLastIDHomeWall())
-						// setLastIDHomeWall(id);
+					ContentValues m = new ContentValues();
+					// int id = Integer.parseInt(ID);
+					// if (id > getLastIDHomeWall())
+					// setLastIDHomeWall(id);
 
-						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
-								.getString(Keys.WallPosterDisplayName) + "");
-						m.put(Keys.ID_WALLITEM, ID);
-						m.put(Keys.ID_OWNER,
-								json.getJSONObject(i).getInt(Keys.ID_OWNER)
-										+ "");
-						m.put(Keys.ItemType,
-								json.getJSONObject(i).getString(Keys.ItemType));
-						m.put(Keys.WallLastActivityTime, json.getJSONObject(i)
-								.getString(Keys.WallLastActivityTime));
-						m.put(Keys.WallMessage, returnUnserializedText(json
-								.getJSONObject(i).getString(Keys.WallMessage)));
-						m.put(Keys.WallOwnerType, json.getJSONObject(i)
-								.getString(Keys.WallOwnerType));
-						m.put(Keys.WallPostingTime, json.getJSONObject(i)
-								.getString(Keys.WallPostingTime));
-						sql.insertWithOnConflict(Keys.HomeWallTable, null, m,
-								SQLiteDatabase.CONFLICT_REPLACE);
-					}
+					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
+							.getString(Keys.WallPosterDisplayName) + "");
+					m.put(Keys.ID_WALLITEM, ID);
+					m.put(Keys.ID_OWNER,
+							json.getJSONObject(i).getInt(Keys.ID_OWNER) + "");
+					m.put(Keys.ItemType,
+							json.getJSONObject(i).getString(Keys.ItemType));
+					m.put(Keys.WallLastActivityTime, json.getJSONObject(i)
+							.getString(Keys.WallLastActivityTime));
+					m.put(Keys.WallMessage, returnUnserializedText(json
+							.getJSONObject(i).getString(Keys.WallMessage)));
+					m.put(Keys.WallOwnerType,
+							json.getJSONObject(i).getString(Keys.WallOwnerType));
+					m.put(Keys.WallPostingTime, json.getJSONObject(i)
+							.getString(Keys.WallPostingTime));
+					sql.insertWithOnConflict(Keys.HomeWallTable, null, m,
+							SQLiteDatabase.CONFLICT_REPLACE);
+					// }
 				} catch (Exception e) {
 					Log.e("DataConnector ", " querryPlayerWall() Error " + e);
 				}
@@ -2135,34 +2139,29 @@ public class DataConnector extends SQLiteOpenHelper {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
 
-					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem,
-							playerID)) {
-						ContentValues m = new ContentValues();
-						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
-								.getString(Keys.WallPosterDisplayName) + "");
-						m.put(Keys.ID_WALLITEM, ID);
-						m.put(Keys.ID_ORGOWNER,
-								json.getJSONObject(i).getInt(Keys.ID_ORGOWNER)
-										+ "");
-						m.put(Keys.PLAYERAVATAR, json.getJSONObject(i)
-								.getString(Keys.PLAYERAVATAR) + "");
-						m.put(Keys.WallLastActivityTime, HelperClass
-								.convertTime(Integer.parseInt(json
-										.getJSONObject(i).getString(
-												Keys.WallLastActivityTime)),
-										dataTemplate));
-						m.put(Keys.WallMessage, json.getJSONObject(i)
-								.getString(Keys.WallMessage));
-						m.put(Keys.WallOwnerType, json.getJSONObject(i)
-								.getString(Keys.WallOwnerType));
-						m.put(Keys.WallPostingTime, HelperClass.convertTime(
-								Integer.parseInt(json.getJSONObject(i)
-										.getString(Keys.WallPostingTime)),
-								dataTemplate));
+					ContentValues m = new ContentValues();
+					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
+							.getString(Keys.WallPosterDisplayName) + "");
+					m.put(Keys.ID_WALLITEM, ID);
+					m.put(Keys.ID_ORGOWNER,
+							json.getJSONObject(i).getInt(Keys.ID_ORGOWNER) + "");
+					m.put(Keys.PLAYERAVATAR,
+							json.getJSONObject(i).getString(Keys.PLAYERAVATAR)
+									+ "");
+					m.put(Keys.WallLastActivityTime, HelperClass.convertTime(
+							Integer.parseInt(json.getJSONObject(i).getString(
+									Keys.WallLastActivityTime)), dataTemplate));
+					m.put(Keys.WallMessage,
+							json.getJSONObject(i).getString(Keys.WallMessage));
+					m.put(Keys.WallOwnerType,
+							json.getJSONObject(i).getString(Keys.WallOwnerType));
+					m.put(Keys.WallPostingTime, HelperClass.convertTime(
+							Integer.parseInt(json.getJSONObject(i).getString(
+									Keys.WallPostingTime)), dataTemplate));
 
-						sql.insertWithOnConflict(Keys.HomeWallRepliesTable,
-								null, m, SQLiteDatabase.CONFLICT_REPLACE);
-					}
+					sql.insertWithOnConflict(Keys.HomeWallRepliesTable, null,
+							m, SQLiteDatabase.CONFLICT_REPLACE);
+
 				} catch (Exception e) {
 					Log.e("Fetching Wall Replies",
 							"Fetching WallReplies: Error" + e);
@@ -2352,10 +2351,10 @@ public class DataConnector extends SQLiteOpenHelper {
 			HttpPost httppost = new HttpPost(url);
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			url = temp;
-			pairs.add(new BasicNameValuePair(Keys.ID_PLAYER, getCurrentPlayer()
-					.getString(Keys.ID_PLAYER)));
+			pairs.add(new BasicNameValuePair(Keys.ID_PLAYER, wallOwner));
 			pairs.add(new BasicNameValuePair(Keys.OWNERTYPE, ownerType));
-			pairs.add(new BasicNameValuePair("CurrentObjID", wallOwner));
+			pairs.add(new BasicNameValuePair("CurrentObjID", getCurrentPlayer()
+					.getString(Keys.ID_PLAYER)));
 			pairs.add(new BasicNameValuePair(Keys.WallPosterDisplayName,
 					postName));
 			String now = DateFormat.getDateInstance().format(new Date());

@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 
 public class GameWallFragment extends Fragment {
 	DataConnector con;
@@ -32,7 +32,7 @@ public class GameWallFragment extends Fragment {
 		con = DataConnector.getInst(getActivity());
 		View mView = inflater.inflate(R.layout.fragment_template_wall,
 				container, false);
-		ExpandableListView expList = (ExpandableListView) mView
+		final ExpandableListView expList = (ExpandableListView) mView
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
 				con.getComments(getArguments().getString(Keys.ID_GAME), "game"));
@@ -43,27 +43,35 @@ public class GameWallFragment extends Fragment {
 		commentBut.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				con.insertComment(commentText.getText().toString(), "game",
+						getArguments().getString(Keys.GAMENAME), getArguments()
+								.getString(Keys.ID_GAME));
+				CommExpListAdapter expAdapter = new CommExpListAdapter(
+						getActivity(), HelperClass.modifyDataSet(getArguments()
+								.getString(Keys.ID_GAME), "game"));
+				expList.setAdapter(expAdapter);
+				expAdapter.notifyDataSetChanged();
+
 				Log.i("Games Wall", "Comment Button Pressed"
 						+ commentText.getText().toString());
 			}
 		});
 		expList.addFooterView(footer);
-		expList.setAdapter(expAdapter);
-		for (int i = 0; i < expAdapter.getGroupCount(); i++)
-			expList.expandGroup(i);
 
 		if (expAdapter.isEmpty()) {
-			RelativeLayout rl = (RelativeLayout) mView
-					.findViewById(R.id.fragMsgAndWallTemp);
-
 			TextView msgText = new TextView(getActivity());
 			msgText.setText(R.string.emptyListString);
 			msgText.setTextColor(Color.parseColor("#CFCFCF"));
 			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
 			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
-			rl.addView(msgText);
+			expList.addHeaderView(msgText);
 
 		}
+		expList.setAdapter(expAdapter);
+
+		for (int i = 0; i < expAdapter.getGroupCount(); i++)
+			expList.expandGroup(i);
+
 		// Inflate the layout for this fragment
 		return mView;
 	}

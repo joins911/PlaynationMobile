@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -51,20 +50,16 @@ public class HomeWallFragment extends Fragment {
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 		HomExpandableAdapter expAdapter = new HomExpandableAdapter(context,
 				listParents, eListView, this);
-		eListView.setAdapter(expAdapter);
 
 		if (expAdapter.isEmpty()) {
-			RelativeLayout rl = (RelativeLayout) view
-					.findViewById(R.id.fragMsgAndWallTemp);
-
 			TextView msgText = new TextView(getActivity());
 			msgText.setText(R.string.emptyListString);
 			msgText.setTextColor(Color.parseColor("#CFCFCF"));
 			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
 			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
-			rl.addView(msgText);
-
+			eListView.addHeaderView(msgText);
 		}
+		eListView.setAdapter(expAdapter);
 		return view;
 	}
 }

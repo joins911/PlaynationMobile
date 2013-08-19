@@ -49,8 +49,8 @@ public class HomeTabHostDesc extends TabHostDesc implements OnTabChangeListener 
 		// TextView(getActivity()),Keys.TAB_SUBSCRIPTION);
 		setupTab(HomeFriendsFragment.class, new TextView(getActivity()),
 				Keys.TAB_FRIENDS, getArguments());
-		setupTab(HomeEventsFragment.class, new TextView(getActivity()),
-				Keys.TAB_EVENTS, getArguments());
+		// setupTab(HomeEventsFragment.class, new TextView(getActivity()),
+		// Keys.TAB_EVENTS, getArguments());
 		// setupTab(GameMediaFragment.class,new
 		// TextView(getActivity()),Keys.TAB_EDITPROFILE);
 		mTabHost.setOnTabChangedListener(this);

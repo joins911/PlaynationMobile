@@ -54,8 +54,6 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 		View view = arg1;
-		// if (currentFragment instanceof HomeFriendsFragment
-		// || currentFragment instanceof PlayerFriendsFragment) {
 		view = inflater.inflate(R.layout.component_homeheader_layout, arg2,
 				false);
 
@@ -88,7 +86,7 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 			txPlAge.setText(view.getResources().getString(R.string.Age)
 					+ (currentYear - year));
 		}
-		// }
+
 		return view;
 	}
 

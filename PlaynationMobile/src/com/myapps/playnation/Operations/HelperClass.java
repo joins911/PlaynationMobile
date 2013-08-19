@@ -28,6 +28,7 @@ import com.myapps.playnation.Classes.DataSection;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Classes.NewsFeedItem;
+import com.myapps.playnation.Classes.UserComment;
 
 public class HelperClass {
 	/**
@@ -66,6 +67,11 @@ public class HelperClass {
 		myListView.setLayoutParams(params);
 		// print height of adapter on log
 		Log.i("height of listItem:", String.valueOf(totalHeight));
+	}
+
+	public static ArrayList<UserComment> modifyDataSet(String id, String owner) {
+		DataConnector con = DataConnector.getInst();
+		return con.getComments(id, owner);
 	}
 
 	/**

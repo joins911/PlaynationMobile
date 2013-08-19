@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -41,8 +40,17 @@ public class HomeFriendsFragment extends Fragment {
 		PlayerHomeInfoAdapter expAdapter = new PlayerHomeInfoAdapter(
 				getActivity(), con.getTable(Keys.HomeFriendsTable,
 						Keys.TEMPLAYERID));
-		mListView.setAdapter(expAdapter);
 
+		if (expAdapter.isEmpty()) {
+			TextView msgText = new TextView(getActivity());
+			msgText.setText(R.string.emptyFriendsListString);
+			msgText.setTextColor(Color.parseColor("#CFCFCF"));
+			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
+			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
+			mListView.addHeaderView(msgText);
+
+		}
+		mListView.setAdapter(expAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -51,19 +59,6 @@ public class HomeFriendsFragment extends Fragment {
 				mCall.setPageAndTab(Keys.PlayersSTATE, 4, results);
 			}
 		});
-
-		if (expAdapter.isEmpty()) {
-			RelativeLayout rl = (RelativeLayout) view
-					.findViewById(R.id.generalPlayerListViewLayout);
-
-			TextView msgText = new TextView(getActivity());
-			msgText.setText(R.string.emptyFriendsListString);
-			msgText.setTextColor(Color.parseColor("#CFCFCF"));
-			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
-			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
-			rl.addView(msgText);
-
-		}
 		return view;
 	}
 }
