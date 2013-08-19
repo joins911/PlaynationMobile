@@ -21,8 +21,7 @@
 	<RelativeLayout
 		android:id="@+id/newsEventInfo"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/content" >
+		android:layout_height="wrap_content">
 		<TextView
 			android:id="@+id/txtEdit"
 			android:layout_width="wrap_content"
@@ -62,7 +61,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_below="@+id/txtEdit"
 			android:layout_marginLeft="19dp"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -72,7 +71,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@+id/newsEventType"
 			android:layout_below="@+id/textView2"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -82,7 +81,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@+id/newsEventStartDate"
 			android:layout_below="@id/textView3"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -93,7 +92,7 @@
 			android:layout_alignLeft="@+id/textView4"
 			android:layout_below="@+id/textView4"
 			android:gravity="right"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -116,7 +115,7 @@
 			android:layout_alignLeft="@+id/textView4"
 			android:layout_below="@id/textView9"
 			android:autoLink="web"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -126,7 +125,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@id/textView5"
 			android:layout_below="@id/textView5"
-			android:text="Small Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -163,15 +162,11 @@
 	<WebView
 		android:id="@+id/webView1"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
-		android:layout_below="@id/newsEventInfo" />
+		android:layout_height="wrap_content"/>
 	<!-- </RelativeLayout> -->
 	<WebView
 		android:id="@+id/webView2"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
-		android:layout_below="@+id/webView1"
 		android:layout_marginTop="17dp" />
 </LinearLayout>

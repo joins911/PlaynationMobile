@@ -38,7 +38,8 @@ public class PlayerInfoFragment extends Fragment {
 				.findViewById(R.id.list_item_text_childEmail);
 		lblEmail.setVisibility(View.GONE);
 		Button but = (Button) view.findViewById(R.id.saveProfileButton);
-		but.setVisibility(View.GONE);
+		if (but != null)
+			but.setVisibility(View.GONE);
 		Bundle args = getArguments();
 		editFirst.setText(args.getString(Keys.FirstName));
 		editLast.setText(args.getString(Keys.LastName));

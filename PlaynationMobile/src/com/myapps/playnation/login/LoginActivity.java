@@ -94,9 +94,11 @@ public class LoginActivity extends Activity {
 						}
 					} else
 						Toast.makeText(getApplicationContext(),
-								"No server Connection", Toast.LENGTH_SHORT);
-				} else {
-					logOnlineGuest();
+								"No server Connection", Toast.LENGTH_SHORT)
+								.show();
+				} else if (username.getText().toString()
+						.equalsIgnoreCase("admin")) {
+					logOnlineAdmin();
 				}
 			}
 		});
@@ -104,8 +106,7 @@ public class LoginActivity extends Activity {
 		if (logGuestButton != null)
 			logGuestButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-
-					logOnlineUser();
+					logOnlineGuest();
 				}
 			});
 
@@ -141,28 +142,25 @@ public class LoginActivity extends Activity {
 
 	}
 
-	private void logOnlineUser() {
-		// Login as User XXX
+	private void logOnlineAdmin() {
 		Keys.TEMPLAYERID = "12";
 		startMainActivity(Configurations.appStateOnUser);
 	}
 
-	private void logOfflineUser() {
-		// Log Offline WIthout Comments posibility + ???
-		Toast.makeText(getApplicationContext(), "Server could not be reached",
-				Toast.LENGTH_LONG).show();
-		// startMainActivity(Configurations.appStateOffUser);
+	private void logOnlineUser() {
+		// Login as User XXX
+		startMainActivity(Configurations.appStateOnUser);
 	}
 
 	private void logOnlineGuest() {
 		// Login as Guest
 		Keys.changeStates();
-		Configurations.setApplicationState(Configurations.appStateOnGuest);
 		startMainActivity(Configurations.appStateOnGuest);
 
 	}
 
 	private void startMainActivity(int appState) {
+		Configurations.setApplicationState(appState);
 		task = new LoadMainActivityTask(appState);
 		task.execute();
 	}

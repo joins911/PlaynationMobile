@@ -1,0 +1,88 @@
+<resources>
+	<string name="app_name">"Playnation"</string>
+	<string name="action_settings">"Einstellungen"</string>
+	<!-- Buttons Strings -->
+	<string name="newsString">"Nachrichten"</string>
+	<string name="playerString">"Spieler"</string>
+	<string name="groupString">"Gruppen"</string>
+	<string name="gamesString">"Spiele"</string>
+	<string name="companiesString">"Unternehmen"</string>
+	<string name="homeString">"Privat"</string>
+	<string name="buttonString_comment">"Senden"</string>
+	<string name="searchString">Sog</string>
+	<!-- Login+Register -->
+	<string name="loginString">"Anmelden"</string>	
+	<string name="loginGuestString">"Melden Sie sich als Gast an"</string>
+	<string name="loginOfflineString">"Melden Sie sich als Gast Offline"</string>
+	<string name="passwordString">"Passwort"</string>
+	<string name="registerString">"Registrieren"</string>
+	<string name="registerDesc">"Neu bei Playnation? Registrieren Sie sich hier"</string>
+	<string name="registerOfflineDesc">"Login-Daten nicht im Offline-Modus erforderlich"</string>
+	<string name="nameString">"Vollständiger Name"</string>
+	<string name="registerButtonString">"Neues Konto registrieren"</string>
+	<string name="loginButtonString">"Haben Sie bereits ein Konto! Loggen Sie sich hier"</string>
+	<!-- Text View Strings -->
+	<string name="commentString">"Kommentar:"</string>
+	<string name="usernameString">"Ihr Spitzname:"</string>
+	<string name="title_activity_game_description">"GameDescriptionActivity"</string>
+	<string name="commentsString">"Kommentare"</string>
+	<string name="reviewString">"Game Reviews"</string>
+	<string name="ratingString">"Bewertung"</string>
+	<string name="friendsString">"Freunde spielen dieses Spiel"</string>
+	<string name="descString">"Spielbeschreibung"</string>
+	<string name="noFriendsString">"Sie haben noch keine Freunde. Achten Sie darauf, gehen Sie auf unserer Website unter www.playnation.eu so dass Sie ein paar neue Freunde machen kann."</string>
+	<string name="emptyListString">"Keine Wand Elemente. Seien Sie der Erste, der one :) hinzuzufügen."</string>
+    <string name="emptyNewsListString">"Keine News vorhanden ..."</string>
+	<!-- Extras New -->
+	<string name="fontFamilyTextView">"Ariel"</string>
+	<string name="btnSave">"Speichern"</string>
+	<string name="Date">"Datum: \ u0020"</string>
+	<string name="Location">"Ort: \ u0020"</string>
+	<string name="Age">"Alter: \ u0020"</string>
+	<string name="Country">"Land: \ u0020"</string>
+	<string name="City">"Stadt: \ u0020"</string>
+	<string name="DisplayName">"DisplayName: \ u0020"</string>
+	<string name="FirstName">"Vorname: \ u0020"</string>
+	<string name="LastName">"Nachname: \ u0020"</string>
+	<string name="Duration">"Dauer: \ u0020"</string>
+	<string name="DayEvent">"Tag Ereignis"</string>
+	<string name="Members">"\ u0020 Mitglieder"</string>
+	<string name="Leader">"LEADER"</string>
+	<string name="NewsMembers">"Mitglieder"</string>
+	<string name="create">"Erstellt:"</string>
+	<string name="startdate">"Startdatum:"</string>
+	<string name="endDate">"Enddatum"</string>
+	<string name="Participants">"Teilnehmer:"</string>
+	<string name="Privacy">"Privacy"</string>
+	<string name="Invitations">"Einladungen"</string>
+	<string name="headquarters">"Hauptsitz:"</string>
+	<string name="founded">"Gründung:"</string>
+	<string name="employees">"Die Mitarbeiter"</string>
+	<string name="joined">"Verbunden"</string>
+	<string name="website">"Website"</string>
+	<string name="btnEdit">"Info bearbeiten"</string>
+	<string name="emptyGameListString">Kein Spiel vorhanden ...</string>
+	<string name="emptyPlayerListString">Keine Spieler präsentieren ...</string>
+	<string name="emptyFriendsListString">Noch keine Freunde ...</string>
+	<string name="emptyMsgListString">Keine Nachrichten präsentieren ...</string>
+	<string name="emptyGroupListString">Keine Gruppen präsentieren ...</string>
+	<string name="nothing"></string>
+	 <!-- Strings that dont need translation -->
+    <string name="Email">"EMail: \ u0020"</string>
+    <string name="Type1">"Typ \ u00201:"</string>
+    <string name="Type2">"Typ \ u00202:"</string>
+    <string name="Type">"Type:"</string>
+    <string name="emailString">"Email "</string>
+    <string name="Nick">"Nick: \ u0020 "</string>
+	<!-- Base strings for coding purposes will be replaced at runtime with Database values -->
+	<string name="gamename">"Crysis 3"</string>
+	<string name="gametype">"FPS (First Person Shooter)"</string>
+	<string name="gamedate">"Erscheinungsdatum 15.10.2009"</string>
+	<string name="ratings">"5"</string>
+	<string name="GameName">"Crysis 3"</string>
+	<string name="released">"Veröffentlicht"</string>
+	<string name="platforms">"Plattformen"</string>
+	<string name="esrbRating">"ESRB-Bewertung"</string>
+	<string name="developers">"Entwickler"</string>
+	<string name="distributors">"Lieferanten"</string>
+</resources>

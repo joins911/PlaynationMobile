@@ -27,7 +27,6 @@ public class SectionAdapter extends FragmentPagerAdapter {
 	FragmentManager fm;
 	ArrayList<String> titles;
 	ViewPager mContainer;
-	private boolean enabled;
 	private ArrayList<WrapperFragment> currFragments;
 
 	/**
@@ -38,7 +37,6 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		super(fm);
 		this.fm = fm;
 		this.act = act;
-		this.enabled = true;
 		this.mContainer = pager;
 		titles = new ArrayList<String>();
 		if (Configurations.isAppState(Configurations.appStateOnUser))

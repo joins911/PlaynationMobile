@@ -10,17 +10,14 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
-import com.myapps.playnation.Operations.DataConnector;
 
 public class GroupInfoFragment extends Fragment {
 	private WebView txtNewsTitle;
 	private WebView txtNewsText;
 	// private ImageView newsImage;
-	private DataConnector con;
 	private View mView;
 
 	private void initGroup() {
-		con = DataConnector.getInst(getActivity());
 		TextView txtNewsLeader = (TextView) mView
 				.findViewById(R.id.txtgameinfoType);
 		TextView txtNewsType1 = (TextView) mView

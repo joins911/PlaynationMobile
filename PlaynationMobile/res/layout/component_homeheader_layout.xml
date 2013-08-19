@@ -41,7 +41,7 @@
 			android:id="@+id/txPlName"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Large Text"
+			android:text="@string/nothing"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:textColor="@color/background_gradient"
 			android:textSize="15sp" />
@@ -51,31 +51,31 @@
 			android:layout_height="wrap_content"
 			android:text="User Info:"
 			android:textColor="@color/headlineColor"
-			android:textSize="10sp"
+			android:textSize="12sp"
 			android:textStyle="bold|italic" />
 		<TextView
 			android:id="@+id/txPlNick"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Small Text"
+			android:text="@string/nothing"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
-			android:textSize="10sp" />
+			android:textSize="12sp" />
 		<TextView
 			android:id="@+id/txPlAge"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Small Text"
+			android:text="@string/nothing"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
-			android:textSize="10sp" />
+			android:textSize="12sp" />
 		<TextView
 			android:id="@+id/txPlCountry"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Small Text"
+			android:text="@string/nothing"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
-			android:textSize="10sp" />
+			android:textSize="12sp" />
 	</LinearLayout>
 </RelativeLayout>

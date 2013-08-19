@@ -30,6 +30,7 @@ import com.myapps.playnation.Adapters.MyBaseAdapter;
 import com.myapps.playnation.Adapters.NewsListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
@@ -43,7 +44,6 @@ public class ListsFragment extends Fragment {
 	private ViewFlipper flipper = null;
 	private ListView mList;
 	private ArrayList<Bundle> mListBundle;
-	private AsyncTask<Void, Void, Void> mListTask;
 	TextView friendsString;
 
 	public ListsFragment() {
@@ -75,7 +75,8 @@ public class ListsFragment extends Fragment {
 		mList = list;
 
 		friendsString = (TextView) rootView.findViewById(R.id.noFriendsText);
-		friendsString.setVisibility(View.GONE);
+		if (friendsString != null)
+			friendsString.setVisibility(View.GONE);
 
 		mList.setOnScrollListener(new OnScrollListener() {
 
@@ -121,7 +122,7 @@ public class ListsFragment extends Fragment {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
 
-		mListTask = new LoadListTask().execute();
+		new LoadListTask().execute();
 
 		return rootView;
 	}
@@ -216,6 +217,9 @@ public class ListsFragment extends Fragment {
 			});
 		} else {
 			friendsString.setVisibility(View.VISIBLE);
+			if (Configurations.isAppState(Configurations.appStateOnGuest))
+				friendsString.setText(getResources().getString(
+						R.string.guestFriendListString));
 		}
 	}
 

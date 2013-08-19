@@ -5,7 +5,7 @@
 	android:layout_height="match_parent">
 <LinearLayout 
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_height="wrap_content"
 	android:orientation="vertical" >
 	<!-- <TextView -->
 	<!-- android:id="@+id/frag_GrInfo_TView" -->
@@ -41,7 +41,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_below="@+id/TextView01"
 			android:layout_marginLeft="18dp"
-			android:text="Medium Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -62,7 +62,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_below="@+id/TextView02"
-			android:text="Medium Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -84,7 +84,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_below="@+id/TextView04"
-			android:text="Medium Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -95,7 +95,7 @@
 			android:layout_alignLeft="@+id/txtgameinfoType"
 			android:layout_alignRight="@+id/TextView05"
 			android:layout_below="@+id/TextView03"
-			android:text="Medium Text"
+			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
@@ -139,13 +139,11 @@
 		android:id="@+id/webview"
 		android:layout_width="match_parent"
 		android:layout_height="70dp"
-		android:layout_below="@id/newsGroupInfo"
 		android:layout_marginTop="15dp" />
 	<WebView
 		android:id="@+id/webview2"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/webview"
 		android:layout_marginTop="15dp" />
 </LinearLayout>
 </ScrollView>

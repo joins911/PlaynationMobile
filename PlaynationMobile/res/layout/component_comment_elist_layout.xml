@@ -35,7 +35,7 @@
         android:lines="2"
         android:maxLines="2"
         android:text="Here there is gona be the comment, not the whole thing but just a bit with the rest on follow up "
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:typeface="sans" />
 
     <TextView

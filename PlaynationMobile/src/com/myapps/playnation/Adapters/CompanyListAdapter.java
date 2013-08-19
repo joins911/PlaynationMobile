@@ -15,17 +15,14 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
-import com.myapps.playnation.main.ISectionAdapter;
 
 public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
 	private ArrayList<Bundle> companiesList;
-	private ISectionAdapter context;
 	private int count = 10;
 	private boolean showMore = true;
 
 	public CompanyListAdapter(Activity context, ArrayList<Bundle> items) {
-		this.context = (ISectionAdapter) context;
 		this.companiesList = items;
 		inflator = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

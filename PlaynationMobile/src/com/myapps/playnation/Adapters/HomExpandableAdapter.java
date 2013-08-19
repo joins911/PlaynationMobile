@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -169,8 +168,6 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					view = inflater.inflate(
 							R.layout.component_homewall_eitem_layout,
 							viewGroup, false);
-					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
-							.findViewById(R.id.mainLayoutPlayer);
 
 					txEHeadline = (TextView) view
 							.findViewById(R.id.txEHeadline);
@@ -191,9 +188,6 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 					view = inflater.inflate(
 							R.layout.component_homemsg_eitem_layout, viewGroup,
 							false);
-					RelativeLayout mainLayoutPlayer = (RelativeLayout) view
-							.findViewById(R.id.mainLayoutPlayer);
-
 					ImageView img = (ImageView) view
 							.findViewById(R.id.imgEvent);
 					img.setImageResource(R.drawable.msgopen);

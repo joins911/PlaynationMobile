@@ -1,0 +1,90 @@
+<resources>
+
+    <string name="app_name">Playnation</string>
+    <string name="action_settings">Indstillinger</string>
+    <!-- Buttons Strings -->
+    <string name="newsString">Nyheder</string>
+    <string name="playerString">Spillere</string>
+    <string name="groupString">Grupper</string>
+    <string name="gamesString">Spil</string>
+    <string name="companiesString">Virksomheder"</string>
+    <string name="homeString">Forside</string>
+    <string name="buttonString_comment">Send</string>
+    <string name="searchString">Sog</string>
+    <!-- Login+Register -->
+    <string name="loginString">Log ind</string>
+    <string name="loginGuestString">Login som gæst</string>
+    <string name="loginOfflineString">Login som gæst Offline</string>
+    <string name="passwordString">Adgangskode</string>
+    <string name="registerString">Registrer</string>
+    <string name="registerDesc">Ny på Playnation? Registrer dig her</string>
+    <string name="registerOfflineDesc">Login-oplysninger ikke er påkrævet i offline tilstand</string>
+    <string name="nameString">Fulde navn</string>
+    <string name="registerButtonString">Registrer ny konto</string>
+    <string name="loginButtonString">Allerede har en konto! Log ind her</string>
+    <!-- Text View Strings -->
+    <string name="commentString">Kommenter...</string>
+    <string name="usernameString">Dit kaldenavn:</string>
+    <string name="title_activity_game_description">GameDescriptionActivity</string>
+    <string name="commentsString">Kommentarer</string>
+    <string name="reviewString">Game Anmeldelser</string>
+    <string name="ratingString">Bedømmelse</string>
+    <string name="friendsString">Venner spiller dette spil</string>
+    <string name="descString">Spil Beskrivelse</string>
+    <string name="noFriendsString">Du har ingen venner endnu. Vær sikker på at gå tjekke vores hjemmeside på www.playnation.eu, så du kan få nogle nye venner.</string>
+    <string name="emptyListString">Ingen væg poster. Bliv den første til at tilføje én :).</string>
+    <string name="emptyNewsListString">Ingen nyheder stede ...</string>
+    <!-- Extras New -->
+    <string name="fontFamilyTextView">Ariel</string>
+    <string name="btnSave">Gem</string>
+    <string name="Date">Dato: \ u0020</string>
+    <string name="Location">Placering: \ u0020</string>
+    <string name="Age">Alder: \ u0020</string>
+    <string name="Country">Land: \ u0020</string>
+    <string name="City">By: \u0020</string>
+    <string name="DisplayName">DisplayName: \u0020</string>
+    <string name="FirstName">ForNavn: \u0020</string>
+    <string name="LastName">Navn: \u0020</string>
+    <string name="Duration">Varighed: \u0020</string>
+    <string name="DayEvent">Day begivenhed</string>
+    <string name="Members">\u0020 Medlemmer:</string>
+    <string name="Leader">Leader:</string>
+    <string name="NewsMembers">Medlemmer:</string>
+    <string name="create">Oprettet</string>
+    <string name="startdate">Startdato"</string>
+    <string name="endDate">Slutdato:</string>
+    <string name="Participants">Deltagere:</string>
+    <string name="Privacy">Beskyttelse af personlige oplysninger</string>
+    <string name="Invitations">Invitationer:</string>
+    <string name="headquarters">Hovedkontor:</string>
+    <string name="founded">Grundlagt:</string>
+    <string name="employees">Medarbejdere:</string>
+    <string name="joined">Tilmeldt:</string>
+    <string name="website">We</string>
+    <string name="btnEdit">Rediger Info</string>
+    <string name="emptyGameListString">Ingen spil til stede ...</string>
+    <string name="emptyPlayerListString">Ingen spillere præsentere...</string>
+    <string name="emptyFriendsListString">Ingen venner endnu ...</string>
+    <string name="emptyMsgListString">Ingen beskeder præsentere ...</string>
+    <string name="emptyGroupListString">Ingen grupper præsentere ...</string>
+    <string name="nothing"></string>
+    <!-- Strings that dont need translation -->
+    <string name="Email">EMail: \ u0020</string>
+    <string name="Type1">Type \ u00201:</string>
+    <string name="Type2">Type \ u00202:</string>
+    <string name="Type">Type </string>
+    <string name="emailString">E-mail</string>
+    <string name="Nick">Nick: \ u0020 </string>
+    <!-- Base strings for coding purposes will be replaced at runtime with Database values -->
+    <string name="gamename">Crysis 3</string>
+    <string name="gametype">FPS (First Person Shooter)</string>
+    <string name="gamedate">Udgivelsesdato 15/10/2009"</string>
+    <string name="ratings">5</string>
+    <string name="GameName">Crysis 3</string>
+    <string name="released">Udgivet:</string>
+    <string name="platforms">Platforme:</string>
+    <string name="esrbRating">ESRB Rating</string>
+    <string name="developers">Udviklere:</string>
+    <string name="distributors">Distributører:</string>
+
+</resources>
