@@ -33,8 +33,6 @@ public class GameReviewFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View mainView = inflater.inflate(R.layout.fragment_game_reviews, null);
 
-		// TextView gameDesc = (TextView)
-		// game_desc_layout.findViewById(R.id.gameCLH_descText_TView);
 		ListView reviews = (ListView) mainView
 				.findViewById(R.id.frag_reviewTemp_reviewList);
 

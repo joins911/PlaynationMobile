@@ -50,13 +50,9 @@ public class GroupInfoFragment extends Fragment {
 		txtNewsMembers.setText(args.getString(Keys.GroupMemberCount)
 				+ getResources().getString(R.string.Members));
 		String ID_CREATOR;
-		// CC if (args.getString(Keys.GruopID_CREATOR) != null) {
+
 		ID_CREATOR = args.getString(Keys.GruopCreatorName);
 		txtNewsLeader.setText(ID_CREATOR);
-		// } else {
-		// ID_CREATOR = args.getString(Keys.ID_GROUP);
-		// txtNewsLeader.setText(con.queryGroupCreator(ID_CREATOR + ""));
-		// }
 
 		txtNewsCreated.setText(args.getString(Keys.GROUPDATE));
 	}

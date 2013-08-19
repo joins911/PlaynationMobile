@@ -82,6 +82,7 @@ public class CommExpListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getGroupCount() {
 		return commentList.size();
+
 	}
 
 	@Override

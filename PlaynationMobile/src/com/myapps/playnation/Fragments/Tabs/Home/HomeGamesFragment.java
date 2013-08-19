@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -53,6 +52,15 @@ public class HomeGamesFragment extends Fragment {
 			con.queryPlayerGames(Keys.TEMPLAYERID);
 		HomeListViewAdapter expAdapter = new HomeListViewAdapter(getActivity(),
 				con.getTable(Keys.HomeGamesTable, Keys.TEMPLAYERID), this);
+
+		if (expAdapter.isEmpty()) {
+			TextView msgText = new TextView(getActivity());
+			msgText.setText(R.string.emptyGameListString);
+			msgText.setTextColor(Color.parseColor("#CFCFCF"));
+			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
+			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
+			mListView.addHeaderView(msgText);
+		}
 		mListView.setAdapter(expAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -64,19 +72,6 @@ public class HomeGamesFragment extends Fragment {
 				mCallback.setPageAndTab(Keys.GamesSTATE, 3, args);
 			}
 		});
-
-		if (expAdapter.isEmpty()) {
-			RelativeLayout rl = (RelativeLayout) view
-					.findViewById(R.id.generalPlayerListViewLayout);
-
-			TextView msgText = new TextView(getActivity());
-			msgText.setText(R.string.emptyGameListString);
-			msgText.setTextColor(Color.parseColor("#CFCFCF"));
-			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
-			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
-			rl.addView(msgText);
-
-		}
 
 		return view;
 	}

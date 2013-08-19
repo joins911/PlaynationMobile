@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
@@ -33,34 +32,37 @@ public class PlayerWallFragment extends Fragment {
 		ExpandableListView expList = (ExpandableListView) mView
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 		Bundle args = getArguments();
-		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
-				con.getComments(args.getString(Keys.ID_PLAYER), "player"));
+		final CommExpListAdapter expAdapter = new CommExpListAdapter(
+				getActivity(), con.getComments(args.getString(Keys.ID_PLAYER),
+						"player"));
 		View footer = inflater.inflate(R.layout.component_comment_footer, null);
 		Button commentBut = (Button) footer.findViewById(R.id.wallsF_commBut);
 		commentText = (EditText) footer.findViewById(R.id.wallsF_comment_EBox);
 		commentBut.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				con.insertComment(commentText.getText().toString(), "player",
+						getArguments().getString(Keys.PLAYERNAME),
+						getArguments().getString(Keys.ID_PLAYER));
+				expAdapter.notifyDataSetChanged();
 				Log.i("Games Wall", "Comment Button Pressed"
 						+ commentText.getText().toString());
 			}
 		});
 		expList.addFooterView(footer);
-		expList.setAdapter(expAdapter);
-		for (int i = 0; i < expAdapter.getGroupCount(); i++)
-			expList.expandGroup(i);
 
 		if (expAdapter.isEmpty()) {
-			RelativeLayout rl = (RelativeLayout) mView
-					.findViewById(R.id.fragMsgAndWallTemp);
-
 			TextView msgText = new TextView(getActivity());
 			msgText.setText(R.string.emptyListString);
 			msgText.setTextColor(Color.parseColor("#CFCFCF"));
 			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
 			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
-			rl.addView(msgText);
+			expList.addHeaderView(msgText);
+		}
 
+		expList.setAdapter(expAdapter);
+		for (int i = 0; i < expAdapter.getGroupCount(); i++) {
+			expList.expandGroup(i);
 		}
 		// Inflate the layout for this fragment
 		return mView;
