@@ -20,6 +20,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 
 public class GameWallFragment extends Fragment {
 	DataConnector con;
@@ -31,11 +32,10 @@ public class GameWallFragment extends Fragment {
 		con = DataConnector.getInst(getActivity());
 		View mView = inflater.inflate(R.layout.fragment_template_wall,
 				container, false);
-		ExpandableListView expList = (ExpandableListView) mView
+		final ExpandableListView expList = (ExpandableListView) mView
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
-		final CommExpListAdapter expAdapter = new CommExpListAdapter(
-				getActivity(), con.getComments(
-						getArguments().getString(Keys.ID_GAME), "game"));
+		CommExpListAdapter expAdapter = new CommExpListAdapter(getActivity(),
+				con.getComments(getArguments().getString(Keys.ID_GAME), "game"));
 
 		View footer = inflater.inflate(R.layout.component_comment_footer, null);
 		Button commentBut = (Button) footer.findViewById(R.id.wallsF_commBut);
@@ -46,6 +46,10 @@ public class GameWallFragment extends Fragment {
 				con.insertComment(commentText.getText().toString(), "game",
 						getArguments().getString(Keys.GAMENAME), getArguments()
 								.getString(Keys.ID_GAME));
+				CommExpListAdapter expAdapter = new CommExpListAdapter(
+						getActivity(), HelperClass.modifyDataSet(getArguments()
+								.getString(Keys.ID_GAME), "game"));
+				expList.setAdapter(expAdapter);
 				expAdapter.notifyDataSetChanged();
 
 				Log.i("Games Wall", "Comment Button Pressed"
