@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	style="@style/GrayTheme"
+	android:background="@drawable/background_pattern2"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical" >
@@ -21,10 +21,12 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/newsAuthor"
 		android:layout_marginTop="15dp" />
+
 	<WebView
-		android:id="@+id/webview2"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/webview"
-		android:layout_marginTop="15dp" />
+	    android:id="@+id/webview2"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_below="@id/webview"
+	    android:layout_marginTop="15dp" />
+
 </RelativeLayout>

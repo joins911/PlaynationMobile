@@ -30,6 +30,7 @@ import com.myapps.playnation.Adapters.MyBaseAdapter;
 import com.myapps.playnation.Adapters.NewsListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
@@ -216,6 +217,9 @@ public class ListsFragment extends Fragment {
 			});
 		} else {
 			friendsString.setVisibility(View.VISIBLE);
+			if (Configurations.isAppState(Configurations.appStateOnGuest))
+				friendsString.setText(getResources().getString(
+						R.string.guestFriendListString));
 		}
 	}
 

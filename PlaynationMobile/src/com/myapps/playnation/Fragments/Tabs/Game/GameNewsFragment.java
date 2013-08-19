@@ -54,6 +54,7 @@ public class GameNewsFragment extends Fragment {
 			txtMessage = (TextView) mView.findViewById(R.id.frag_Gnews_TView);
 			if (results.size() != 0)
 				txtMessage.setVisibility(View.GONE);
+
 			NewsListAdapter bindingData = new NewsListAdapter(getActivity(),
 					HelperClass.createHeaderListView(HelperClass
 							.queryNewsList(results)));

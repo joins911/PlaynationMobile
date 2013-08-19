@@ -61,6 +61,12 @@
 	<string name="joined">"Verbunden"</string>
 	<string name="website">"Website"</string>
 	<string name="btnEdit">"Info bearbeiten"</string>
+	<string name="emptyGameListString">Kein Spiel vorhanden ...</string>
+	<string name="emptyPlayerListString">Keine Spieler präsentieren ...</string>
+	<string name="emptyFriendsListString">Noch keine Freunde ...</string>
+	<string name="emptyMsgListString">Keine Nachrichten präsentieren ...</string>
+	<string name="emptyGroupListString">Keine Gruppen präsentieren ...</string>
+	<string name="nothing"></string>
 	 <!-- Strings that dont need translation -->
     <string name="Email">"EMail: \ u0020"</string>
     <string name="Type1">"Typ \ u00201:"</string>

@@ -205,7 +205,15 @@ public class HelperClass {
 		return true;
 	}
 
-	private static boolean EmailValidation(EditText email) {
+	public static boolean isEmpty(EditText etText) {
+		if (etText.getText().toString().trim().length() > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public static boolean EmailValidation(EditText email) {
 		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);

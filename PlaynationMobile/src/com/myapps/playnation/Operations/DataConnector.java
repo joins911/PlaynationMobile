@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,6 +47,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.CommentInfo;
@@ -79,6 +82,15 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	private static String DATABASE_NAME = "cdcol.db";
 	private static int DATABASE_VERSION = 2;
+	private Bundle currentPlayer;
+
+	public Bundle getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(Bundle currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 
 	private DataConnector(Context con) {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
@@ -2064,7 +2076,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerWall(String playerID, String ownerType) {
 		SQLiteDatabase sql = this.getWritableDatabase();
-
+		System.out.println("Wall PlayerID " + playerID);
+		System.out.println("Wall ownerType " + ownerType);
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallTable, ownerType, 0);
 		// // Print the data to the console
@@ -2075,7 +2088,9 @@ public class DataConnector extends SQLiteOpenHelper {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
+					System.out.println("Wall wallitem " + ID);
 					if (!checkRowExist(Keys.HomeWallTable, ID, playerID)) {
+
 						ContentValues m = new ContentValues();
 						// int id = Integer.parseInt(ID);
 						// if (id > getLastIDHomeWall())
@@ -2112,19 +2127,16 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallRepliesTable, wallitem, 0);
-
+		System.out.println("WallRep PlayerID " + playerID);
+		System.out.println("WallRep ID_WALLITEM " + wallitem);
 		if (json != null) {
-			System.out.println("json " + json.length());
 			for (int i = 0; i < json.length(); i++) {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
+
 					if (!checkRowExist(Keys.HomeWallRepliesTable, wallitem,
 							playerID)) {
-						// int id = Integer.parseInt(ID);
-						// if (id > getLastIDHomeWallRep())
-						// setLastIDHomeWallRep(id);
-
 						ContentValues m = new ContentValues();
 						m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
 								.getString(Keys.WallPosterDisplayName) + "");
@@ -2252,7 +2264,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	}
 
 	public View populatePlayerGeneralInfo(View v, String nameT, String playerID) {
-		Bundle currentPlayer = getPlayer(playerID);
+		setCurrentPlayer(getPlayer(playerID));
 
 		if (v != null) {
 			TextView txPlName = (TextView) v.findViewById(R.id.txPlName);
@@ -2281,6 +2293,83 @@ public class DataConnector extends SQLiteOpenHelper {
 				playerIcon.setImageResource(R.drawable.no_player_100x100);
 		}
 		return v;
+	}
+
+	public void savePersonalInfo(Bundle args, EditText first, EditText last,
+			EditText nick, EditText city, EditText country, EditText email,
+			Context context) {
+		String temp = url;
+		url += "updatePlayer.php";
+
+		try {
+			httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(url);
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			url = temp;
+			pairs.add(new BasicNameValuePair(Keys.ID_PLAYER, args
+					.getString(Keys.ID_PLAYER)));
+			pairs.add(new BasicNameValuePair(Keys.FirstName, first.getText()
+					.toString().trim()));
+			pairs.add(new BasicNameValuePair(Keys.LastName, last.getText()
+					.toString().trim()));
+			pairs.add(new BasicNameValuePair(Keys.CITY, city.getText()
+					.toString().trim()));
+			pairs.add(new BasicNameValuePair(Keys.COUNTRY, country.getText()
+					.toString().trim()));
+			pairs.add(new BasicNameValuePair(Keys.PLAYERNICKNAME, nick
+					.getText().toString().trim()));
+			pairs.add(new BasicNameValuePair(Keys.Email, email.getText()
+					.toString().trim()));
+
+			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+			httpclient.execute(httppost);
+			Toast.makeText(context, "Your profile was updated successfully",
+					Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			Log.e("log_tag HTML Conn",
+					"Error in savePersonalInfo http connection " + e.toString());
+		}
+	}
+
+	/**
+	 * 
+	 * @param msg
+	 * @param ownerType
+	 *            Group,Player,Company
+	 * @param postName
+	 *            Name of the group,company,player(Nick)
+	 * @param player
+	 * @param wallOwner
+	 *            ID of the object
+	 */
+	public void insertComment(String msg, String ownerType, String postName,
+			String wallOwner) {
+		String temp = url;
+		url += "insertComment.php";
+
+		try {
+			httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(url);
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			url = temp;
+			pairs.add(new BasicNameValuePair(Keys.ID_PLAYER, getCurrentPlayer()
+					.getString(Keys.ID_PLAYER)));
+			pairs.add(new BasicNameValuePair(Keys.OWNERTYPE, ownerType));
+			pairs.add(new BasicNameValuePair("CurrentObjID", wallOwner));
+			pairs.add(new BasicNameValuePair(Keys.WallPosterDisplayName,
+					postName));
+			String now = DateFormat.getDateInstance().format(new Date());
+			pairs.add(new BasicNameValuePair(Keys.WallPostingTime, now));
+			pairs.add(new BasicNameValuePair(Keys.WallLastActivityTime, now));
+			pairs.add(new BasicNameValuePair(Keys.WallMessage, msg));
+
+			httppost.setEntity(new UrlEncodedFormEntity(pairs));
+			httpclient.execute(httppost);
+
+		} catch (Exception e) {
+			Log.e("log_tag HTML Conn",
+					"Error in insertComment http connection " + e.toString());
+		}
 	}
 
 	public ArrayList<Bundle> queryPlayerFriendsSearch(CharSequence search) {

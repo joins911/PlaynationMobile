@@ -109,6 +109,7 @@ public class CommExpListAdapter extends BaseExpandableListAdapter {
 		TextView timeTV = (TextView) view
 				.findViewById(R.id.gamesCL_commentTime_TView);
 		timeTV.setText(userComment.getComment().getTime());
+
 		return view;
 	}
 

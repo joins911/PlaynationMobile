@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    style="@style/GrayTheme">
-
-    <ExpandableListView
-        android:id="@+id/fragMsgAndWallTemp_expList"
-        android:groupIndicator="@null"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ExpandableListView>
-
+	android:id="@+id/fragMsgAndWallTemp"
+	style="@style/GrayTheme"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<ExpandableListView
+		android:id="@+id/fragMsgAndWallTemp_expList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:groupIndicator="@null" >
+	</ExpandableListView>
 </RelativeLayout>

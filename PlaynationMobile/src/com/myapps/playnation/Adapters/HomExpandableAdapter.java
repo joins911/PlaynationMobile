@@ -110,6 +110,7 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		TextView txText;
 
 		Bundle mapEntry = mParent.get(groupPosition).getFirstChild();
+
 		if (currentFragment instanceof HomeWallFragment) {
 			view = inflater.inflate(R.layout.component_homewall_elist_layout,
 					viewGroup, false);
@@ -138,8 +139,8 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 			txEHeadline.setText("" + mapEntry.getString(Keys.PLAYERNICKNAME));
 			txELocation.setText(mapEntry.getString(Keys.MessageTime));
 			txText.setText(mapEntry.getString(Keys.MessageText));
-		}
 
+		}
 		// return the entire view
 		return view;
 	}
