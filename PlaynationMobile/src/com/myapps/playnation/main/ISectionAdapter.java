@@ -10,5 +10,7 @@ public interface ISectionAdapter {
 	// public void menuClick();
 	public void finishTask(int viewPagerState);
 
+	public void setIndeterminateVisibility(boolean isVisible);
+
 	public void startTask(int viewPagerState);
 }

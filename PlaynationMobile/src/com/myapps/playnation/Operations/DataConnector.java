@@ -2353,8 +2353,12 @@ public class DataConnector extends SQLiteOpenHelper {
 			url = temp;
 			pairs.add(new BasicNameValuePair(Keys.ID_PLAYER, wallOwner));
 			pairs.add(new BasicNameValuePair(Keys.OWNERTYPE, ownerType));
-			pairs.add(new BasicNameValuePair("CurrentObjID", getCurrentPlayer()
-					.getString(Keys.ID_PLAYER)));
+			if (getCurrentPlayer() != null) {
+				pairs.add(new BasicNameValuePair("CurrentObjID",
+						getCurrentPlayer().getString(Keys.ID_PLAYER)));
+			} else {
+				pairs.add(new BasicNameValuePair("CurrentObjID", "0"));
+			}
 			pairs.add(new BasicNameValuePair(Keys.WallPosterDisplayName,
 					postName));
 			String now = DateFormat.getDateInstance().format(new Date());
@@ -2522,30 +2526,32 @@ public class DataConnector extends SQLiteOpenHelper {
 		ArrayList<CommentInfo> dummy1;
 
 		ArrayList<Bundle> list = getSQLitePWall(Keys.HomeWallTable, ownerId);
-
-		if (list.size() > 0)
-			for (Bundle bundle : list) {
-				queryPlayerWallReplices(bundle.getString(Keys.ID_WALLITEM),
-						ownerId);
-				ArrayList<Bundle> dum1 = getSQLitePWallReplies(
-						Keys.HomeWallRepliesTable,
-						bundle.getString(Keys.ID_WALLITEM));
-
-				dummy1 = new ArrayList<CommentInfo>();
-				if (dum1.size() > 0) {
-					for (Bundle bundle2 : dum1) {
-						String date = bundle2.getString(Keys.WallPostingTime);
-						dummy1.add(new CommentInfo(bundle2
-								.getString(Keys.WallPosterDisplayName), bundle2
-								.getString(Keys.WallMessage), date));
-					}
-				}
-				String date = HelperClass.convertTime(Integer.parseInt(bundle
-						.getString(Keys.WallPostingTime)), dataTemplate);
-				comments.add(new UserComment(new CommentInfo(bundle
-						.getString(Keys.WallPosterDisplayName), bundle
-						.getString(Keys.WallMessage), date), dummy1));
-			}
+		/*
+		 * if (list.size() > 0) for (Bundle bundle : list) {
+		 * queryPlayerWallReplices(bundle.getString(Keys.ID_WALLITEM), ownerId);
+		 * ArrayList<Bundle> dum1 = getSQLitePWallReplies(
+		 * Keys.HomeWallRepliesTable, bundle.getString(Keys.ID_WALLITEM));
+		 * 
+		 * dummy1 = new ArrayList<CommentInfo>(); if (dum1.size() > 0) { for
+		 * (Bundle bundle2 : dum1) { String date =
+		 * bundle2.getString(Keys.WallPostingTime); dummy1.add(new
+		 * CommentInfo(bundle2 .getString(Keys.WallPosterDisplayName), bundle2
+		 * .getString(Keys.WallMessage), date)); } } String date =
+		 * HelperClass.convertTime(Integer.parseInt(bundle
+		 * .getString(Keys.WallPostingTime)), dataTemplate); comments.add(new
+		 * UserComment(new CommentInfo(bundle
+		 * .getString(Keys.WallPosterDisplayName), bundle
+		 * .getString(Keys.WallMessage), date), dummy1)); }
+		 */
+		for (Bundle bundle : list) {
+			String date = HelperClass.convertTime(
+					Integer.parseInt(bundle.getString(Keys.WallPostingTime)),
+					dataTemplate);
+			comments.add(new UserComment(new CommentInfo(bundle
+					.getString(Keys.WallPosterDisplayName), bundle
+					.getString(Keys.WallMessage), date),
+					new ArrayList<CommentInfo>()));
+		}
 		return comments;
 	}
 

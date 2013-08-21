@@ -100,17 +100,17 @@ public class CommExpListAdapter extends BaseExpandableListAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inf.inflate(R.layout.component_comment_elist_layout, null);
 		}
-
-		TextView userName = (TextView) view
-				.findViewById(R.id.gamesCL_commentUsername_TView);
-		userName.setText(userComment.getComment().getName().trim());
-		TextView commentText = (TextView) view
-				.findViewById(R.id.gamesCL_commentText_TView);
-		commentText.setText(userComment.getComment().getText().trim());
-		TextView timeTV = (TextView) view
-				.findViewById(R.id.gamesCL_commentTime_TView);
-		timeTV.setText(userComment.getComment().getTime());
-
+		if (userComment != null) {
+			TextView userName = (TextView) view
+					.findViewById(R.id.gamesCL_commentUsername_TView);
+			userName.setText(userComment.getComment().getName().trim());
+			TextView commentText = (TextView) view
+					.findViewById(R.id.gamesCL_commentText_TView);
+			commentText.setText(userComment.getComment().getText().trim());
+			TextView timeTV = (TextView) view
+					.findViewById(R.id.gamesCL_commentTime_TView);
+			timeTV.setText(userComment.getComment().getTime());
+		}
 		return view;
 	}
 

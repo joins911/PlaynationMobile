@@ -45,6 +45,7 @@ public class ListsFragment extends Fragment {
 	private ListView mList;
 	private ArrayList<Bundle> mListBundle;
 	TextView friendsString;
+	private AsyncTask mListTask;
 
 	public ListsFragment() {
 		con = DataConnector.getInst(getActivity());
@@ -122,9 +123,15 @@ public class ListsFragment extends Fragment {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
 
-		new LoadListTask().execute();
+		mListTask = new LoadListTask().execute();
 
 		return rootView;
+	}
+
+	@Override
+	public void onDestroy() {
+		mListTask.cancel(true);
+		super.onDestroy();
 	}
 
 	private void initializeGames(final ArrayList<Bundle> results) {

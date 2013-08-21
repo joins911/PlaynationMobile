@@ -289,6 +289,10 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		mSectionAdapter.setPageAndTab(pageIndex, tabIndex, args);
 	}
 
+	public void setIndeterminateVisibility(boolean isVisible) {
+		setSupportProgressBarIndeterminateVisibility(isVisible);
+	}
+
 	public void finishTask(int viewPagerState) {
 		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
 				+ finished);
