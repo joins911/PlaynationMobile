@@ -189,7 +189,7 @@ public class LoginActivity extends Activity {
 			// Create a new progress dialog
 			progressDialog = new ProgressDialog(LoginActivity.this);
 			// progressDialog.setMax(100);
-			progressDialog.setCancelable(true);
+			progressDialog.setCancelable(false);
 			progressDialog.setMessage("Downloading Data... Please wait");
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			// progressDialog.setProgress(0);

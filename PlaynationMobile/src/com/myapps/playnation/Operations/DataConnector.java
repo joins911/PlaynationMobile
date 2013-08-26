@@ -66,9 +66,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	InputStream is = null;
 	HttpClient httpclient;
 	final String ServerIp = "87.55.208.165:1337";
-	// final String ServerIp = "192.168.1.11:1337";
-	// final String ServerIp = "10.0.2.2";
-	// final String ServerIp = "192.168.1.47:90";
+
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
