@@ -52,6 +52,7 @@ public class HomeFriendsFragment extends Fragment {
 		}
 		mListView.setAdapter(expAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Bundle results = (Bundle) parent.getItemAtPosition(position);

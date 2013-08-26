@@ -1,6 +1,5 @@
 package com.myapps.playnation.Fragments.Tabs.Companies;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.HelperClass;
 
 public class CompaniesInfoFragment extends Fragment {
 	private WebView txtNewsTitle;
@@ -65,8 +65,15 @@ public class CompaniesInfoFragment extends Fragment {
 			txtEventLocation.setText(myIntent.getString(Keys.CompanyEmployees));
 			txtEventPartcipants.setText(myIntent
 					.getString(Keys.CompanyCreatedTime));
-			txtEventInvetation.setText(Uri.parse(myIntent
-					.getString(Keys.CompanyURL)) + "");
+			if (!HelperClass.isTablet(getActivity())) {
+				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
+						+ "");
+			} else {
+				txtEventInvetation.setAutoLinkMask(0);
+				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
+						+ "");
+
+			}
 		}
 	}
 

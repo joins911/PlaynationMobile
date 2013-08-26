@@ -99,6 +99,7 @@ public class HomeEditProfileFragment extends Fragment {
 		}
 	}
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.fragment_home_editprofile, container,

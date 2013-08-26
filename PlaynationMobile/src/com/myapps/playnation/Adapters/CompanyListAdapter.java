@@ -53,7 +53,7 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 		if (v == null)
 			v = inflator.inflate(R.layout.component_newslist_itemlayout, null);
 		if (companiesList != null) {
-			Bundle map = (Bundle) companiesList.get(position);
+			Bundle map = companiesList.get(position);
 
 			TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
 			ImageView img = (ImageView) v.findViewById(R.id.imgPlayerAvatarLog);

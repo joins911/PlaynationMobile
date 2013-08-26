@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
 
 public class GameInfoFragment extends Fragment {
@@ -75,12 +76,19 @@ public class GameInfoFragment extends Fragment {
 			txtJoined.setText(gameFounded);
 			txtPlatform.setText(gamePlatform);
 			txtPlayer.setText(gamePlCount);
-			txtWeb.setText(gameURL);
+			if (!HelperClass.isTablet(getActivity())) {
+				txtWeb.setText(" " + gameURL + " ");
+			} else {
+				txtWeb.setAutoLinkMask(0);
+				txtWeb.setText(" " + gameURL + " ");
+			}
+
 			txtDistr.setText(gameDistributor);
 			txtDeveloper.setText(gameDeveloper);
 		}
 	}
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_game_info, container, false);

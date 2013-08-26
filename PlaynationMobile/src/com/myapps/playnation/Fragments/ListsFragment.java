@@ -142,6 +142,7 @@ public class ListsFragment extends Fragment {
 			mList.setAdapter(bindingData);
 		}
 		mList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -162,6 +163,7 @@ public class ListsFragment extends Fragment {
 			mList.setAdapter(bindingData);
 		}
 		mList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -216,6 +218,7 @@ public class ListsFragment extends Fragment {
 			mList.setAdapter(bindingData);
 
 			mList.setOnItemClickListener(new OnItemClickListener() {
+				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					tabletOrPhoneControll(Keys.PlayersSTATE,
@@ -252,6 +255,7 @@ public class ListsFragment extends Fragment {
 			mList.setAdapter(bindingData);
 		}
 		mList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 

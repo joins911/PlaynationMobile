@@ -66,6 +66,7 @@ public class GamePlayersFragment extends Fragment {
 		}
 		mListView.setAdapter(expAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Bundle args = (Bundle) parent.getItemAtPosition(position);

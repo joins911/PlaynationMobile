@@ -41,10 +41,12 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		count = 10;
 	}
 
+	@Override
 	public ArrayList<Bundle> getList() {
 		return gamesDataCollection;
 	}
 
+	@Override
 	public int getCount() {
 		if (gamesDataCollection.size() >= count)
 			return count;
@@ -52,18 +54,22 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 			return gamesDataCollection.size();
 	}
 
+	@Override
 	public Object getItem(int arg0) {
 		return null;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
+	@Override
 	public boolean canShowMore() {
 		return showMore;
 	}
 
+	@Override
 	public void showMore() {
 		if (showMore)
 			if (count + 5 <= gamesDataCollection.size())
@@ -80,6 +86,7 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	 * @param parent
 	 *            : The parent of the List
 	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View vi = convertView;

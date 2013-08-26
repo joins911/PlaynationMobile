@@ -39,6 +39,7 @@ public class GameWallFragment extends Fragment implements WallFragment {
 	private ArrayList<UserComment> mListData;
 	private AsyncTask mCommentsTask;
 
+	@Override
 	@SuppressLint("ResourceAsColor")
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

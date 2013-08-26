@@ -53,6 +53,7 @@ public class RegisterActivity extends Activity {
 		// Listening to Login Screen link
 		loginScreen.setOnClickListener(new View.OnClickListener() {
 
+			@Override
 			public void onClick(View arg0) {
 				// Switching to Login Screen/closing register screen
 				finish();

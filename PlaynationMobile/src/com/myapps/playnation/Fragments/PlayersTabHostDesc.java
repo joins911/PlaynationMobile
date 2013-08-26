@@ -62,6 +62,7 @@ public class PlayersTabHostDesc extends TabHostDesc implements
 
 		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview)
 				.setContent(new TabContentFactory() {
+					@Override
 					public View createTabContent(String tag) {
 						return view;
 					}
