@@ -19,6 +19,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.DataSection;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Classes.NewsFeedItem;
+import com.myapps.playnation.Operations.LoadImage;
 import com.myapps.playnation.main.ISectionAdapter;
 
 @SuppressWarnings("rawtypes")
@@ -67,13 +68,18 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 				TextView txtTitle = (TextView) row.findViewById(R.id.txtTitle);
 				ImageView img = (ImageView) row
 						.findViewById(R.id.imgPlayerAvatarLog);
-				img.setImageResource(R.drawable.no_news_100x100);
+
+				String imageUrl = feed.getKey_NewsImage();
+
 				TextView txtText = (TextView) row
 						.findViewById(R.id.txtNickNameText);
-				txtTitle.setText(Html.fromHtml(feed.getKey_NewsTitle()));
-				// img.setImageResource(feed.getKey_NewsImage());
-				txtText.setText(Html.fromHtml(feed.getKey_NewsIntroText()));
+				txtTitle.setText(Html.fromHtml(feed.getKey_NewsTitle().replace(
+						"\\", "")));
 
+				txtText.setText(Html.fromHtml(feed.getKey_NewsIntroText()
+						.replace("\\", "")));
+				img.setTag(imageUrl);
+				new LoadImage(imageUrl, img, "newsitems").execute(img);
 			}
 		}
 		return row;

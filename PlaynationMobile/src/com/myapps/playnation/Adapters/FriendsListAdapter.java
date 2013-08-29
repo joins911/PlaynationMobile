@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.LoadImage;
 
 public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflater;
@@ -68,9 +69,7 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 
 		Bundle mapEntry = generalList.get(position);
 		if (mapEntry != null) {
-			playerIcon.setImageResource(R.drawable.person);
-			playerIcon.setContentDescription(mapEntry
-					.getString(Keys.PLAYERNICKNAME));
+
 			txPlName.setText("" + mapEntry.getString(Keys.FirstName) + " , "
 					+ mapEntry.getString(Keys.LastName));
 			txPlNick.setText(view.getResources().getString(R.string.Nick)
@@ -82,6 +81,10 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 			txPlAge.setText(view.getResources().getString(R.string.Age)
 					+ (currentYear - year));
+
+			String imageUrl = mapEntry.getString(Keys.PLAYERAVATAR);
+			playerIcon.setTag(imageUrl);
+			new LoadImage(imageUrl, playerIcon, "players").execute(playerIcon);
 		}
 		return view;
 	}

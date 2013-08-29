@@ -20,6 +20,7 @@ import com.myapps.playnation.Fragments.Tabs.Home.HomeGroupsFragment;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeSubscriptionFragment;
 import com.myapps.playnation.Fragments.Tabs.Players.PlayerGamesFragment;
 import com.myapps.playnation.Operations.HelperClass;
+import com.myapps.playnation.Operations.LoadImage;
 
 public class HomeListViewAdapter extends BaseAdapter {
 	private ArrayList<Bundle> generalList;
@@ -122,15 +123,14 @@ public class HomeListViewAdapter extends BaseAdapter {
 			}
 		} else if (currentFragment instanceof HomeGamesFragment
 				|| currentFragment instanceof PlayerGamesFragment) {
-			view = inflater.inflate(R.layout.component_homemsg_elist_layout, viewGroup,
-					false);
+			view = inflater.inflate(R.layout.component_homemsg_elist_layout,
+					viewGroup, false);
 
 			txEHeadline = (TextView) view.findViewById(R.id.txEHeadline);
 			txELocation = (TextView) view.findViewById(R.id.txELocation);
 			txText = (TextView) view.findViewById(R.id.txText);
 
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-			img.setImageResource(R.drawable.no_game_100x100);
 
 			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
@@ -139,6 +139,9 @@ public class HomeListViewAdapter extends BaseAdapter {
 
 				txText.setText(Html.fromHtml(HelperClass
 						.checkGameComments(mapEntry)));
+				String imageUrl = mapEntry.getString(Keys.EventIMAGEURL);
+				img.setTag(imageUrl);
+				new LoadImage(imageUrl, img, "games").execute(img);
 			}
 		} else if (currentFragment instanceof HomeGroupsFragment) {
 			view = inflater.inflate(R.layout.fragment_home_group, viewGroup,
@@ -150,7 +153,6 @@ public class HomeListViewAdapter extends BaseAdapter {
 			txText = (TextView) view.findViewById(R.id.txText);
 
 			ImageView img = (ImageView) view.findViewById(R.id.imgEvent);
-			img.setImageResource(R.drawable.no_group_100x100);
 
 			final Bundle mapEntry = generalList.get(position);
 			if (mapEntry != null) {
@@ -159,6 +161,9 @@ public class HomeListViewAdapter extends BaseAdapter {
 				txText.setText(mapEntry.getString(Keys.GROUPDESC));
 				txEDuration.setText(mapEntry.getString(Keys.GroupMemberCount)
 						+ view.getResources().getString(R.string.Members));
+				String imageUrl = mapEntry.getString(Keys.EventIMAGEURL);
+				img.setTag(imageUrl);
+				new LoadImage(imageUrl, img, "groups").execute(img);
 			}
 
 		} else if (currentFragment instanceof HomeSubscriptionFragment) {

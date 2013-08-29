@@ -2,6 +2,7 @@ package com.myapps.playnation.Adapters;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.LoadImage;
 
 public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflator;
@@ -47,20 +49,26 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 		return 0;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		if (v == null)
 			v = inflator.inflate(R.layout.component_newslist_itemlayout, null);
 		if (companiesList != null) {
-			Bundle map = companiesList.get(position);
 
 			TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
 			ImageView img = (ImageView) v.findViewById(R.id.imgPlayerAvatarLog);
 			TextView txtText = (TextView) v.findViewById(R.id.txtNickNameText);
-			txtTitle.setText(Html.fromHtml(map.getString(Keys.CompanyName)));
-			img.setImageResource(R.drawable.no_company_100x100);
-			txtText.setText(Html.fromHtml(map.getString(Keys.CompanyDesc)));
+			txtTitle.setText(Html.fromHtml(companiesList.get(position)
+					.getString(Keys.CompanyName)));
+			txtText.setText(Html.fromHtml(companiesList.get(position)
+					.getString(Keys.CompanyDesc)));
+			String imageUrl = companiesList.get(position).getString(
+					Keys.CompanyImageURL);
+			img.setTag(imageUrl);
+			new LoadImage(imageUrl, img, "companies").execute(img);
+
 		}
 		return v;
 	}
@@ -74,7 +82,6 @@ public class CompanyListAdapter extends BaseAdapter implements MyBaseAdapter {
 				count = companiesList.size();
 				showMore = false;
 			}
-
 	}
 
 	@Override

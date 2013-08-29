@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.CommentInfo;
 import com.myapps.playnation.Classes.UserComment;
+import com.myapps.playnation.Operations.LoadImage;
 
 /**
  * 
@@ -110,6 +112,10 @@ public class CommExpListAdapter extends BaseExpandableListAdapter {
 			TextView timeTV = (TextView) view
 					.findViewById(R.id.gamesCL_commentTime_TView);
 			timeTV.setText(userComment.getComment().getTime());
+			ImageView imageTV = (ImageView) view
+					.findViewById(R.id.gamesCL_commentImage);
+			String imageUrl = userComment.getComment().getImageUrl();
+			new LoadImage(imageUrl, imageTV, "wall_photos").execute();
 		}
 		return view;
 	}

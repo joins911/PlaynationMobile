@@ -27,11 +27,13 @@ public class SelectedNewsFeed extends Fragment {
 		// newsImage = (ImageView) mView.findViewById(R.id.newsImg);
 		txtNewsAuthor = (TextView) mView.findViewById(R.id.newsAuthor);
 		Bundle args = getArguments();
-		mNewsText.loadData(args.getString(Keys.NEWSCOLNEWSTEXT), "text/html",
-				null);
+		mNewsText.loadData(
+				args.getString(Keys.NEWSCOLNEWSTEXT).replace("\\", ""),
+				"text/html", null);
 
-		mNewsTitle.loadData(args.getString(Keys.NEWSCOLHEADLINE), "text/html",
-				null);
+		mNewsTitle.loadData(
+				args.getString(Keys.NEWSCOLHEADLINE).replace("\\", ""),
+				"text/html", null);
 
 		Spanned text = Html.fromHtml(args.getString(Keys.NEWSCOLPOSTINGTIME));
 		String author = args.getString(Keys.Author);

@@ -15,6 +15,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeEditProfileFragment;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.LoadImage;
 import com.myapps.playnation.main.ISectionAdapter;
 
 public class HeaderFragment extends Fragment {
@@ -135,7 +136,11 @@ public class HeaderFragment extends Fragment {
 				gName.setText(getArguments().getString(Keys.GAMENAME));
 				gType.setText(getArguments().getString(Keys.GAMETYPE));
 				gRating.setText(getArguments().getString(Keys.RATING));
-				gImage.setImageResource(R.drawable.no_game_100x100);
+				String imageUrl = getArguments().getString(Keys.EventIMAGEURL);
+
+				gImage.setTag(imageUrl);
+				new LoadImage(imageUrl, gImage, "games").execute(gImage);
+
 			}
 			if (state == Keys.GroupsSTATE) {
 				gName.setText(getArguments().getString(Keys.GROUPNAME));
@@ -144,8 +149,17 @@ public class HeaderFragment extends Fragment {
 				ratingTV.setText("");
 
 				gRating.setVisibility(View.INVISIBLE);
+<<<<<<< HEAD
 				gImage.setImageResource(R.drawable.no_group_100x100);
 				mView.setFocusable(false);
+||||||| merged common ancestors
+				gImage.setImageResource(R.drawable.no_group_100x100);
+=======
+				String imageUrl = getArguments().getString(Keys.EventIMAGEURL);
+
+				gImage.setTag(imageUrl);
+				new LoadImage(imageUrl, gImage, "groups").execute(gImage);
+>>>>>>> 206ba6adbdaa4e96ef0c7648fa9618f8555aef33
 			}
 			if (state == Keys.PlayersSTATE) {
 				mView = inflater.inflate(R.layout.wrapper_header_home,
@@ -164,8 +178,11 @@ public class HeaderFragment extends Fragment {
 				gType.setText(getArguments().getString(Keys.CompanyOwnership));
 				gRating.setText(getArguments().getString(
 						Keys.CompanySocialRating));
-				gImage.setImageResource(R.drawable.no_company_100x100);
+				String imageUrl = getArguments()
+						.getString(Keys.CompanyImageURL);
 
+				gImage.setTag(imageUrl);
+				new LoadImage(imageUrl, gImage, "companies").execute(gImage);
 				ratingTV.setText("");
 			}
 		}
