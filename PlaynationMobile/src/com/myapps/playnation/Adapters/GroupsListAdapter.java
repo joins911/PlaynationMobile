@@ -41,6 +41,7 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 		return groupsDataCollection;
 	}
 
+	@Override
 	public int getCount() {
 		if (groupsDataCollection.size() >= count)
 			return count;
@@ -48,14 +49,17 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			return groupsDataCollection.size();
 	}
 
+	@Override
 	public Object getItem(int arg0) {
 		return null;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
+	@Override
 	public void showMore() {
 		if (showMore)
 			if (count + 5 <= groupsDataCollection.size())
@@ -66,10 +70,12 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			}
 	}
 
+	@Override
 	public boolean canShowMore() {
 		return showMore;
 	}
 
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View vi = convertView;

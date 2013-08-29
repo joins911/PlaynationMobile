@@ -25,6 +25,7 @@ public class CompaniesWallFragment extends Fragment {
 	DataConnector con;
 	EditText commentText;
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		con = DataConnector.getInst(getActivity());

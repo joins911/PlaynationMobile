@@ -70,7 +70,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		con = DataConnector.getInst(getApplicationContext());
-
 		username = (EditText) findViewById(R.id.password_logIn);
 		password = (EditText) findViewById(R.id.username_logIn);
 		logButton = (Button) findViewById(R.id.btnLogin);
@@ -79,6 +78,7 @@ public class LoginActivity extends Activity {
 
 		logButton.setOnClickListener(new View.OnClickListener() {
 
+			@Override
 			public void onClick(View v) {
 				logButton.setError(null);
 				if (HelperClass.EmailPassNickCheck(password, username, null)) {
@@ -105,6 +105,7 @@ public class LoginActivity extends Activity {
 
 		if (logGuestButton != null)
 			logGuestButton.setOnClickListener(new View.OnClickListener() {
+				@Override
 				public void onClick(View v) {
 					logOnlineGuest();
 				}
@@ -113,6 +114,7 @@ public class LoginActivity extends Activity {
 		// Listening to register new account link
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 
+			@Override
 			public void onClick(View v) {
 				// Switching to Register screen
 				if (con.checkConnection()) {
@@ -231,6 +233,7 @@ public class LoginActivity extends Activity {
 						con.getArrayFromQuerryWithPostVariable("",
 								Keys.newsTable, "", con.getLastIDNews());
 					}
+					con.queryMiniIds();
 					progressbarStatus += 20;
 					progressDialog.setProgress(progressbarStatus);
 

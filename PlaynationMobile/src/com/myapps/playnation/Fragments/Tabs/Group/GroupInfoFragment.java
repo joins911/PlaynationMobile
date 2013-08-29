@@ -50,10 +50,11 @@ public class GroupInfoFragment extends Fragment {
 
 		ID_CREATOR = args.getString(Keys.GruopCreatorName);
 		txtNewsLeader.setText(ID_CREATOR);
-
+		mView.setFocusable(false);
 		txtNewsCreated.setText(args.getString(Keys.GROUPDATE));
 	}
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment

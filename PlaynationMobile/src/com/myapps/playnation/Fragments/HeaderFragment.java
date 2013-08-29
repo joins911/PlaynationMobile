@@ -142,8 +142,10 @@ public class HeaderFragment extends Fragment {
 				gType.setText(getArguments().getString(Keys.GROUPTYPE) + " "
 						+ getArguments().getString(Keys.GROUPTYPE2));
 				ratingTV.setText("");
+
 				gRating.setVisibility(View.INVISIBLE);
 				gImage.setImageResource(R.drawable.no_group_100x100);
+				mView.setFocusable(false);
 			}
 			if (state == Keys.PlayersSTATE) {
 				mView = inflater.inflate(R.layout.wrapper_header_home,

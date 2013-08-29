@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/GrayTheme"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/newsTitle"
+	style="@style/GrayTheme"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical" >
@@ -21,7 +20,7 @@
 	<RelativeLayout
 		android:id="@+id/newsEventInfo"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content" >
 		<TextView
 			android:id="@+id/txtEdit"
 			android:layout_width="wrap_content"
@@ -103,6 +102,7 @@
 			android:layout_alignLeft="@+id/textView5"
 			android:layout_below="@+id/newsEventPartcipants"
 			android:layout_centerHorizontal="true"
+			android:autoLink="web"
 			android:text="@string/website"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
@@ -115,6 +115,7 @@
 			android:layout_alignLeft="@+id/textView4"
 			android:layout_below="@id/textView9"
 			android:autoLink="web"
+			android:linksClickable="true"
 			android:text="@string/Age"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
@@ -162,7 +163,7 @@
 	<WebView
 		android:id="@+id/webView1"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content" />
 	<!-- </RelativeLayout> -->
 	<WebView
 		android:id="@+id/webView2"

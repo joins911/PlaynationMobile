@@ -25,21 +25,25 @@ public class ReviewListAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return reviewsDataCollection.size();
 	}
 
+	@Override
 	public Object getItem(int index) {
 		// TODO Auto-generated method stub
 		return reviewsDataCollection.get(index);
 	}
 
+	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View vi = convertView;

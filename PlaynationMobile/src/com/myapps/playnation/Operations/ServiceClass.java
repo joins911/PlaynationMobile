@@ -31,18 +31,36 @@ public class ServiceClass extends Service {
 		@Override
 		public void run() {
 			try {
+				if (con.getMinGameID() == con.getLastIDGames()) {
+					con.setLastIDGames(0);
+				}
+				if (con.getMinGroupID() == con.getLastIDGroups()) {
+					con.setLastIDGroups(0);
+				}
+				if (con.getMinCompanyID() == con.getLastIDCompanies()) {
+					con.setLastIDCompanies(0);
+				}
+
 				con.getArrayFromQuerryWithPostVariable("", Keys.gamesTable, "",
 						con.getLastIDGames());
-				// Thread.sleep(60);
+
 				con.getArrayFromQuerryWithPostVariable("", Keys.companyTable,
 						"", con.getLastIDCompanies());
-				// Thread.sleep(60);
+
 				con.getArrayFromQuerryWithPostVariable("", Keys.groupsTable,
 						"", con.getLastIDGroups());
-				// Thread.sleep(60);
 
-				con.getArrayFromQuerryWithPostVariable("", Keys.newsTable, "",
-						con.getLastIDNews());
+				if (con.getLastIDNews() == con.getMinNewsID()) {
+					con.setLastIDNews(0);
+					con.getArrayFromQuerryWithPostVariable("", Keys.newsTable,
+							"", con.getLastIDNews());
+				} else {
+					if (con.getLastIDNews() > 0) {
+						con.getArrayFromQuerryWithPostVariable("",
+								Keys.newsServiceTable, "", con.getLastIDNews());
+					}
+				}
+
 			} catch (Exception e) {
 				Log.e("Service", "Error Service Timer" + e.toString());
 			}

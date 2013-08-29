@@ -14,6 +14,7 @@ public class ArraySorter {
 	public static ArrayList<HashMap<String, String>> sortBy(ArrayList<HashMap<String, String>> map, final String columnName)
 	{
 		Collections.sort(map, new Comparator<HashMap<String, String>>() {
+			@Override
 			public int compare(HashMap<String, String> o1,
 					HashMap<String, String> o2) {
 				String t1 = o1.get(columnName);
@@ -29,6 +30,7 @@ public class ArraySorter {
 			ArrayList<HashMap<String, String>> map, int tableId) {
 		if (tableId == Keys.gamesID)
 			Collections.sort(map, new Comparator<HashMap<String, String>>() {
+				@Override
 				public int compare(HashMap<String, String> o1,
 						HashMap<String, String> o2) {
 					String t1 = o1.get(Keys.GAMENAME);
@@ -38,6 +40,7 @@ public class ArraySorter {
 			});
 		else if (tableId == Keys.groupsID)
 			Collections.sort(map, new Comparator<HashMap<String, String>>() {
+				@Override
 				public int compare(HashMap<String, String> o1,
 						HashMap<String, String> o2) {
 					String t1 = o1.get(Keys.GROUPNAME);
@@ -53,6 +56,7 @@ public class ArraySorter {
 			ArrayList<HashMap<String, String>> map, int tableId) {
 		if (tableId == Keys.gamesID)
 			Collections.sort(map, new Comparator<HashMap<String, String>>() {
+				@Override
 				public int compare(HashMap<String, String> o1,
 						HashMap<String, String> o2) {
 					String t1 = o1.get(Keys.GAMEDATE);
@@ -62,6 +66,7 @@ public class ArraySorter {
 			});
 		else if (tableId == Keys.groupsID)
 			Collections.sort(map, new Comparator<HashMap<String, String>>() {
+				@Override
 				public int compare(HashMap<String, String> o1,
 						HashMap<String, String> o2) {
 					String t1 = o1.get(Keys.GROUPDATE);
@@ -75,6 +80,7 @@ public class ArraySorter {
 	public static ArrayList<HashMap<String, String>> sortByRating(
 			ArrayList<HashMap<String, String>> map, int tableId) {
 		Collections.sort(map, new Comparator<HashMap<String, String>>() {
+			@Override
 			public int compare(HashMap<String, String> o1,
 					HashMap<String, String> o2) {
 				String t1 = o1.get(Keys.RATING);

@@ -60,6 +60,7 @@ public class GameTabHostDesc extends TabHostDesc implements OnTabChangeListener 
 
 		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview)
 				.setContent(new TabContentFactory() {
+					@Override
 					public View createTabContent(String tag) {
 						return view;
 					}
@@ -77,8 +78,8 @@ public class GameTabHostDesc extends TabHostDesc implements OnTabChangeListener 
 
 	@Override
 	public void onDestroyView() {
-		mTabHost = null;
 		super.onDestroyView();
+		mTabHost = null;
 	}
 
 	@Override

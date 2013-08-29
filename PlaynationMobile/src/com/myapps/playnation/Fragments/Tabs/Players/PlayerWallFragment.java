@@ -37,6 +37,7 @@ public class PlayerWallFragment extends Fragment implements WallFragment {
 	private View footer;
 	private AsyncTask mCommentsTask;
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		con = DataConnector.getInst(getActivity());

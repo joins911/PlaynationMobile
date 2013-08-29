@@ -261,6 +261,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	 * 
 	 * } return super.onOptionsItemSelected(item); }
 	 */
+	@Override
 	public SectionAdapter getAdapter() {
 		return this.mSectionAdapter;
 	}
@@ -289,10 +290,12 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		mSectionAdapter.setPageAndTab(pageIndex, tabIndex, args);
 	}
 
+	@Override
 	public void setIndeterminateVisibility(boolean isVisible) {
 		setSupportProgressBarIndeterminateVisibility(isVisible);
 	}
 
+	@Override
 	public void finishTask(int viewPagerState) {
 		Log.i("total:=" + total + " ", "state:=" + viewPagerState + "; "
 				+ finished);
@@ -301,6 +304,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 			setSupportProgressBarIndeterminateVisibility(false);
 	}
 
+	@Override
 	public void startTask(int viewPagerState) {
 		total = total - viewPagerState;
 		setSupportProgressBarIndeterminateVisibility(true);

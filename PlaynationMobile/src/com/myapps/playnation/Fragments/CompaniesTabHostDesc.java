@@ -46,6 +46,7 @@ public class CompaniesTabHostDesc extends TabHostDesc implements OnTabChangeList
 		View tabview = createTabView(mTabHost.getContext(), tag);
 
 		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview).setContent(new TabContentFactory() {
+			@Override
 			public View createTabContent(String tag) {return view;}
 		});
 		mTabHost.addTab(setContent, fragClass,bundle);

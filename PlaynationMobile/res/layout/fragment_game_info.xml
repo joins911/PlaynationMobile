@@ -1,243 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<LinearLayout
-	    xmlns:android="http://schemas.android.com/apk/res/android"
-		style="@style/GrayTheme"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" 
-	    android:orientation="vertical">
-	    <RelativeLayout
-	        android:id="@+id/newsGroupInfo"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="@dimen/margin" >
-
-	        <TextView
-	            android:id="@+id/TextView01"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignParentTop="true"
-	            android:text="@string/Type"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoReleased"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/TextView03"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/TextView03"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_above="@+id/txtgameinfoPlayers"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignRight="@+id/txtgameinfoReleased"
-	            android:text="@string/released"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/TextView05"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/txtgameinfoReleased"
-	            android:text="@string/esrbRating"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoEsrb"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/TextView05"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/TextView08"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/txtgameinfoEsrb"
-	            android:text="@string/distributors"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/TextView04"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignRight="@+id/txtgameinfoPlatforms"
-	            android:layout_alignWithParentIfMissing="true"
-	            android:layout_below="@+id/txtgameinfoPlatforms"
-	            android:layout_marginRight="50dp"
-	            android:text="@string/playerString"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameInfoDevelopers"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_above="@+id/TextView08"
-	            android:layout_alignParentRight="true"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/TextView07"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/TextView04"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignWithParentIfMissing="true"
-	            android:layout_below="@+id/txtgameinfoPlayers"
-	            android:text="@string/developers"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/TextView06"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_above="@+id/txtgameinfoDistributors"
-	            android:layout_alignLeft="@+id/TextView07"
-	            android:layout_alignParentRight="true"
-	            android:layout_alignWithParentIfMissing="true"
-	            android:text="@string/joined"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoJoined"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignBaseline="@+id/txtgameinfoDistributors"
-	            android:layout_alignParentRight="true"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoDistributors"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/TextView08"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/TextView09"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/txtgameinfoJoined"
-	            android:layout_centerHorizontal="true"
-	            android:text="@string/website"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoWebsite"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/TextView09"
-	            android:layout_centerHorizontal="true"
-	            android:autoLink="web"
-	            android:maxLength="25"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoPlayers"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
-	            android:layout_below="@+id/TextView04"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoPlatforms"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
-	            android:layout_below="@+id/TextView02"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-
-	        <TextView
-	            android:id="@+id/TextView02"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_above="@+id/txtgameinfoType"
-	            android:layout_alignLeft="@+id/TextView04"
-	            android:text="@string/platforms"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize"
-	            android:textStyle="bold" />
-
-	        <TextView
-	            android:id="@+id/txtgameinfoType"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_below="@+id/TextView01"
-	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceSmall"
-	            android:textColor="@color/background_gradient"
-	            android:textSize="@dimen/textviewInfoTempSize" />
-	    </RelativeLayout>
-
-	    <WebView
-	        android:id="@+id/webview"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="15dp" />
-
-	    <WebView
-	        android:id="@+id/webview2"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="15dp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/GrayTheme"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/newsGroupInfo"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/margin" >
+		<TextView
+			android:id="@+id/TextView01"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:text="@string/Type"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameinfoReleased"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/TextView03"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/TextView03"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/txtgameinfoPlayers"
+			android:layout_alignParentLeft="true"
+			android:layout_alignRight="@+id/txtgameinfoReleased"
+			android:text="@string/released"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/TextView05"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/txtgameinfoReleased"
+			android:text="@string/esrbRating"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameinfoEsrb"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/TextView05"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/TextView08"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/txtgameinfoEsrb"
+			android:text="@string/distributors"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/TextView04"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_alignRight="@+id/txtgameinfoPlatforms"
+			android:layout_alignWithParentIfMissing="true"
+			android:layout_below="@+id/txtgameinfoPlatforms"
+			android:layout_marginRight="50dp"
+			android:text="@string/playerString"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameInfoDevelopers"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/TextView08"
+			android:layout_alignParentRight="true"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/TextView07"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/TextView04"
+			android:layout_alignParentRight="true"
+			android:layout_alignWithParentIfMissing="true"
+			android:layout_below="@+id/txtgameinfoPlayers"
+			android:text="@string/developers"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/TextView06"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/txtgameinfoDistributors"
+			android:layout_alignLeft="@+id/TextView07"
+			android:layout_alignParentRight="true"
+			android:layout_alignWithParentIfMissing="true"
+			android:text="@string/joined"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameinfoJoined"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/txtgameinfoDistributors"
+			android:layout_alignParentRight="true"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/txtgameinfoDistributors"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/TextView08"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/TextView09"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/txtgameinfoJoined"
+			android:layout_centerHorizontal="true"
+			android:text="@string/website"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameinfoWebsite"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/TextView09"
+			android:layout_centerHorizontal="true"
+			android:autoLink="web"
+			android:maxLength="25"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/txtgameinfoPlayers"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/TextView04"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/txtgameinfoPlatforms"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/TextView02"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/TextView02"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/txtgameinfoType"
+			android:layout_alignLeft="@+id/TextView04"
+			android:text="@string/platforms"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/txtgameinfoType"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/TextView01"
+			android:text="Medium Text"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/background_gradient"
+			android:textSize="@dimen/textviewInfoTempSize" />
+	</RelativeLayout>
+	<WebView
+		android:id="@+id/webview"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp" />
+	<WebView
+		android:id="@+id/webview2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp" />
 </LinearLayout>

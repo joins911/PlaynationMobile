@@ -34,7 +34,7 @@ public class JSONTransformer {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static JSONObject mapToJSON(Map o) throws JSONException {
 		JSONObject obj = new JSONObject();
-		Map map = (Map) o;
+		Map map = o;
 
 		Iterator<Map.Entry> i = map.entrySet().iterator();
 		while (i.hasNext()) {

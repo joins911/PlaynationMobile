@@ -72,6 +72,7 @@ public final class Keys {
 	public static String companyTempTable = "TempCompany";
 
 	public static String newsTable = "news";
+	public static String newsServiceTable = "newsService";
 	public static final String NEWSNAME = "NewsName";
 	public static final String NEWSDESC = "NewsDesc";
 	public static final String NEWSTYPE = "NewsType1";

@@ -24,6 +24,7 @@ public class HomeWallFragment extends Fragment {
 	private DataConnector con;
 	private ArrayList<ExpandbleParent> listParents = new ArrayList<ExpandbleParent>();
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_template_wall,
