@@ -75,7 +75,8 @@ public class CompaniesNewsFragment extends Fragment {
 
 						edit.putInt(Keys.NEWSCOLID_NEWS,
 								feed.getKey_NewsFeedID());
-						edit.putInt(Keys.NEWSCOLIMAGE, feed.getKey_NewsImage());
+						edit.putString(Keys.NEWSCOLIMAGE,
+								feed.getKey_NewsImage());
 						edit.putString(Keys.NEWSCOLHEADLINE,
 								feed.getKey_NewsTitle());
 						edit.putString(Keys.NEWSCOLINTROTEXT,

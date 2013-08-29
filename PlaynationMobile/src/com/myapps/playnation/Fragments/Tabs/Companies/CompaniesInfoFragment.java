@@ -52,7 +52,6 @@ public class CompaniesInfoFragment extends Fragment {
 			txtNewsText.loadData(myIntent.getString(Keys.CompanyDesc),
 					"text/html", null);
 
-			newsImage.setImageResource(R.drawable.no_company_100x100);
 			txtEventType.setText(myIntent.getString(Keys.CompanyType));
 			String s = myIntent.getString(Keys.CompanyAddress);
 			StringBuilder sb = new StringBuilder(s);
@@ -65,6 +64,18 @@ public class CompaniesInfoFragment extends Fragment {
 			txtEventLocation.setText(myIntent.getString(Keys.CompanyEmployees));
 			txtEventPartcipants.setText(myIntent
 					.getString(Keys.CompanyCreatedTime));
+			String imageUrl = myIntent.getString(Keys.CompanyImageURL);
+			String main = "companies/";
+			String finals = "";
+			if (!imageUrl.equalsIgnoreCase("")) {
+				String dic1 = imageUrl.substring(0, 1);
+				String dic2 = imageUrl.substring(1, 2);
+				finals = main + dic1 + "/" + dic2 + "/" + imageUrl;
+			} else {
+				finals = main;
+			}
+			HelperClass.getPIc(finals, newsImage);
+
 			if (!HelperClass.isTablet(getActivity())) {
 				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
 						+ "");

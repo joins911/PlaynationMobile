@@ -1,5 +1,10 @@
 package com.myapps.playnation.Operations;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +19,8 @@ import java.util.regex.Pattern;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.myapps.playnation.R;
@@ -42,6 +50,52 @@ public class HelperClass {
 		boolean large = ((content.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
 		boolean xlarge = ((content.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
 		return (large || xlarge);
+	}
+
+	public static void getPIc(String imageLoc, ImageView tvImage) {
+		URL imageURL = null;
+		Bitmap bitmap = null;
+		try {
+			imageURL = new URL("http://playnation.eu/global/pub_img/"
+					+ imageLoc);
+		} catch (MalformedURLException e) {
+			// e.printStackTrace();
+		}
+
+		try {
+			HttpURLConnection connection = (HttpURLConnection) imageURL
+					.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream inputStream = connection.getInputStream();
+
+			bitmap = BitmapFactory.decodeStream(inputStream);
+		} catch (IOException e) {
+			// e.printStackTrace();
+		}
+
+		if (bitmap == null) {
+			if (imageLoc != null) {
+				String[] arr = imageLoc.split("/");
+				if (arr[0].equals("games")) {
+					tvImage.setImageResource(R.drawable.no_game_100x100);
+				} else if (arr[0].equals("players")) {
+					tvImage.setImageResource(R.drawable.no_player_100x100);
+				} else if (arr[0].equals("newsitems")) {
+					tvImage.setImageResource(R.drawable.no_news_100x100);
+				} else if (arr[0].equals("groups")) {
+					tvImage.setImageResource(R.drawable.no_group_100x100);
+				} else if (arr[0].equals("wall_photos")) {
+					tvImage.setImageResource(R.drawable.no_forum_100x100);
+				} else if (arr[0].equals("companies")) {
+					tvImage.setImageResource(R.drawable.no_company_100x100);
+				}
+			}
+		} else {
+			bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+			tvImage.setImageBitmap(bitmap);
+
+		}
 	}
 
 	public static void getListViewSize(ListView myListView) {
@@ -360,6 +414,8 @@ public class HelperClass {
 						Keys.NEWSCOLNEWSTEXT));
 				feed.setKey_NewsIntroText(result.get(i).getString(
 						Keys.NEWSCOLINTROTEXT));
+				feed.setKey_NewsImage(result.get(i)
+						.getString(Keys.NEWSCOLIMAGE));
 				String s = result.get(i).getString(Keys.Author);
 				if (!s.equalsIgnoreCase(" "))
 					feed.setKey_Author(s);

@@ -232,8 +232,8 @@ public class LoginActivity extends Activity {
 					if (!con.checkDBTableExits(Keys.newsTable)) {
 						con.getArrayFromQuerryWithPostVariable("",
 								Keys.newsTable, "", con.getLastIDNews());
+						con.queryMiniIds();
 					}
-					con.queryMiniIds();
 					progressbarStatus += 20;
 					progressDialog.setProgress(progressbarStatus);
 

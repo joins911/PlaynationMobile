@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.LoadImage;
 
 public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	LayoutInflater inflater;
@@ -117,7 +118,11 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 							Keys.GROUPTYPE2));
 			holder.tvGameDate.setText(groupsDataCollection.get(position)
 					.getString(Keys.GROUPDATE));
-			holder.tvImage.setImageResource(R.drawable.no_group_100x100);
+			String imageUrl = groupsDataCollection.get(position).getString(
+					Keys.EventIMAGEURL);
+			holder.tvImage.setTag(imageUrl);
+			new LoadImage(imageUrl, holder.tvImage, "groups")
+					.execute(holder.tvImage);
 		}
 		// Setting an image
 		// String uri = "drawable/"+

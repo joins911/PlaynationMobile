@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class NewsFeed implements NewsFeedItem {
 	private int Key_NewsFeedID;
-	private int Key_NewsImage;
+	private String Key_NewsImage;
 	private String Key_NewsTitle;
 	private String Key_NewsIntroText;
 	private String Key_NewsText;
@@ -20,11 +20,11 @@ public class NewsFeed implements NewsFeedItem {
 		Key_NewsFeedID = key_NewsFeedID;
 	}
 
-	public int getKey_NewsImage() {
+	public String getKey_NewsImage() {
 		return Key_NewsImage;
 	}
 
-	public void setKey_NewsImage(int newsImage) {
+	public void setKey_NewsImage(String newsImage) {
 		this.Key_NewsImage = newsImage;
 	}
 

@@ -162,7 +162,7 @@ public final class Keys {
 	public final static String NEWSCOLHEADLINE = "Headline";
 	public final static String NEWSCOLPOSTINGTIME = "PostingTime";
 	// TODO ADD IMAGE REFERENCE
-	public final static String NEWSCOLIMAGE = "IMAGE";
+	public final static String NEWSCOLIMAGE = "Image";
 
 	/*
 	 * Who is Playing json and map identifiers

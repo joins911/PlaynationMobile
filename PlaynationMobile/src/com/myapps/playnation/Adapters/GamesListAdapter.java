@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
-import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.LoadImage;
 
 /**
  * 
@@ -29,7 +29,6 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	ArrayList<Bundle> gamesDataCollection;
 	JSONArray gamesArray;
 	ViewHolder holder;
-	DataConnector con;
 	int count;
 	boolean showMore = true;
 
@@ -37,7 +36,6 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		this.gamesDataCollection = map;
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		con = DataConnector.getInst(act);
 		count = 10;
 	}
 
@@ -116,7 +114,11 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.getString(Keys.GAMETYPE));
 			holder.tvGameDate.setText(gamesDataCollection.get(position)
 					.getString(Keys.GAMEDATE));
-			holder.tvImage.setImageResource(R.drawable.no_game_100x100);
+			String imageUrl = gamesDataCollection.get(position).getString(
+					Keys.EventIMAGEURL);
+			holder.tvImage.setTag(imageUrl);
+			new LoadImage(imageUrl, holder.tvImage, "games")
+					.execute(holder.tvImage);
 		}
 		/*
 		 * For getting image try {

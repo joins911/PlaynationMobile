@@ -67,7 +67,7 @@ public class ServiceClass extends Service {
 		}
 	};
 
-	static int MINUTES = 1;
+	static int MINUTES = 3;
 
 	private void showNotification() {
 		stopTimer();
