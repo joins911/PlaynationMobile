@@ -19,6 +19,10 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 	private String folderName;
 	private String path = "";
 
+	public LoadImage() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public LoadImage(String url, ImageView img, String folderName) {
 		this.img = img;
 		this.url = url;
@@ -39,8 +43,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 		} else {
 			finals = main;
 		}
-
-		return getPIc(finals, img);
+		return getImage(finals, img);
 	}
 
 	@Override
@@ -49,6 +52,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 	}
 
 	protected void onPostExecute(Bitmap bitmap) {
+
 		if (img.getTag() != null)
 			if (img.getTag().equals(path)) {
 				if (bitmap == null || img == null) {
@@ -56,10 +60,11 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 						no_Image(folderName);
 					}
 				} else {
-					bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+					bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
 					img.setImageBitmap(bitmap);
 				}
 			}
+
 	}
 
 	private void no_Image(String folderName) {
@@ -78,11 +83,11 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 		}
 	}
 
-	public Bitmap getPIc(String imageLoc, ImageView tvImage) {
+	public Bitmap getImage(String imageLoc, ImageView tvImage) {
 		URL imageURL = null;
 		Bitmap bitmap = null;
 		try {
-			imageURL = new URL("http://playnation.eu/global/pub_img/"
+			imageURL = new URL("http://playnation.eu/beta/global/pub_img/"
 					+ imageLoc);
 		} catch (MalformedURLException e) {
 		}
@@ -94,8 +99,28 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 			InputStream inputStream = connection.getInputStream();
 
 			bitmap = BitmapFactory.decodeStream(inputStream);
+
 		} catch (IOException e) {
 		}
+		if (bitmap == null) {
+			try {
+				imageURL = new URL("http://playnation.eu/global/pub_img/"
+						+ imageLoc);
+			} catch (MalformedURLException e) {
+			}
+			try {
+				HttpURLConnection connection = (HttpURLConnection) imageURL
+						.openConnection();
+				connection.setDoInput(true);
+				connection.connect();
+				InputStream inputStream = connection.getInputStream();
+
+				bitmap = BitmapFactory.decodeStream(inputStream);
+
+			} catch (IOException e) {
+			}
+		}
+
 		return bitmap;
 	}
 }

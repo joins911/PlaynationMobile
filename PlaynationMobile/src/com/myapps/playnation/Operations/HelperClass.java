@@ -52,14 +52,13 @@ public class HelperClass {
 		return (large || xlarge);
 	}
 
-	public static void getPIc(String imageLoc, ImageView tvImage) {
+	public static void getImage(String imageLoc, ImageView tvImage) {
 		URL imageURL = null;
 		Bitmap bitmap = null;
 		try {
 			imageURL = new URL("http://playnation.eu/global/pub_img/"
 					+ imageLoc);
 		} catch (MalformedURLException e) {
-			// e.printStackTrace();
 		}
 
 		try {
@@ -70,8 +69,8 @@ public class HelperClass {
 			InputStream inputStream = connection.getInputStream();
 
 			bitmap = BitmapFactory.decodeStream(inputStream);
+
 		} catch (IOException e) {
-			// e.printStackTrace();
 		}
 
 		if (bitmap == null) {
@@ -228,7 +227,6 @@ public class HelperClass {
 			returns = "SELECT * FROM " + tableName + " Where ID_WALLITEM="
 					+ separeteID + " and " + Keys.ID_ORGOWNER + "=" + anotherID
 					+ ";";
-			System.out.println(returns);
 		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
 			returns = "SELECT * FROM " + tableName + " Where ID_MESSAGE="
 					+ anotherID + " and " + Keys.MessageID_CONVERSATION + "=?;";
@@ -241,6 +239,8 @@ public class HelperClass {
 		} else if (tableName.equals(Keys.whoIsPlayingTable)) {
 			returns = "SELECT * FROM " + tableName
 					+ " Where ID_GAME=? and ID_PLAYER=" + anotherID + ";";
+		} else if (tableName.equals(Keys.PlayerTable)) {
+			returns = "SELECT * FROM " + tableName + " Where ID_PLAYER=?;";
 		}
 		return returns;
 	}

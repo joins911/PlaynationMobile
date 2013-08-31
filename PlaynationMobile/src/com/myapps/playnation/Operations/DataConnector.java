@@ -65,10 +65,9 @@ public class DataConnector extends SQLiteOpenHelper {
 	static DataConnector inst;
 	InputStream is = null;
 	HttpClient httpclient;
-	// final String ServerIp = "87.55.208.165:1337";
-	// final String ServerIp = "192.168.1.11:1337";
+
 	final String ServerIp = "10.0.2.2";
-	// final String ServerIp = "192.168.1.47:90";
+
 	String url;
 	HashMap<String, ArrayList<Bundle>> lilDb;
 	String[] gameTypes;
@@ -95,7 +94,8 @@ public class DataConnector extends SQLiteOpenHelper {
 	private DataConnector(Context con) {
 		super(con, DATABASE_NAME, null, DATABASE_VERSION);
 
-		url = "http://" + ServerIp + "/test/";
+		url = "http://playnation.eu/beta/hacks/";
+		// url = "http://" + ServerIp + "/test/";
 		lilDb = new HashMap<String, ArrayList<Bundle>>();
 		// new CheckConnectionTask().execute();
 	}
@@ -1570,7 +1570,8 @@ public class DataConnector extends SQLiteOpenHelper {
 			// is.close();
 
 			// result = sb.toString();
-			result = EntityUtils.toString(entity);
+			if (entity != null)
+				result = EntityUtils.toString(entity);
 		} catch (Exception e) {
 			Log.e("DataConnector getWithPost2() ", "Error converting result "
 					+ e.toString());
@@ -2311,8 +2312,8 @@ public class DataConnector extends SQLiteOpenHelper {
 			for (int i = 0; i < json.length(); i++) {
 				try {
 					ContentValues map = new ContentValues();
-					map.put(Keys.ID_PLAYER,
-							json.getJSONObject(i).getString(Keys.ID_PLAYER));
+					String ID = json.getJSONObject(i).getString(Keys.ID_PLAYER);
+
 					map.put(Keys.CITY,
 							json.getJSONObject(i).getString(Keys.CITY));
 					map.put(Keys.COUNTRY,
@@ -2322,9 +2323,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 					String imageUrl = json.getJSONObject(i).getString(
 							Keys.PLAYERAVATAR);
-
 					map.put(Keys.PLAYERAVATAR, imageUrl);
-
 					map.put(Keys.FirstName,
 							json.getJSONObject(i).getString(Keys.FirstName));
 					map.put(Keys.LastName,
@@ -2334,9 +2333,15 @@ public class DataConnector extends SQLiteOpenHelper {
 					map.put(Keys.Age, json.getJSONObject(i).getString(Keys.Age));
 					map.put(Keys.Email,
 							json.getJSONObject(i).getString(Keys.Email));
-
-					sql.insertWithOnConflict(Keys.PlayerTable, null, map,
-							SQLiteDatabase.CONFLICT_REPLACE);
+					if (!checkRowExist(Keys.PlayerTable, ID, "")) {
+						map.put(Keys.ID_PLAYER, ID);
+						sql.insertWithOnConflict(Keys.PlayerTable, null, map,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else {
+						sql.updateWithOnConflict(Keys.PlayerTable, map,
+								"ID_PLAYER=" + ID, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					}
 
 				} catch (Exception e) {
 					Log.e("Fetching Info", "Error " + e);
@@ -2372,7 +2377,6 @@ public class DataConnector extends SQLiteOpenHelper {
 						+ currentPlayer.get(Keys.COUNTRY));
 			if (playerIcon != null) {
 				String imageUrl = currentPlayer.getString(Keys.PLAYERAVATAR);
-
 				playerIcon.setTag(imageUrl);
 				new LoadImage(imageUrl, playerIcon, "players")
 						.execute(playerIcon);

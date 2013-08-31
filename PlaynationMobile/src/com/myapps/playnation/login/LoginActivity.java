@@ -297,6 +297,6 @@ public class LoginActivity extends Activity {
 		String passWord = password.getText().toString();
 
 		return con.checkLogin(passWord, userName, prefrence);
-
+		// return true;
 	}
 }

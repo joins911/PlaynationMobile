@@ -1,24 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainList_LLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/list_selector"
-    android:orientation="vertical" >
-    <TextView
-        android:id="@+id/noFriendsText"
-        style="@style/BlackText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/noFriendsString" />
-    <ListView
-        android:id="@+id/mainList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.16"
-        android:divider="#b5b5b5"
-        android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector" >
-    </ListView>
-
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/mainList_LLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/list_selector"
+	android:orientation="vertical" >
+	<TextView
+		android:id="@+id/noFriendsText"
+		style="@style/BlackText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/noFriendsString" />
+	<ListView
+		android:id="@+id/mainList"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1.16"
+		android:choiceMode="singleChoice"
+		android:divider="#b5b5b5"
+		android:dividerHeight="1dp"
+		android:listSelector="@drawable/list_selector" >
+	</ListView>
 </LinearLayout>

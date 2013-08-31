@@ -55,7 +55,6 @@ public class WrapperFragment extends Fragment {
 			mHeaderFragment = new SelectedNewsFeed();
 			mHeaderFragment.setArguments(args);
 			canBack = true;
-
 		} else if (mViewPagerState != Keys.HomeSTATE) {
 			args.putAll(getArguments());
 			mHeaderFragment = new HeaderFragment();
@@ -71,6 +70,7 @@ public class WrapperFragment extends Fragment {
 			getChildFragmentManager().beginTransaction()
 					.replace(R.id.container_wrapper, mHeaderFragment)
 					.addToBackStack(null).commit();
+
 		}
 
 	}

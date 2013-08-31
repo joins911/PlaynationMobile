@@ -26,6 +26,7 @@ public class CompaniesInfoFragment extends Fragment {
 		txtNewsTitle.setBackgroundColor(getResources().getColor(
 				R.color.background_gradient));
 		newsImage = (ImageView) view.findViewById(R.id.newsImg);
+
 		Bundle myIntent = getArguments();
 		TextView txtInvetationLabel = (TextView) view
 				.findViewById(R.id.textView9);
@@ -64,6 +65,14 @@ public class CompaniesInfoFragment extends Fragment {
 			txtEventLocation.setText(myIntent.getString(Keys.CompanyEmployees));
 			txtEventPartcipants.setText(myIntent
 					.getString(Keys.CompanyCreatedTime));
+			if (!HelperClass.isTablet(getActivity())) {
+				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
+						+ "");
+			} else {
+				txtEventInvetation.setAutoLinkMask(0);
+				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
+						+ "");
+			}
 			String imageUrl = myIntent.getString(Keys.CompanyImageURL);
 			String main = "companies/";
 			String finals = "";
@@ -74,17 +83,8 @@ public class CompaniesInfoFragment extends Fragment {
 			} else {
 				finals = main;
 			}
-			HelperClass.getPIc(finals, newsImage);
+			HelperClass.getImage(finals, newsImage);
 
-			if (!HelperClass.isTablet(getActivity())) {
-				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
-						+ "");
-			} else {
-				txtEventInvetation.setAutoLinkMask(0);
-				txtEventInvetation.setText(myIntent.getString(Keys.CompanyURL)
-						+ "");
-
-			}
 		}
 	}
 

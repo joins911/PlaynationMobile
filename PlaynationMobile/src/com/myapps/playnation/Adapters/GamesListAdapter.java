@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -84,12 +85,12 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 	 * @param parent
 	 *            : The parent of the List
 	 */
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View vi = convertView;
 		if (convertView == null) {
-
 			vi = inflater.inflate(R.layout.component_mainlist_itemlayout, null);
 			holder = new ViewHolder();
 
@@ -101,6 +102,7 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.findViewById(R.id.gameList_GameDate_TView);
 			holder.tvImage = (ImageView) vi
 					.findViewById(R.id.gameList_GameImage);
+
 			vi.setTag(holder);
 		} else {
 			holder = (ViewHolder) vi.getTag();
@@ -116,26 +118,12 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.getString(Keys.GAMEDATE));
 			String imageUrl = gamesDataCollection.get(position).getString(
 					Keys.EventIMAGEURL);
+
 			holder.tvImage.setTag(imageUrl);
 			new LoadImage(imageUrl, holder.tvImage, "games")
 					.execute(holder.tvImage);
+
 		}
-		/*
-		 * For getting image try {
-		 * holder.tvImage.setImageBitmap(con.getPicture()); } catch
-		 * (JSONException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
-		// if(holder.tvImage)
-		// Setting an image
-		// String uri = "drawable/"+
-		// gamesDataCollection.get(position).get(KEY_ICON);
-		// int imageResource =
-		// vi.getContext().getApplicationContext().getResources().getIdentifier(uri,
-		// null, vi.getContext().getApplicationContext().getPackageName());
-		// Drawable image =
-		// vi.getContext().getResources().getDrawable(imageResource);
-		// holder.tvImage.setImageDrawable(image);
 
 		return vi;
 	}
@@ -144,4 +132,5 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 		TextView tvGameName, tvGameType, tvGameDate;
 		ImageView tvImage;
 	}
+
 }
