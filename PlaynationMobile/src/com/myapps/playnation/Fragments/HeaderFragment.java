@@ -147,11 +147,17 @@ public class HeaderFragment extends Fragment {
 				gType.setText(getArguments().getString(Keys.GROUPTYPE) + " "
 						+ getArguments().getString(Keys.GROUPTYPE2));
 				ratingTV.setText("");
+
 				gRating.setVisibility(View.INVISIBLE);
+
+				gImage.setImageResource(R.drawable.no_group_100x100);
+				mView.setFocusable(false);
+
 				String imageUrl = getArguments().getString(Keys.EventIMAGEURL);
 
 				gImage.setTag(imageUrl);
 				new LoadImage(imageUrl, gImage, "groups").execute(gImage);
+
 			}
 			if (state == Keys.PlayersSTATE) {
 				mView = inflater.inflate(R.layout.wrapper_header_home,
