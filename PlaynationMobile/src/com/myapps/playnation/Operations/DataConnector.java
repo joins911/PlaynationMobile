@@ -113,7 +113,6 @@ public class DataConnector extends SQLiteOpenHelper {
 				urlconn.connect();
 				return true;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return false;
@@ -159,6 +158,7 @@ public class DataConnector extends SQLiteOpenHelper {
 				try {
 					String id = json.getJSONObject(i).getString(
 							Keys.NEWSCOLID_NEWS);
+
 					if (gameType.toLowerCase().equals("game")) {
 						if (!checkRowExist(Keys.newsTempTable, id, id_game)) {
 
@@ -424,7 +424,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	@SuppressLint("NewApi")
 	public void addGroups(JSONArray jsonArray) throws JSONException {
 		SQLiteDatabase sql = this.getWritableDatabase();
-		Set<String> groupTypes = new HashSet<String>();
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String ID_Groups = jsonArray.getJSONObject(i).getString(
 					Keys.ID_GROUP);
@@ -564,6 +564,7 @@ public class DataConnector extends SQLiteOpenHelper {
 									.getColumnIndex(Keys.WallPostingTime)));
 					bundle.putString(Keys.PLAYERAVATAR, cursor.getString(cursor
 							.getColumnIndex(Keys.PLAYERAVATAR)));
+
 					list.add(bundle);
 				} while (cursor.moveToNext());
 			}
@@ -613,11 +614,12 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	public ArrayList<Bundle> getSQLiteGame(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
+		Keys.tempLimitGame += 10;
 		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
-				0 + "");
+				Keys.tempLimitGame + "");
 		SQLiteDatabase sql = this.getReadableDatabase();
-		Cursor cursor = sql.rawQuery(selectQuery, null);
 
+		Cursor cursor = sql.rawQuery(selectQuery, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -995,6 +997,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	public ArrayList<Bundle> getSQLitePGames(String tableName, String sep) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
+
 		String selectQuery = HelperClass.sqliteQueryStrings(tableName, sep, "",
 				0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
@@ -1173,7 +1176,6 @@ public class DataConnector extends SQLiteOpenHelper {
 				sepateID, "", 0 + "");
 		SQLiteDatabase sql = getReadableDatabase();
 		Cursor cursor = sql.rawQuery(selectQuery, null);
-		System.out.println("Cursor " + cursor.getCount());
 		if (cursor != null) {
 			cursor.moveToFirst();
 			if (!cursor.isAfterLast()) {
@@ -1348,8 +1350,12 @@ public class DataConnector extends SQLiteOpenHelper {
 			}
 
 			try {
-				jArray = new JSONArray(result);
-				jsonToArray(jArray, tableName);
+				if (result != null) {
+					if (result.endsWith("]")) {
+						jArray = new JSONArray(result);
+						jsonToArray(jArray, tableName);
+					}
+				}
 			} catch (JSONException e) {
 				Log.e("DataConnector " + tableName + " ", "Error parsing data "
 						+ e.toString());
@@ -1386,29 +1392,21 @@ public class DataConnector extends SQLiteOpenHelper {
 		}
 
 		try {
-			// BufferedReader reader = new BufferedReader(new InputStreamReader(
-			// is, "iso-8859-1"), 8);
-			// StringBuilder sb = new StringBuilder();
-			// String line = null;
-			// while ((line = reader.readLine()) != null) {
-			// sb.append(line + "\n");
-			// }
-			// is.close();
-
-			// result = sb.toString();
 			if (entity != null)
 				result = EntityUtils.toString(entity);
 		} catch (Exception e) {
 			Log.e("DataConnector getWithPost2() ", "Error converting result "
 					+ e.toString());
 		}
-
 		// parse json data
 		try {
 			if (result != null) {
-				jArray = new JSONArray(result);
-				jsonToArray(jArray, tableName);
-				return jArray;
+				if (result.endsWith("]")
+						|| tableName.equals(Keys.SearchFriendsTable)) {
+					jArray = new JSONArray(result);
+					jsonToArray(jArray, tableName);
+					return jArray;
+				}
 			}
 
 		} catch (JSONException e) {
@@ -1606,6 +1604,57 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Events", "Error Events" + e);
 				}
 			}
+	}
+
+	@SuppressLint({ "NewApi", "InlinedApi" })
+	public String queryNewImageURL(String ids, String ownerType,
+			String mainTable) {
+		SQLiteDatabase sql = this.getWritableDatabase();
+		JSONArray json = getArrayFromQuerryWithPostVariable(ids, "newImageUrl",
+				ownerType, 0);
+		String returnUrl = "";
+		if (json != null)
+			for (int i = 0; i < json.length(); i++) {
+				try {
+					ContentValues map = new ContentValues();
+					returnUrl = json.getJSONObject(i).getString("ImageUrl");
+					if (mainTable.equals(Keys.gamesTable)) {
+						map.put(Keys.EventIMAGEURL, returnUrl);
+						sql.updateWithOnConflict(mainTable, map, Keys.ID_GAME
+								+ "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else if (mainTable.equals(Keys.companyTable)) {
+						map.put(Keys.CompanyImageURL, returnUrl);
+						sql.updateWithOnConflict(mainTable, map,
+								Keys.EventID_COMPANY + "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else if (mainTable.equals(Keys.groupsTable)) {
+						map.put(Keys.EventIMAGEURL, returnUrl);
+						sql.updateWithOnConflict(mainTable, map, Keys.ID_GROUP
+								+ "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else if (mainTable.equals(Keys.newsTable)) {
+						map.put(Keys.NEWSCOLIMAGE, returnUrl);
+						sql.updateWithOnConflict(mainTable, map,
+								Keys.NEWSCOLID_NEWS + "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else if (mainTable.equals(Keys.newsTempTable)) {
+						map.put(Keys.NEWSCOLIMAGE, returnUrl);
+						sql.updateWithOnConflict(mainTable, map,
+								Keys.NEWSCOLID_NEWS + "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					} else if (mainTable.equals(Keys.companyTempTable)) {
+						map.put(Keys.NEWSCOLIMAGE, returnUrl);
+						sql.updateWithOnConflict(mainTable, map,
+								Keys.NEWSCOLID_NEWS + "=" + ids, null,
+								SQLiteDatabase.CONFLICT_REPLACE);
+					}
+
+				} catch (Exception e) {
+					Log.e("Fetching NewImageURL", "Error NewImageURL" + e);
+				}
+			}
+		return returnUrl;
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
@@ -1946,8 +1995,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
 	public void queryPlayerWall(String playerID, String ownerType) {
 		SQLiteDatabase sql = this.getWritableDatabase();
-		System.out.println("Wall PlayerID " + playerID);
-		System.out.println("Wall ownerType " + ownerType);
+
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallTable, ownerType, 0);
 		// // Print the data to the console
@@ -1958,8 +2006,6 @@ public class DataConnector extends SQLiteOpenHelper {
 				try {
 					String ID = json.getJSONObject(i).getInt(Keys.ID_WALLITEM)
 							+ "";
-					System.out.println("Wall wallitem " + ID);
-
 					ContentValues m = new ContentValues();
 
 					m.put(Keys.WallPosterDisplayName, json.getJSONObject(i)
@@ -1985,7 +2031,8 @@ public class DataConnector extends SQLiteOpenHelper {
 					sql.insertWithOnConflict(Keys.HomeWallTable, null, m,
 							SQLiteDatabase.CONFLICT_REPLACE);
 				} catch (Exception e) {
-					Log.e("DataConnector ", " querryPlayerWall() Error " + e);
+					Log.e("DataConnector wall", " querryPlayerWall() Error "
+							+ e);
 				}
 			}
 	}
@@ -1995,8 +2042,7 @@ public class DataConnector extends SQLiteOpenHelper {
 		SQLiteDatabase sql = this.getWritableDatabase();
 		JSONArray json = getArrayFromQuerryWithPostVariable(playerID,
 				Keys.HomeWallRepliesTable, wallitem, 0);
-		System.out.println("WallRep PlayerID " + playerID);
-		System.out.println("WallRep ID_WALLITEM " + wallitem);
+
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
 				try {
@@ -2120,6 +2166,7 @@ public class DataConnector extends SQLiteOpenHelper {
 						sql.updateWithOnConflict(Keys.PlayerTable, map,
 								"ID_PLAYER=" + ID, null,
 								SQLiteDatabase.CONFLICT_REPLACE);
+						queryNewImageURL(ID, "player", Keys.PlayerTable);
 					}
 
 				} catch (Exception e) {
@@ -2157,7 +2204,7 @@ public class DataConnector extends SQLiteOpenHelper {
 			if (playerIcon != null) {
 				String imageUrl = currentPlayer.getString(Keys.PLAYERAVATAR);
 				playerIcon.setTag(imageUrl);
-				new LoadImage(imageUrl, playerIcon, "players")
+				new LoadImage("", "", "", imageUrl, playerIcon, "players")
 						.execute(playerIcon);
 
 			}
@@ -2193,9 +2240,11 @@ public class DataConnector extends SQLiteOpenHelper {
 
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 			httpclient.execute(httppost);
-			Toast.makeText(context, "Your profile was updated successfully",
+			Toast.makeText(context, "Your profile was updated successfully.",
 					Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
+			Toast.makeText(context, "Your profile was not updated.",
+					Toast.LENGTH_SHORT).show();
 			Log.e("log_tag HTML Conn",
 					"Error in savePersonalInfo http connection " + e.toString());
 		}

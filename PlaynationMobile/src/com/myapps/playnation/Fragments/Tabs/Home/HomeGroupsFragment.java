@@ -66,11 +66,11 @@ public class HomeGroupsFragment extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) { // TODO Auto-generated method stub
+					long arg3) {
 
 				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
-
-				mCallback.setPageAndTab(Keys.GroupsSTATE, 2, args);
+				if (args != null)
+					mCallback.setPageAndTab(Keys.GroupsSTATE, 2, args);
 			}
 		});
 		return view;

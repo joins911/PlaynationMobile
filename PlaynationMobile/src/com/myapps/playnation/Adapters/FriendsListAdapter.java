@@ -84,7 +84,8 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 
 			String imageUrl = mapEntry.getString(Keys.PLAYERAVATAR);
 			playerIcon.setTag(imageUrl);
-			new LoadImage(imageUrl, playerIcon, "players").execute(playerIcon);
+			new LoadImage("", "", "", imageUrl, playerIcon, "players")
+					.execute(playerIcon);
 		}
 		return view;
 	}

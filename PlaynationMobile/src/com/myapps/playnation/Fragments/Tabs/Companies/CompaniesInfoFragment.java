@@ -84,7 +84,6 @@ public class CompaniesInfoFragment extends Fragment {
 				finals = main;
 			}
 			HelperClass.getImage(finals, newsImage);
-
 		}
 	}
 

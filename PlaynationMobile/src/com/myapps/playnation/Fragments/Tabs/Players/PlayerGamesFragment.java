@@ -55,14 +55,12 @@ public class PlayerGamesFragment extends Fragment {
 				con.getTable(Keys.HomeGamesTable,
 						args.getString(Keys.ID_PLAYER)), this);
 		if (expAdapter.isEmpty()) {
-
 			TextView msgText = new TextView(getActivity());
 			msgText.setText(R.string.emptyGameListString);
 			msgText.setTextColor(Color.parseColor("#CFCFCF"));
 			msgText.setTextSize(TypedValue.COMPLEX_UNIT_SP, Keys.testSize);
 			msgText.setGravity(Gravity.CENTER_HORIZONTAL);
 			mListView.addHeaderView(msgText);
-
 		}
 
 		mListView.setAdapter(expAdapter);

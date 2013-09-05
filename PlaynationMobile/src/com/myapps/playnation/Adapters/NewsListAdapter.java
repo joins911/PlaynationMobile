@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.DataSection;
+import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Classes.NewsFeedItem;
 import com.myapps.playnation.Operations.LoadImage;
@@ -79,7 +80,9 @@ public class NewsListAdapter extends ArrayAdapter implements MyBaseAdapter {
 				txtText.setText(Html.fromHtml(feed.getKey_NewsIntroText()
 						.replace("\\", "")));
 				img.setTag(imageUrl);
-				new LoadImage(imageUrl, img, "newsitems").execute(img);
+				new LoadImage(feed.getKey_NewsFeedID() + "", "news",
+						Keys.newsTable, imageUrl, img, "newsitems")
+						.execute(img);
 			}
 		}
 		return row;

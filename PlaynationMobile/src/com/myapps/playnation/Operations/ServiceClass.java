@@ -4,7 +4,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -30,6 +32,8 @@ public class ServiceClass extends Service {
 	TimerTask serviceStarterTask = new TimerTask() {
 		@Override
 		public void run() {
+			Keys.internetStatus = HelperClass
+					.isNetworkAvailable((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
 			try {
 				if (con.getMinGameID() == con.getLastIDGames()) {
 					con.setLastIDGames(0);
@@ -60,7 +64,6 @@ public class ServiceClass extends Service {
 								Keys.newsServiceTable, "", con.getLastIDNews());
 					}
 				}
-
 			} catch (Exception e) {
 				Log.e("Service", "Error Service Timer" + e.toString());
 			}
@@ -71,10 +74,11 @@ public class ServiceClass extends Service {
 
 	private void showNotification() {
 		stopTimer();
-
-		timer = new Timer();
-		timer.scheduleAtFixedRate(serviceStarterTask, MINUTES * 60 * 1000,
-				MINUTES * 60 * 1000);
+		if (Keys.internetStatus) {
+			timer = new Timer();
+			timer.scheduleAtFixedRate(serviceStarterTask, MINUTES * 60 * 1000,
+					MINUTES * 60 * 1000);
+		}
 	}
 
 	private void stopTimer() {

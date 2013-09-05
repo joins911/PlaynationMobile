@@ -116,13 +116,14 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 					.getString(Keys.GAMETYPE));
 			holder.tvGameDate.setText(gamesDataCollection.get(position)
 					.getString(Keys.GAMEDATE));
+
 			String imageUrl = gamesDataCollection.get(position).getString(
 					Keys.EventIMAGEURL);
 
 			holder.tvImage.setTag(imageUrl);
-			new LoadImage(imageUrl, holder.tvImage, "games")
-					.execute(holder.tvImage);
-
+			new LoadImage(gamesDataCollection.get(position).getString(
+					Keys.ID_GAME), "game", Keys.gamesTable, imageUrl,
+					holder.tvImage, "games").execute(holder.tvImage);
 		}
 
 		return vi;

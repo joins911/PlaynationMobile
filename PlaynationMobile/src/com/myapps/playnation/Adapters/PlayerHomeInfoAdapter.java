@@ -88,7 +88,8 @@ public class PlayerHomeInfoAdapter extends BaseAdapter implements MyBaseAdapter 
 					+ (currentYear - year));
 			String imageUrl = mapEntry.getString(Keys.PLAYERAVATAR);
 			playerIcon.setTag(imageUrl);
-			new LoadImage(imageUrl, playerIcon, "players").execute(playerIcon);
+			new LoadImage("", "", "", imageUrl, playerIcon, "players")
+					.execute(playerIcon);
 		}
 
 		return view;

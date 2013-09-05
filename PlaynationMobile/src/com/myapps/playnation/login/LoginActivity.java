@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -42,6 +41,9 @@ public class LoginActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		stopService(new Intent(this, ServiceClass.class));
+		Keys.internetStatus = HelperClass
+				.isNetworkAvailable((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
+
 		startService(new Intent(this, ServiceClass.class));
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -53,19 +55,9 @@ public class LoginActivity extends Activity {
 		// UserLoginPreferences
 		prefrence = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
+
+		clearPreviewsLoginInformation(prefrence);
 		Keys.TEMPLAYERID = prefrence.getString(Keys.ID_PLAYER, "12");
-
-		// Setting the activesession to be true so that it wont wait for button
-		// press on login
-		// SharedPreferences.Editor edit = prefrence.edit();
-		// edit.putBoolean(Keys.ActiveSession, true);
-		// edit.clear();
-		// edit.commit();
-		// To unset sharepref. comment the activesession line and put
-
-		// if (prefrence.getBoolean(Keys.ActiveSession, false) == true) {
-		// logOnlineUser();
-		// }
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -130,7 +122,8 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		if (!isNetworkAvailable()) {
+		if (!HelperClass
+				.isNetworkAvailable((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE))) {
 			Toast.makeText(
 					getApplicationContext(),
 					"There is no internet connection available. Offline Mode(Ignore login).",
@@ -268,27 +261,17 @@ public class LoginActivity extends Activity {
 	}
 
 	private boolean checkServerStatus() {
-		if (isNetworkAvailable()) {
+		if (HelperClass
+				.isNetworkAvailable((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE))) {
 			return con.checkConnection();
 		}
 		return false;
 	}
 
-	private boolean isNetworkAvailable() {
-		boolean haveConnectedWifi = false;
-		boolean haveConnectedMobile = false;
-
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo[] mNetInfo = cm.getAllNetworkInfo();
-		for (NetworkInfo ni : mNetInfo) {
-			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-				if (ni.isConnected())
-					haveConnectedWifi = true;
-			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-				if (ni.isConnected())
-					haveConnectedMobile = true;
-		}
-		return haveConnectedWifi || haveConnectedMobile;
+	private void clearPreviewsLoginInformation(SharedPreferences pref) {
+		SharedPreferences.Editor edit = pref.edit();
+		edit.clear();
+		edit.commit();
 	}
 
 	@SuppressLint("NewApi")

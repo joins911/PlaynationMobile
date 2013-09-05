@@ -56,8 +56,8 @@ public class HomeFriendsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Bundle results = (Bundle) parent.getItemAtPosition(position);
-
-				mCall.setPageAndTab(Keys.PlayersSTATE, 4, results);
+				if (results != null)
+					mCall.setPageAndTab(Keys.PlayersSTATE, 4, results);
 			}
 		});
 		return view;

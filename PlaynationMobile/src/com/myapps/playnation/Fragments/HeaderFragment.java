@@ -119,6 +119,7 @@ public class HeaderFragment extends Fragment {
 			});
 			header = con.populatePlayerGeneralInfo(header, "Wall",
 					Keys.TEMPLAYERID);
+
 		} else {
 			mView = inflater.inflate(R.layout.wrapper_header_games, container,
 					false);
@@ -139,7 +140,9 @@ public class HeaderFragment extends Fragment {
 				String imageUrl = getArguments().getString(Keys.EventIMAGEURL);
 
 				gImage.setTag(imageUrl);
-				new LoadImage(imageUrl, gImage, "games").execute(gImage);
+				new LoadImage(getArguments().getString(Keys.ID_GAME), "game",
+						Keys.gamesTable, imageUrl, gImage, "games")
+						.execute(gImage);
 
 			}
 			if (state == Keys.GroupsSTATE) {
@@ -156,7 +159,9 @@ public class HeaderFragment extends Fragment {
 				String imageUrl = getArguments().getString(Keys.EventIMAGEURL);
 
 				gImage.setTag(imageUrl);
-				new LoadImage(imageUrl, gImage, "groups").execute(gImage);
+				new LoadImage(getArguments().getString(Keys.ID_GROUP), "group",
+						Keys.groupsTable, imageUrl, gImage, "groups")
+						.execute(gImage);
 
 			}
 			if (state == Keys.PlayersSTATE) {
@@ -180,7 +185,9 @@ public class HeaderFragment extends Fragment {
 						.getString(Keys.CompanyImageURL);
 
 				gImage.setTag(imageUrl);
-				new LoadImage(imageUrl, gImage, "companies").execute(gImage);
+				new LoadImage(getArguments().getString(Keys.EventID_COMPANY),
+						"company", Keys.companyTable, imageUrl, gImage,
+						"companies").execute(gImage);
 				ratingTV.setText("");
 			}
 		}

@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +54,23 @@ public class HelperClass {
 		return (large || xlarge);
 	}
 
+	public static boolean isNetworkAvailable(ConnectivityManager obj) {
+		boolean haveConnectedWifi = false;
+		boolean haveConnectedMobile = false;
+
+		ConnectivityManager cm = obj;
+		NetworkInfo[] mNetInfo = cm.getAllNetworkInfo();
+		for (NetworkInfo ni : mNetInfo) {
+			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+				if (ni.isConnected())
+					haveConnectedWifi = true;
+			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+				if (ni.isConnected())
+					haveConnectedMobile = true;
+		}
+		return haveConnectedWifi || haveConnectedMobile;
+	}
+
 	public static void getImage(String imageLoc, ImageView tvImage) {
 		URL imageURL = null;
 		Bitmap bitmap = null;
@@ -67,8 +86,11 @@ public class HelperClass {
 			connection.setDoInput(true);
 			connection.connect();
 			InputStream inputStream = connection.getInputStream();
-
-			bitmap = BitmapFactory.decodeStream(inputStream);
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inPurgeable = true;
+			options.inJustDecodeBounds = false;
+			options.outHeight = 150;
+			bitmap = BitmapFactory.decodeStream(inputStream, null, options);
 
 		} catch (IOException e) {
 		}
@@ -91,7 +113,8 @@ public class HelperClass {
 				}
 			}
 		} else {
-			bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+			bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), 150,
+					true);
 			tvImage.setImageBitmap(bitmap);
 
 		}
@@ -157,7 +180,7 @@ public class HelperClass {
 				|| tableName.equals(Keys.gamesTable)
 				|| tableName.equals(Keys.companyTable)
 				|| tableName.equals(Keys.HomeSubscriptionTable)) {
-			return "SELECT * FROM " + tableName + ";";
+			return "SELECT * FROM " + tableName + " Limit" + limit + ";";
 		} else if (tableName.equals(Keys.HomeMsgTable)) {
 			return "SELECT * FROM " + tableName + " Where " + Keys.ID_PLAYER
 					+ "=" + separeteID + ";";

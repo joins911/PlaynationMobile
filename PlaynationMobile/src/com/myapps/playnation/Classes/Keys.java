@@ -4,6 +4,8 @@ public final class Keys {
 	public static final String UserName = "UserName";
 	public static final String Password = "Password";
 	public static final String ActiveSession = "ActiveSession";
+	public static boolean internetStatus = false;
+	public static int tempLimitGame = 0;
 
 	public static final String LASTIDTABLE = "LASTIDTABLE";
 	public static final float testSize = 22;

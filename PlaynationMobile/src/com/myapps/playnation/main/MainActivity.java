@@ -130,15 +130,15 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 
 			@Override
 			public boolean onQueryTextChange(String arg0) {
-				searchList(arg0);
-				Toast.makeText(getApplicationContext(), arg0,
-						Toast.LENGTH_SHORT).show();
+
 				return false;
 			}
 
 			@Override
 			public boolean onQueryTextSubmit(String arg0) {
-
+				searchList(arg0);
+				Toast.makeText(getApplicationContext(), arg0,
+						Toast.LENGTH_SHORT).show();
 				return false;
 
 			}
@@ -197,8 +197,8 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				temp = searchListGroups(args);
 			else if (mViewPager.getCurrentItem() == Keys.NewsSTATE)
 				Log.i("NewsSearch", "To Do");
-			// else if (mViewPager.getCurrentItem() == Keys.PlayersSTATE)
-			// temp = searchListPlayers(args);
+			else if (mViewPager.getCurrentItem() == Keys.PlayersSTATE)
+				temp = searchListPlayers(args);
 			else if (mViewPager.getCurrentItem() == Keys.CompaniesSTATE)
 				temp = searchListCompanies(args);
 			if (temp != null)
@@ -234,11 +234,14 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	}
 
 	public ArrayList<Bundle> searchListPlayers(String args) {
-		ArrayList<Bundle> list = con.queryPlayerFriendsSearch("");
+		ArrayList<Bundle> list = con.queryPlayerFriendsSearch(args);
 		ArrayList<Bundle> results = new ArrayList<Bundle>();
-		for (int i = 0; i < list.size(); i++)
-			if (list.get(i).getString(Keys.PLAYERNAME).contains(args))
-				results.add(list.get(i));
+		if (list != null) {
+			System.out.println(list.size() + "");
+			for (int i = 0; i < list.size(); i++)
+				if (list.get(i).getString(Keys.PLAYERNAME).contains(args))
+					results.add(list.get(i));
+		}
 		return results;
 	}
 

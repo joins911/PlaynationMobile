@@ -239,9 +239,11 @@ public class ListsFragment extends Fragment {
 	}
 
 	public void setListBundle(ArrayList<Bundle> bund) {
-		mListBundle.clear();
-		mListBundle.addAll(bund);
-		((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+		if (mListBundle != null) {
+			mListBundle.clear();
+			mListBundle.addAll(bund);
+			((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+		}
 	}
 
 	public ArrayList<Bundle> getListBundle() {

@@ -121,8 +121,9 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			String imageUrl = groupsDataCollection.get(position).getString(
 					Keys.EventIMAGEURL);
 			holder.tvImage.setTag(imageUrl);
-			new LoadImage(imageUrl, holder.tvImage, "groups")
-					.execute(holder.tvImage);
+			new LoadImage(groupsDataCollection.get(position).getString(
+					Keys.ID_GROUP), "group", Keys.groupsTable, imageUrl,
+					holder.tvImage, "groups").execute(holder.tvImage);
 		}
 		// Setting an image
 		// String uri = "drawable/"+

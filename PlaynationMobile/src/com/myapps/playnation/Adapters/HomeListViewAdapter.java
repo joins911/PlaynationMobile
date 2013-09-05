@@ -141,7 +141,8 @@ public class HomeListViewAdapter extends BaseAdapter {
 						.checkGameComments(mapEntry)));
 				String imageUrl = mapEntry.getString(Keys.EventIMAGEURL);
 				img.setTag(imageUrl);
-				new LoadImage(imageUrl, img, "games").execute(img);
+				new LoadImage(mapEntry.getString(Keys.ID_GAME), "game",
+						Keys.gamesTable, imageUrl, img, "games").execute(img);
 			}
 		} else if (currentFragment instanceof HomeGroupsFragment) {
 			view = inflater.inflate(R.layout.fragment_home_group, viewGroup,
@@ -163,7 +164,8 @@ public class HomeListViewAdapter extends BaseAdapter {
 						+ view.getResources().getString(R.string.Members));
 				String imageUrl = mapEntry.getString(Keys.EventIMAGEURL);
 				img.setTag(imageUrl);
-				new LoadImage(imageUrl, img, "groups").execute(img);
+				new LoadImage(mapEntry.getString(Keys.ID_GROUP), "group",
+						Keys.groupsTable, imageUrl, img, "groups").execute(img);
 			}
 
 		} else if (currentFragment instanceof HomeSubscriptionFragment) {

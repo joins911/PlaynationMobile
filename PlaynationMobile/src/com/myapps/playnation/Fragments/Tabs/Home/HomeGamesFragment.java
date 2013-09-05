@@ -69,7 +69,8 @@ public class HomeGamesFragment extends Fragment {
 					long arg3) { // TODO Auto-generated method stub
 
 				Bundle args = (Bundle) arg0.getItemAtPosition(arg2);
-				mCallback.setPageAndTab(Keys.GamesSTATE, 3, args);
+				if (args != null)
+					mCallback.setPageAndTab(Keys.GamesSTATE, 3, args);
 			}
 		});
 
