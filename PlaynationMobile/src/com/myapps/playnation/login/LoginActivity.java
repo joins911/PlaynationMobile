@@ -155,7 +155,6 @@ public class LoginActivity extends Activity {
 	}
 
 	private void startMainActivity(int appState) {
-		Configurations.setApplicationState(appState);
 		task = new LoadMainActivityTask(appState);
 		task.execute();
 	}

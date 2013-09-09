@@ -9,24 +9,14 @@ public class Configurations {
 	public final static boolean isLoginEnabled = true;
 
 	private static Configurations inst;
-	private static int appState;
+	private int appState;
 
-	private Configurations() {
+	public Configurations(int appState) {
+		this.appState = appState;
 	}
 
-	public static Configurations getConfigs() {
-		if (inst == null)
-			return new Configurations();
-		else
-			return inst;
-	}
-
-	public static int getApplicationState() {
+	public int getApplicationState() {
 		return appState;
-	}
-
-	public static void setApplicationState(int state) {
-		appState = state;
 	}
 
 	public void setAdapterSection(int adaptSect) {
@@ -37,7 +27,7 @@ public class Configurations {
 		return this.currentAdapterSection;
 	}
 
-	public static boolean isAppState(int appState2) {
+	public boolean isAppState(int appState2) {
 		if (appState == appState2)
 			return true;
 		return false;

@@ -32,7 +32,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 		if (img.getTag() != null)
 			path = img.getTag().toString();
 		String tempUrl = "";
-		tempUrl = con.queryNewImageURL(ownerID, ownerType, tableName);
+		tempUrl = "";// con.queryNewImageURL(ownerID, ownerType, tableName);
 		if (!tempUrl.equalsIgnoreCase("")) {
 			url = tempUrl;
 		}

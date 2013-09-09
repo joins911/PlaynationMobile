@@ -26,7 +26,7 @@
 			android:textColor="@color/background_gradient"
 			android:textStyle="bold" />
 		<TextView
-			android:id="@+id/textView2"
+			android:id="@+id/btnGroupLike"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentLeft="true"
@@ -140,7 +140,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@+id/newsEventType"
-			android:layout_below="@+id/textView2"
+			android:layout_below="@+id/btnGroupLike"
 			android:text="Small Text"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient" />

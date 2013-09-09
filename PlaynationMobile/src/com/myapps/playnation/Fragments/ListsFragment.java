@@ -34,6 +34,7 @@ import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
+import com.myapps.playnation.main.MainActivity;
 
 public class ListsFragment extends Fragment {
 
@@ -81,9 +82,10 @@ public class ListsFragment extends Fragment {
 
 		mList.setOnScrollListener(new OnScrollListener() {
 
-			// private int currentFirstVisibleItem;
-			private int currentVisibleItemCount;
+			private int visibleItemCount;
 			private int currentScrollState;
+			private int totalItemCount;
+			private int firstVisible;
 
 			// private boolean isLoading;
 
@@ -91,7 +93,9 @@ public class ListsFragment extends Fragment {
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 				// currentFirstVisibleItem = firstVisibleItem;
-				currentVisibleItemCount = visibleItemCount;
+				this.visibleItemCount = visibleItemCount;
+				firstVisible = firstVisibleItem;
+				this.totalItemCount = totalItemCount;
 
 			}
 
@@ -103,7 +107,8 @@ public class ListsFragment extends Fragment {
 			}
 
 			private void isScrollCompleted() {
-				if (this.currentVisibleItemCount > 0
+				if (firstVisible + visibleItemCount == totalItemCount
+						&& totalItemCount != 0
 						&& this.currentScrollState == SCROLL_STATE_IDLE) {
 					/***
 					 * In this way I detect if there's been a scroll which has
@@ -114,11 +119,13 @@ public class ListsFragment extends Fragment {
 						((MyBaseAdapter) mList.getAdapter()).showMore();
 						((BaseAdapter) mList.getAdapter())
 								.notifyDataSetChanged();
+
 					}
 				}
 			}
 
 		});
+
 		if (HelperClass.isTablet(getActivity())) {
 			flipper = (ViewFlipper) rootView.findViewById(R.id.viewFlipper1);
 		}
@@ -135,6 +142,7 @@ public class ListsFragment extends Fragment {
 	}
 
 	private void initializeGames(final ArrayList<Bundle> results) {
+
 		mListBundle = results;
 		if (mListBundle != null) {
 			GamesListAdapter bindingData = new GamesListAdapter(getActivity(),
@@ -228,7 +236,7 @@ public class ListsFragment extends Fragment {
 			});
 		} else {
 			friendsString.setVisibility(View.VISIBLE);
-			if (Configurations.isAppState(Configurations.appStateOnGuest))
+			if (MainActivity.configs.isAppState(Configurations.appStateOnGuest))
 				friendsString.setText(getResources().getString(
 						R.string.guestFriendListString));
 		}

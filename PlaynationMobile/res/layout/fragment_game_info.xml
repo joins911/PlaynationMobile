@@ -208,6 +208,24 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:textColor="@color/background_gradient"
 			android:textSize="@dimen/textviewInfoTempSize" />
+		<TextView
+			android:id="@+id/btnAddGame"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/btnAddGame"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/btnLinkColot" />
+		<TextView
+			android:id="@+id/btnGameLike"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/txtgameinfoEsrb"
+			android:layout_centerHorizontal="true"
+			android:text="@string/btnLike"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/btnLinkColot" />
 	</RelativeLayout>
 	<WebView
 		android:id="@+id/webview"

@@ -154,7 +154,14 @@ public final class Keys {
 	public final static String POSTTableName = "tableName";
 	public final static String POSTLASTID = "lastID";
 	public final static String POSTorderByColumn = "orderbyColumn";
-
+	public final static String POSTFUNCOMMANTACCEPT = "Accept";
+	public final static String POSTFUNCOMMANTDecline = "Decline";
+	public final static String POSTFUNCOMMANTLike = "Like";
+	public final static String POSTFUNCOMMANTUnLike = "UnLike";
+	public final static String POSTFUNCOMMANTAddGame = "AddGame";
+	public final static String POSTFUNCOMMANTSend = "Send";
+	public final static String POSTFUNCOMMANTSendPerson = "SendPerson";
+	public final static String POSTFUNCOMMANTSendInvite = "SendInvite";
 	/*
 	 * NewsFeed json column identifiers. Also keys for map
 	 */
@@ -227,6 +234,7 @@ public final class Keys {
 	public final static String GamesisSubscribed = "isSubscribed";
 	public final static String GamesSubscriptionTime = "SubscriptionTime";
 	public final static String GameisPlaying = "isPlaying";
+	public final static String GameIsLiked = "isLiked";
 	public final static String GamePostCount = "PostCount";
 	public final static String GameComments = "Comments";
 	// Should be like that one exists above with lower case DB table

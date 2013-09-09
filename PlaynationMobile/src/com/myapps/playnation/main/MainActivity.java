@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	DataConnector con;
 	private int total;
 	private boolean finished = false;
-
+	public static Configurations configs;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -58,6 +58,9 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		configs = new Configurations(getIntent().getExtras().getInt(
+				Keys.AppState));
+
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		getSupportActionBar().setTitle("Playnation Mobile");
 		getSupportActionBar().setBackgroundDrawable(
@@ -101,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 
 			@Override
 			public void onPageSelected(int arg0) {
-				Configurations.getConfigs().setAdapterSection(arg0);
+				// Configurations.getConfigs().setAdapterSection(arg0);
 			}
 
 		});

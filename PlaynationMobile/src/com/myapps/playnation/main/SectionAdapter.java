@@ -39,7 +39,7 @@ public class SectionAdapter extends FragmentPagerAdapter {
 		this.act = act;
 		this.mContainer = pager;
 		titles = new ArrayList<String>();
-		if (Configurations.isAppState(Configurations.appStateOnUser))
+		if (MainActivity.configs.isAppState(Configurations.appStateOnUser))
 			titles.add("Home");
 		titles.add("Games");
 		titles.add("Groups");

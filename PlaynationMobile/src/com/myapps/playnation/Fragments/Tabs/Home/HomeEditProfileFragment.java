@@ -51,14 +51,17 @@ public class HomeEditProfileFragment extends Fragment {
 				saveData();
 			}
 		});
+
 		map = con.getPlayer(Keys.TEMPLAYERID);
 		// Bundle args = getArguments();
-		editFirst.setText(map.getString(Keys.FirstName));
-		editLast.setText(map.getString(Keys.LastName));
-		editDisp.setText(map.getString(Keys.PLAYERNICKNAME));
-		editCity.setText(map.getString(Keys.CITY));
-		editCountry.setText(map.getString(Keys.COUNTRY));
-		editEmail.setText(map.getString(Keys.Email));
+		if (map != null) {
+			editFirst.setText(map.getString(Keys.FirstName));
+			editLast.setText(map.getString(Keys.LastName));
+			editDisp.setText(map.getString(Keys.PLAYERNICKNAME));
+			editCity.setText(map.getString(Keys.CITY));
+			editCountry.setText(map.getString(Keys.COUNTRY));
+			editEmail.setText(map.getString(Keys.Email));
+		}
 	}
 
 	public void saveData() {

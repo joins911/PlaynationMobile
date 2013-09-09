@@ -14,7 +14,7 @@
 	<string name="searchString">Search</string>
 	<string name="emptyListString">No wall items. Be the first one to add one :).</string>
 	<string name="emptyNewsListString">No news present...</string>
-    <string name="Age">Age: \ u0020</string>
+	<string name="Age">Age: \ u0020</string>
 	<!-- Login+Register -->
 	<string name="loginString">Login</string>
 	<string name="loginGuestString">Login as Guest</string>
@@ -37,7 +37,6 @@
 	<string name="descString">Game Description</string>
 	<string name="guestFriendListString">You are logged as guest therefore you have no friends.</string>
 	<string name="noFriendsString">You have no friends yet. Be sure to go check our website at www.playnation.eu so you can make some new friends.</string>
-	
 	<!-- Empty lists String -->
 	<string name="emptyGameListString">No game present...</string>
 	<string name="emptyPlayerListString">No players present...</string>
@@ -45,7 +44,6 @@
 	<string name="emptyMsgListString">No messages present...</string>
 	<string name="emptyGroupListString">No groups present...</string>
 	<string name="subViewText">Some text that seems very intresting</string>
-	
 	<!-- Extras New -->
 	<string name="fontFamilyTextView">Ariel</string>
 	<string name="btnSave">Save</string>
@@ -73,15 +71,13 @@
 	<string name="joined">Joined :</string>
 	<string name="website">WebSite :</string>
 	<string name="btnEdit">Edit Info</string>
-
-	 <!-- Strings that dont need translation -->
-    <string name="Email">EMail:  \u0020</string>
-    <string name="Type1">Type \u00201:</string>
-    <string name="Type2">Type \u00202:</string>
-    <string name="Type">Type :</string>
-    <string name="emailString">Email</string>
-    <string name="Nick">Nick: \u0020 </string>
-
+	<!-- Strings that dont need translation -->
+	<string name="Email">EMail:  \u0020</string>
+	<string name="Type1">Type \u00201:</string>
+	<string name="Type2">Type \u00202:</string>
+	<string name="Type">Type :</string>
+	<string name="emailString">Email</string>
+	<string name="Nick">Nick: \u0020 </string>
 	<!-- Base strings for coding purposes will be replaced at runtime with Database values -->
 	<string name="gamename">Crysis 3</string>
 	<string name="gametype">FPS ( First Person Shooter)</string>
@@ -93,4 +89,9 @@
 	<string name="esrbRating">ESRB Rating</string>
 	<string name="developers">Developers:</string>
 	<string name="distributors">Distributors:</string>
+	<string name="btnLike">Like</string>
+	<string name="btnAddGame">Add Game</string>
+	<string name="BtnAddGroup">Send Request </string>
+	<string name="btnUnlike">Unlike</string>
+	<string name="btnSendFriendRequest">Add Friend</string>
 </resources>

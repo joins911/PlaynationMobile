@@ -21,9 +21,14 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private ArrayList<Bundle> generalList;
 	private int count;
 	private boolean showMore = true;
+	String addText = "";
+	int color;
 
 	public FriendsListAdapter(Context context, ArrayList<Bundle> list) {
 		this.generalList = list;
+		addText = context.getResources().getString(
+				R.string.btnSendFriendRequest);
+		color = context.getResources().getColor(R.color.btnLinkColot);
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		count = 10;
@@ -65,7 +70,8 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 		TextView txPlAge = (TextView) view.findViewById(R.id.txPlAge);
 		TextView txPlCountry = (TextView) view.findViewById(R.id.txPlCountry);
 		TextView txEdit = (TextView) view.findViewById(R.id.txtEdit);
-		txEdit.setVisibility(View.GONE);
+		txEdit.setText(addText);
+		txEdit.setTextColor(color);
 
 		Bundle mapEntry = generalList.get(position);
 		if (mapEntry != null) {
