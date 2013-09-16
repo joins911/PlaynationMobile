@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.HomeListViewAdapter;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 
 public class HomeSubscriptionFragment extends Fragment {
@@ -29,7 +30,7 @@ public class HomeSubscriptionFragment extends Fragment {
 		ListView mListView = (ListView) view
 				.findViewById(R.id.generalPlayerListView);
 		if (!con.checkDBTableExits(Keys.HomeSubscriptionTable)) {
-			con.queryPlayerSubscription(Keys.TEMPLAYERID);
+			con.queryPlayerSubscription(Configurations.CurrentPlayerID);
 		}
 		mListView.setAdapter(new HomeListViewAdapter(context, con.getTable(
 				Keys.HomeSubscriptionTable, ""), this));

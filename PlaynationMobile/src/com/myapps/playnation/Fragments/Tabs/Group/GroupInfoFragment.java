@@ -1,23 +1,31 @@
 package com.myapps.playnation.Fragments.Tabs.Group;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Fragments.DialogSendCommentFragment;
+import com.myapps.playnation.Operations.Configurations;
+import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.main.MainActivity;
 
 public class GroupInfoFragment extends Fragment {
 	private WebView txtNewsTitle;
 	private WebView txtNewsText;
 	// private ImageView newsImage;
 	private View mView;
+	private DataConnector con;
 
 	private void initGroup() {
+		con = DataConnector.getInst();
 		TextView txtNewsLeader = (TextView) mView
 				.findViewById(R.id.txtgameinfoType);
 		TextView txtNewsType1 = (TextView) mView
@@ -52,6 +60,53 @@ public class GroupInfoFragment extends Fragment {
 		txtNewsLeader.setText(ID_CREATOR);
 		mView.setFocusable(false);
 		txtNewsCreated.setText(args.getString(Keys.GROUPDATE));
+
+		final String id_groupcreator = args.getString(Keys.ID_GROUP);
+		TextView tx = (TextView) mView.findViewById(R.id.btnAddGroup);
+
+		String isLiked = args.getString(Keys.GameIsLiked);
+		String isMember = args.getString(Keys.isMember);
+		if (isMember.equals("1"))
+			tx.setVisibility(View.GONE);
+
+		tx.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				DialogFragment dialog = new DialogSendCommentFragment();
+				dialog.show(getChildFragmentManager(), "Group");
+				Bundle argss = new Bundle();
+				argss.putString(Keys.ID_PLAYER, Configurations.CurrentPlayerID);
+				argss.putString(Keys.functionAnotherID, id_groupcreator);
+				argss.putString(Keys.functionAction,
+						Keys.POSTFUNCOMMANTSendPerson);
+				argss.putString(Keys.functionPhpName, "groupFunction.php");
+				dialog.setArguments(argss);
+			}
+		});
+
+		TextView txlike = (TextView) mView.findViewById(R.id.btnGroupLike);
+		if (isLiked.equals("1")) {
+			txlike.setText(getActivity().getResources().getString(
+					R.string.btnUnlike));
+		} else {
+			txlike.setText(getActivity().getResources().getString(
+					R.string.btnLike));
+		}
+
+		txlike.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				con.functionQuery(Configurations.CurrentPlayerID, id_groupcreator,
+						"groupFunction.php", Keys.POSTFUNCOMMANTLike, "");
+			}
+		});
+		if (MainActivity.configs.getApplicationState() != 0) {
+			tx.setVisibility(View.GONE);
+			txlike.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

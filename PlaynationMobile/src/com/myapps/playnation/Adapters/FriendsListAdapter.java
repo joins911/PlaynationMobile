@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.QuickContactBadge;
@@ -14,15 +15,20 @@ import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
+import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.LoadImage;
+import com.myapps.playnation.main.MainActivity;
 
 public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 	private LayoutInflater inflater;
 	private ArrayList<Bundle> generalList;
 	private int count;
 	private boolean showMore = true;
-	String addText = "";
-	int color;
+	private String addText = "";
+	private int color;
+	private Context context;
+	private DataConnector con;
 
 	public FriendsListAdapter(Context context, ArrayList<Bundle> list) {
 		this.generalList = list;
@@ -31,6 +37,8 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 		color = context.getResources().getColor(R.color.btnLinkColot);
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.context = context;
+		con = DataConnector.getInst();
 		count = 10;
 	}
 
@@ -70,12 +78,28 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 		TextView txPlAge = (TextView) view.findViewById(R.id.txPlAge);
 		TextView txPlCountry = (TextView) view.findViewById(R.id.txPlCountry);
 		TextView txEdit = (TextView) view.findViewById(R.id.txtEdit);
-		txEdit.setText(addText);
-		txEdit.setTextColor(color);
-
-		Bundle mapEntry = generalList.get(position);
+		final Bundle mapEntry = generalList.get(position);
 		if (mapEntry != null) {
+			if (mapEntry.getString(Keys.Mutual).equals("1"))
+				txEdit.setVisibility(View.GONE);
+			else {
+				txEdit.setText(addText);
+				txEdit.setTextColor(color);
+			}
+			txEdit.setOnClickListener(new OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+
+					con.functionQuery(Configurations.CurrentPlayerID, mapEntry
+							.get(Keys.ID_PLAYER).toString(),
+							"friendFuncions.php", Keys.POSTFUNCOMMANTSend, "");
+				}
+			});
+			if (MainActivity.configs.getApplicationState() != 0) {
+				txEdit.setVisibility(View.GONE);
+			}
 			txPlName.setText("" + mapEntry.getString(Keys.FirstName) + " , "
 					+ mapEntry.getString(Keys.LastName));
 			txPlNick.setText(view.getResources().getString(R.string.Nick)
@@ -92,6 +116,10 @@ public class FriendsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			playerIcon.setTag(imageUrl);
 			new LoadImage("", "", "", imageUrl, playerIcon, "players")
 					.execute(playerIcon);
+			playerIcon.setMaxWidth(Keys.globalMaxandMinImageSize);
+			playerIcon.setMinimumWidth(Keys.globalMaxandMinImageSize);
+			playerIcon.setMaxHeight(Keys.globalMaxandMinImageSize);
+			playerIcon.setMinimumHeight(Keys.globalMaxandMinImageSize);
 		}
 		return view;
 	}

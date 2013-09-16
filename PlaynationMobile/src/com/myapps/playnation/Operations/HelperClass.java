@@ -29,9 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.DataSection;
@@ -39,6 +41,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.NewsFeed;
 import com.myapps.playnation.Classes.NewsFeedItem;
 import com.myapps.playnation.Classes.UserComment;
+import com.myapps.playnation.main.MainActivity;
 
 public class HelperClass {
 	/**
@@ -52,6 +55,17 @@ public class HelperClass {
 		boolean large = ((content.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
 		boolean xlarge = ((content.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
 		return (large || xlarge);
+	}
+
+	public static void disableAddComments(View footer, TextView commentText,
+			Button commentBut) {
+		if (MainActivity.configs.getApplicationState() != 0) {
+			TextView lbl = (TextView) footer
+					.findViewById(R.id.wallsF_comment_TView);
+			lbl.setVisibility(View.GONE);
+			commentText.setVisibility(View.GONE);
+			commentBut.setVisibility(View.GONE);
+		}
 	}
 
 	public static boolean isNetworkAvailable(ConnectivityManager obj) {
@@ -180,13 +194,13 @@ public class HelperClass {
 				|| tableName.equals(Keys.gamesTable)
 				|| tableName.equals(Keys.companyTable)
 				|| tableName.equals(Keys.HomeSubscriptionTable)) {
-			return "SELECT * FROM " + tableName + " Limit" + limit + ";";
+			return "SELECT * FROM " + tableName + " Limit 0," + limit + ";";
 		} else if (tableName.equals(Keys.HomeMsgTable)) {
 			return "SELECT * FROM " + tableName + " Where " + Keys.ID_PLAYER
 					+ "=" + separeteID + ";";
 		} else if (tableName.equals(Keys.HomeEventTable)) {
 			return "SELECT * FROM " + tableName + " Where ID_PLAYER="
-					+ Keys.TEMPLAYERID + ";";
+					+ Configurations.CurrentPlayerID + ";";
 		} else if (tableName.equals(Keys.HomeFriendsTable)) {
 			return "SELECT * FROM " + tableName + " Where ID_OWNER=?;";
 		} else if (tableName.equals(Keys.HomeGamesTable)) {
@@ -232,11 +246,12 @@ public class HelperClass {
 			returns = "SELECT * FROM " + tableName + " Where ID_GROUP=?;";
 		} else if (tableName.equals(Keys.HomeMsgTable)) {
 			returns = "SELECT * FROM " + tableName + " Where ID_MESSAGE=? and "
-					+ Keys.ID_PLAYER + "=" + Keys.TEMPLAYERID + ";";
+					+ Keys.ID_PLAYER + "=" + Configurations.CurrentPlayerID
+					+ ";";
 		} else if (tableName.equals(Keys.HomeEventTable)) {
 			returns = "SELECT * FROM " + tableName
-					+ " Where ID_EVENT=? and ID_PLAYER=" + Keys.TEMPLAYERID
-					+ ";";
+					+ " Where ID_EVENT=? and ID_PLAYER="
+					+ Configurations.CurrentPlayerID + ";";
 		} else if (tableName.equals(Keys.HomeFriendsTable)) {
 			returns = "SELECT * FROM " + tableName
 					+ " Where ID_PLAYER=? and ID_OWNER=" + anotherID + ";";

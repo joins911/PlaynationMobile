@@ -19,6 +19,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.CommExpListAdapter;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 
 public class GroupWallFragment extends Fragment {
 	DataConnector con;
@@ -50,6 +51,7 @@ public class GroupWallFragment extends Fragment {
 			}
 		});
 		expList.addFooterView(footer);
+		HelperClass.disableAddComments(footer, commentText, commentBut);
 
 		// Inflate the layout for this fragment
 

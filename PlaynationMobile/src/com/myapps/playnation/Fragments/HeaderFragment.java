@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeEditProfileFragment;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.LoadImage;
 import com.myapps.playnation.main.ISectionAdapter;
@@ -103,7 +104,7 @@ public class HeaderFragment extends Fragment {
 			mView = inflater.inflate(R.layout.wrapper_header_home, container,
 					false);
 			header = mView.findViewById(R.id.include_TabHolder_Home);
-			con.queryPlayerInfo(Keys.TEMPLAYERID);
+			con.queryPlayerInfo(Configurations.CurrentPlayerID);
 			QuickContactBadge edit = (QuickContactBadge) header
 					.findViewById(R.id.quickContactBadge1);
 			edit.setOnClickListener(new OnClickListener() {
@@ -118,7 +119,7 @@ public class HeaderFragment extends Fragment {
 				}
 			});
 			header = con.populatePlayerGeneralInfo(header, "Wall",
-					Keys.TEMPLAYERID);
+					Configurations.CurrentPlayerID);
 
 		} else {
 			mView = inflater.inflate(R.layout.wrapper_header_games, container,

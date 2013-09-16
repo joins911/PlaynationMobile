@@ -124,16 +124,11 @@ public class GroupsListAdapter extends BaseAdapter implements MyBaseAdapter {
 			new LoadImage(groupsDataCollection.get(position).getString(
 					Keys.ID_GROUP), "group", Keys.groupsTable, imageUrl,
 					holder.tvImage, "groups").execute(holder.tvImage);
+			holder.tvImage.setMaxWidth(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMinimumWidth(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMaxHeight(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMinimumHeight(Keys.globalMaxandMinImageSize);
 		}
-		// Setting an image
-		// String uri = "drawable/"+
-		// gamesDataCollection.get(position).get(KEY_ICON);
-		// int imageResource =
-		// vi.getContext().getApplicationContext().getResources().getIdentifier(uri,
-		// null, vi.getContext().getApplicationContext().getPackageName());
-		// Drawable image =
-		// vi.getContext().getResources().getDrawable(imageResource);
-		// holder.tvImage.setImageDrawable(image);
 
 		return vi;
 	}

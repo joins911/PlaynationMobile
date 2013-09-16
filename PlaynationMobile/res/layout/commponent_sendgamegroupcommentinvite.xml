@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@android:drawable/toast_frame"
+	android:gravity="top" >
+	<TextView
+		android:id="@+id/txtNotificationMsg"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:text="@string/lblSendGroupComment"
+		android:textAppearance="?android:attr/textAppearanceMedium" />
+	<EditText
+		android:id="@+id/txtComment"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/txtNotificationMsg"
+		android:ems="10"
+		android:inputType="textLongMessage"
+		android:maxLength="200" />
+	<Button
+		android:id="@+id/btnCancel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/txtComment"
+		android:text="@string/btnCancel" />
+	<Button
+		android:id="@+id/btnSend"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/txtComment"
+		android:layout_toLeftOf="@+id/btnCancel"
+		android:text="@string/btnSendComment" />
+</RelativeLayout>

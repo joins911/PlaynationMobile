@@ -25,6 +25,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.UserComment;
 import com.myapps.playnation.Fragments.WallFragment;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.Workers.LoadCommentsTask;
 import com.myapps.playnation.main.ISectionAdapter;
 
@@ -50,7 +51,7 @@ public class PlayerWallFragment extends Fragment implements WallFragment {
 		footer = inflater.inflate(R.layout.component_comment_footer, null);
 		Button commentBut = (Button) footer.findViewById(R.id.wallsF_commBut);
 		commentText = (EditText) footer.findViewById(R.id.wallsF_comment_EBox);
-		footer.setVisibility(View.GONE);
+
 		commentBut.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -63,6 +64,8 @@ public class PlayerWallFragment extends Fragment implements WallFragment {
 			}
 		});
 		expList.addFooterView(footer);
+
+		HelperClass.disableAddComments(footer, commentText, commentBut);
 
 		mCommentsTask = new LoadCommentsTask(this, getArguments().getString(
 				Keys.ID_PLAYER), "player").execute();

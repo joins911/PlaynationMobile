@@ -96,20 +96,19 @@ public class ListsFragment extends Fragment {
 				this.visibleItemCount = visibleItemCount;
 				firstVisible = firstVisibleItem;
 				this.totalItemCount = totalItemCount;
-
 			}
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				this.currentScrollState = scrollState;
 				this.isScrollCompleted();
-
 			}
 
 			private void isScrollCompleted() {
 				if (firstVisible + visibleItemCount == totalItemCount
 						&& totalItemCount != 0
 						&& this.currentScrollState == SCROLL_STATE_IDLE) {
+
 					/***
 					 * In this way I detect if there's been a scroll which has
 					 * completed
@@ -119,7 +118,6 @@ public class ListsFragment extends Fragment {
 						((MyBaseAdapter) mList.getAdapter()).showMore();
 						((BaseAdapter) mList.getAdapter())
 								.notifyDataSetChanged();
-
 					}
 				}
 			}
@@ -133,6 +131,15 @@ public class ListsFragment extends Fragment {
 		mListTask = new LoadListTask().execute();
 
 		return rootView;
+	}
+
+	public void loadImages(String table) {
+		ArrayList<Bundle> list = con.getTable(table, "");
+		if (list != null)
+			System.out.println(list.size() + "");
+		// for (Bundle bund : list) {
+		// }
+
 	}
 
 	@Override
@@ -159,6 +166,7 @@ public class ListsFragment extends Fragment {
 						Keys.gamesubNewsTAB);
 
 				tabletOrPhoneControll(Keys.GamesSTATE, results.get(position));
+
 			}
 		});
 	}
@@ -179,6 +187,7 @@ public class ListsFragment extends Fragment {
 						mListBundle.get(position));
 			}
 		});
+
 	}
 
 	private void initializeNews(final ArrayList<Bundle> results) {
@@ -227,9 +236,11 @@ public class ListsFragment extends Fragment {
 			mList.setAdapter(bindingData);
 
 			mList.setOnItemClickListener(new OnItemClickListener() {
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+
 					tabletOrPhoneControll(Keys.PlayersSTATE,
 							mListBundle.get(position));
 				}

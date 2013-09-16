@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
@@ -39,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	 */
 	SectionAdapter mSectionAdapter;
 	FlyOutContainer root;
-	DataConnector con;
+	private DataConnector con;
 	private int total;
 	private boolean finished = false;
 	public static Configurations configs;
@@ -133,17 +132,16 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 
 			@Override
 			public boolean onQueryTextChange(String arg0) {
-
 				return false;
 			}
 
 			@Override
 			public boolean onQueryTextSubmit(String arg0) {
-				searchList(arg0);
-				Toast.makeText(getApplicationContext(), arg0,
-						Toast.LENGTH_SHORT).show();
-				return false;
-
+				// Set limit of searh to be minimum of 3 symbols
+				if (arg0.length() > 2) {
+					searchList(arg0);
+				}
+				return true;
 			}
 		});
 
@@ -204,7 +202,7 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 				temp = searchListPlayers(args);
 			else if (mViewPager.getCurrentItem() == Keys.CompaniesSTATE)
 				temp = searchListCompanies(args);
-			if (temp != null)
+			if (!temp.isEmpty() || temp != null)
 				frag.setListBundle(temp);
 		}
 	}
@@ -240,10 +238,11 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 		ArrayList<Bundle> list = con.queryPlayerFriendsSearch(args);
 		ArrayList<Bundle> results = new ArrayList<Bundle>();
 		if (list != null) {
-			System.out.println(list.size() + "");
 			for (int i = 0; i < list.size(); i++)
-				if (list.get(i).getString(Keys.PLAYERNAME).contains(args))
-					results.add(list.get(i));
+				// if (list.get(i).getString(Keys.PLAYERNAME).contains(args)
+				// || list.get(i).getString(Keys.PLAYERNICKNAME)
+				// .contains(args))
+				results.add(list.get(i));
 		}
 		return results;
 	}
@@ -288,6 +287,9 @@ public class MainActivity extends ActionBarActivity implements ISectionAdapter {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		// Call garbage collector
+		java.lang.System.gc();
+
 	}
 
 	@Override

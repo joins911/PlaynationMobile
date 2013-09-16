@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
@@ -52,7 +53,7 @@ public class HomeEditProfileFragment extends Fragment {
 			}
 		});
 
-		map = con.getPlayer(Keys.TEMPLAYERID);
+		map = con.getPlayer(Configurations.CurrentPlayerID);
 		// Bundle args = getArguments();
 		if (map != null) {
 			editFirst.setText(map.getString(Keys.FirstName));

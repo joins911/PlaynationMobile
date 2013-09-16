@@ -58,6 +58,7 @@ public class CompaniesWallFragment extends Fragment {
 			}
 		});
 		expList.addFooterView(footer);
+		HelperClass.disableAddComments(footer, commentText, commentBut);
 
 		if (expAdapter.isEmpty()) {
 

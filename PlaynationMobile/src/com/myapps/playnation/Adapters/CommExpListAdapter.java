@@ -115,7 +115,6 @@ public class CommExpListAdapter extends BaseExpandableListAdapter {
 			ImageView imageTV = (ImageView) view
 					.findViewById(R.id.gamesCL_commentImage);
 			String imageUrl = userComment.getComment().getImageUrl();
-
 			new LoadImage("", "", "", imageUrl, imageTV, "wall_photos")
 					.execute();
 		}

@@ -19,6 +19,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 	private String folderName;
 	private String path = "";
 	private String initalmageUrl = "";
+
 	private DataConnector con = DataConnector.getInst();
 
 	public LoadImage() {
@@ -62,7 +63,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 			finals = main;
 		}
 		if (Keys.internetStatus) {
-			returnBitmap = getImage(finals, img, false);
+			returnBitmap = getImage(finals, img, true);
 			if (returnBitmap != null) {
 				return returnBitmap;
 			} else {
@@ -71,6 +72,7 @@ public class LoadImage extends AsyncTask<Object, Object, Bitmap> {
 		} else {
 			return returnBitmap;
 		}
+
 	}
 
 	@Override

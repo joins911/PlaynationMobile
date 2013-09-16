@@ -124,6 +124,10 @@ public class GamesListAdapter extends BaseAdapter implements MyBaseAdapter {
 			new LoadImage(gamesDataCollection.get(position).getString(
 					Keys.ID_GAME), "game", Keys.gamesTable, imageUrl,
 					holder.tvImage, "games").execute(holder.tvImage);
+			holder.tvImage.setMaxWidth(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMinimumWidth(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMaxHeight(Keys.globalMaxandMinImageSize);
+			holder.tvImage.setMinimumHeight(Keys.globalMaxandMinImageSize);
 		}
 
 		return vi;

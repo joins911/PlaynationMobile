@@ -28,6 +28,7 @@ import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Classes.UserComment;
 import com.myapps.playnation.Fragments.WallFragment;
 import com.myapps.playnation.Operations.DataConnector;
+import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.Workers.LoadCommentsTask;
 
 public class GameWallFragment extends Fragment implements WallFragment {
@@ -74,8 +75,12 @@ public class GameWallFragment extends Fragment implements WallFragment {
 						+ commentText.getText().toString());
 			}
 		});
+
+		HelperClass.disableAddComments(footer, commentText, commentBut);
+
 		mCommentsTask = new LoadCommentsTask(this, getArguments().getString(
 				Keys.ID_GAME), "game").execute();
+
 		// Inflate the layout for this fragment
 		return mView;
 	}

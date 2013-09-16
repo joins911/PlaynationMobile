@@ -44,6 +44,8 @@ public class LoginActivity extends Activity {
 		Keys.internetStatus = HelperClass
 				.isNetworkAvailable((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
 
+		// FIRST TIME
+
 		startService(new Intent(this, ServiceClass.class));
 		if (android.os.Build.VERSION.SDK_INT > 10) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -57,7 +59,8 @@ public class LoginActivity extends Activity {
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		clearPreviewsLoginInformation(prefrence);
-		Keys.TEMPLAYERID = prefrence.getString(Keys.ID_PLAYER, "12");
+		Configurations.CurrentPlayerID = prefrence.getString(Keys.ID_PLAYER,
+				"12");
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -67,6 +70,9 @@ public class LoginActivity extends Activity {
 		logButton = (Button) findViewById(R.id.btnLogin);
 		Button logGuestButton = (Button) findViewById(R.id.btnGuestLogin);
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+
+		// NOT SURE BUT HOPE IT WILL REMOVE WHEN BUTTON FOR LOGIN IS PRESSED
+		checkServerStatus();
 
 		logButton.setOnClickListener(new View.OnClickListener() {
 
@@ -138,7 +144,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void logOnlineAdmin() {
-		Keys.TEMPLAYERID = "12";
+		Configurations.CurrentPlayerID = "12";
 		startMainActivity(Configurations.appStateOnUser);
 	}
 
@@ -201,29 +207,33 @@ public class LoginActivity extends Activity {
 					progressbarStatus += 0;
 					progressDialog.setProgress(progressbarStatus);
 					if (!con.checkDBTableExits(Keys.gamesTable)) {
-						con.getArrayFromQuerryWithPostVariable("",
+						con.getArrayFromQuerryWithPostVariable(
+								Configurations.CurrentPlayerID,
 								Keys.gamesTable, "", con.getLastIDGames());
 					}
 					progressbarStatus += 40;
 					progressDialog.setProgress(progressbarStatus);
 
 					if (!con.checkDBTableExits(Keys.companyTable)) {
-						con.getArrayFromQuerryWithPostVariable("",
+						con.getArrayFromQuerryWithPostVariable(
+								Configurations.CurrentPlayerID,
 								Keys.companyTable, "", con.getLastIDCompanies());
 					}
 					progressbarStatus += 20;
 					progressDialog.setProgress(progressbarStatus);
 
 					if (!con.checkDBTableExits(Keys.groupsTable)) {
-						con.getArrayFromQuerryWithPostVariable("",
+						con.getArrayFromQuerryWithPostVariable(
+								Configurations.CurrentPlayerID,
 								Keys.groupsTable, "", con.getLastIDGroups());
 					}
 					progressbarStatus += 20;
 					progressDialog.setProgress(progressbarStatus);
 
 					if (!con.checkDBTableExits(Keys.newsTable)) {
-						con.getArrayFromQuerryWithPostVariable("",
-								Keys.newsTable, "", con.getLastIDNews());
+						con.getArrayFromQuerryWithPostVariable(
+								Configurations.CurrentPlayerID, Keys.newsTable,
+								"", con.getLastIDNews());
 						con.queryMiniIds();
 					}
 					progressbarStatus += 20;

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.HomeListViewAdapter;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.main.ISectionAdapter;
 
@@ -49,9 +50,10 @@ public class HomeGamesFragment extends Fragment {
 				.findViewById(R.id.generalPlayerListView);
 
 		if (!con.checkDBTableExits(Keys.HomeGamesTable))
-			con.queryPlayerGames(Keys.TEMPLAYERID);
+			con.queryPlayerGames(Configurations.CurrentPlayerID);
 		HomeListViewAdapter expAdapter = new HomeListViewAdapter(getActivity(),
-				con.getTable(Keys.HomeGamesTable, Keys.TEMPLAYERID), this);
+				con.getTable(Keys.HomeGamesTable, Configurations.CurrentPlayerID),
+				this);
 
 		if (expAdapter.isEmpty()) {
 			TextView msgText = new TextView(getActivity());

@@ -7,6 +7,7 @@ public class Configurations {
 	public final static int appStateOnUser = 0;
 	private int currentAdapterSection;
 	public final static boolean isLoginEnabled = true;
+	public static String CurrentPlayerID = "12";
 
 	private static Configurations inst;
 	private int appState;

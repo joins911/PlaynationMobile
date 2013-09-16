@@ -17,6 +17,7 @@ import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.HomExpandableAdapter;
 import com.myapps.playnation.Classes.ExpandbleParent;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 
 public class HomeMessagesFragment extends Fragment {
@@ -34,11 +35,11 @@ public class HomeMessagesFragment extends Fragment {
 				.findViewById(R.id.fragMsgAndWallTemp_expList);
 
 		if (!con.checkDBTableExits(Keys.HomeMsgTable))
-			con.queryPlayerMessages(Keys.TEMPLAYERID);
+			con.queryPlayerMessages(Configurations.CurrentPlayerID);
 
 		listParents.clear();
 		ArrayList<Bundle> list = con.getTable(Keys.HomeMsgTable,
-				Keys.TEMPLAYERID);
+				Configurations.CurrentPlayerID);
 		if (list != null)
 			for (Bundle hashMap : list) {
 				if (hashMap != null) {

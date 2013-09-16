@@ -94,4 +94,10 @@
 	<string name="BtnAddGroup">Send Request </string>
 	<string name="btnUnlike">Unlike</string>
 	<string name="btnSendFriendRequest">Add Friend</string>
+	<string name="lblSendGroupComment">Reason to join group :</string>
+	<string name="btnSendComment">Send</string>
+	<string name="btnCancel">Cancel</string>
+	<string name="lblSendGameComment">Comment about the game:</string>
+	<string name="btnAccept">Accept</string>
+	<string name="btnDecline">Decline</string>
 </resources>

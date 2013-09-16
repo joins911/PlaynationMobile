@@ -19,6 +19,7 @@ import com.myapps.playnation.Classes.ExpandbleParent;
 import com.myapps.playnation.Classes.Keys;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeMessagesFragment;
 import com.myapps.playnation.Fragments.Tabs.Home.HomeWallFragment;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 
@@ -235,14 +236,14 @@ public class HomExpandableAdapter extends BaseExpandableListAdapter {
 		if (lastParent == groupPosition
 				|| currentFragment instanceof HomeWallFragment) {
 			con.queryPlayerWallReplices(mapEntry.getString(Keys.ID_WALLITEM),
-					Keys.TEMPLAYERID);
+					Configurations.CurrentPlayerID);
 			array = con.getTable(Keys.HomeWallRepliesTable,
 					mapEntry.getString(Keys.ID_WALLITEM));
 			mParent.get(groupPosition).setArrayChildren(array);
 		} else if (currentFragment instanceof HomeMessagesFragment) {
 			con.queryPlayerMSGReplices(
 					mapEntry.getString(Keys.MessageID_CONVERSATION),
-					Keys.TEMPLAYERID);
+					Configurations.CurrentPlayerID);
 			array = con.getTable(Keys.HomeMsgRepliesTable,
 					mapEntry.getString(Keys.MessageID_CONVERSATION));
 			mParent.get(groupPosition).setArrayChildren(array);

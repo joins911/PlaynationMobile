@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.myapps.playnation.R;
 import com.myapps.playnation.Adapters.HomeListViewAdapter;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Operations.Configurations;
 import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.main.ISectionAdapter;
 
@@ -49,7 +50,7 @@ public class HomeEventsFragment extends Fragment {
 				.findViewById(R.id.generalPlayerListView);
 
 		if (!con.checkDBTableExits(Keys.HomeEventTable))
-			con.queryPlayerEvents(Keys.TEMPLAYERID, getActivity());
+			con.queryPlayerEvents(Configurations.CurrentPlayerID, getActivity());
 
 		mListView.setAdapter(new HomeListViewAdapter(getActivity(), con
 				.getTable(Keys.HomeEventTable, ""), this));

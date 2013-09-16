@@ -20,6 +20,8 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_below="@+id/txtTitle"
+		android:adjustViewBounds="true"
+		android:scaleType="fitXY"
 		android:src="@drawable/no_news_100x100" />
 	<TextView
 		android:id="@+id/txtNickNameText"

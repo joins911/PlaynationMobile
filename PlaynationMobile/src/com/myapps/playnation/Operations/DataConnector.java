@@ -384,6 +384,12 @@ public class DataConnector extends SQLiteOpenHelper {
 						.getString(Keys.CompanyFounded));
 				temp.put(Keys.CompanyName, jsonArray.getJSONObject(i)
 						.getString(Keys.GAMECompanyDeveloper));
+				temp.put(Keys.GameIsLiked, jsonArray.getJSONObject(i)
+						.getString(Keys.GameIsLiked));
+				temp.put(Keys.GameisPlaying, jsonArray.getJSONObject(i)
+						.getString(Keys.GameisPlaying));
+				temp.put(Keys.CompanyName, jsonArray.getJSONObject(i)
+						.getString(Keys.GAMECompanyDeveloper));
 				gameTypes.add(jsonArray.getJSONObject(i).getString(
 						Keys.GAMETYPE));
 				sql.insertWithOnConflict(Keys.gamesTable, null, temp,
@@ -439,10 +445,15 @@ public class DataConnector extends SQLiteOpenHelper {
 						jsonArray.getJSONObject(i).getString(Keys.GROUPDESC));
 				temp.put(Keys.GROUPTYPE2,
 						jsonArray.getJSONObject(i).getString(Keys.GROUPTYPE2));
-
+				temp.put(Keys.ID_CREATOR,
+						jsonArray.getJSONObject(i).getString(Keys.ID_CREATOR));
 				// Changed so date and members should be
 				temp.put(Keys.GroupMemberCount, jsonArray.getJSONObject(i)
 						.getString(Keys.GroupMemberCount));
+				temp.put(Keys.GameIsLiked, jsonArray.getJSONObject(i)
+						.getString(Keys.GameIsLiked));
+				temp.put(Keys.isMember,
+						jsonArray.getJSONObject(i).getString(Keys.isMember));
 				String imageUrl = jsonArray.getJSONObject(i).getString(
 						Keys.EventIMAGEURL);
 
@@ -616,6 +627,7 @@ public class DataConnector extends SQLiteOpenHelper {
 	public ArrayList<Bundle> getSQLiteGame(String tableName) {
 		ArrayList<Bundle> list = new ArrayList<Bundle>();
 		Keys.tempLimitGame += 10;
+		System.out.println(Keys.tempLimitGame);
 		String selectQuery = HelperClass.sqliteQueryStrings(tableName, "", "",
 				Keys.tempLimitGame + "");
 		SQLiteDatabase sql = this.getReadableDatabase();
@@ -649,6 +661,11 @@ public class DataConnector extends SQLiteOpenHelper {
 					bundle.putString(Keys.ID_GAME, id_GAME);
 					bundle.putString(Keys.GAMETYPENAME, cursor.getString(cursor
 							.getColumnIndex(Keys.GAMETYPENAME)));
+					bundle.putString(Keys.GameisPlaying, cursor
+							.getString(cursor
+									.getColumnIndex(Keys.GameisPlaying)));
+					bundle.putString(Keys.GameIsLiked, cursor.getString(cursor
+							.getColumnIndex(Keys.GameIsLiked)));
 					bundle.putString(Keys.GAMETYPE, cursor.getString(cursor
 							.getColumnIndex(Keys.GAMETYPE)));
 					bundle.putString(Keys.GAMEPLATFORM, cursor.getString(cursor
@@ -702,6 +719,12 @@ public class DataConnector extends SQLiteOpenHelper {
 							.getColumnIndex(Keys.GROUPDATE)));
 					bundle.putString(Keys.ID_GROUP, cursor.getString(cursor
 							.getColumnIndex(Keys.ID_GROUP)));
+					bundle.putString(Keys.ID_CREATOR, cursor.getString(cursor
+							.getColumnIndex(Keys.ID_CREATOR)));
+					bundle.putString(Keys.GameIsLiked, cursor.getString(cursor
+							.getColumnIndex(Keys.GameIsLiked)));
+					bundle.putString(Keys.isMember, cursor.getString(cursor
+							.getColumnIndex(Keys.isMember)));
 					bundle.putString(Keys.EventIMAGEURL, cursor
 							.getString(cursor
 									.getColumnIndex(Keys.EventIMAGEURL)));
@@ -926,6 +949,8 @@ public class DataConnector extends SQLiteOpenHelper {
 					Bundle bundle = new Bundle();
 					bundle.putString(Keys.ID_PLAYER, cursor.getString(cursor
 							.getColumnIndex(Keys.ID_PLAYER)));
+					bundle.putString(Keys.ID_FRIEND, cursor.getString(cursor
+							.getColumnIndex(Keys.ID_FRIEND)));
 					bundle.putString(Keys.ID_OWNER, cursor.getString(cursor
 							.getColumnIndex(Keys.ID_OWNER)));
 					bundle.putString(Keys.CITY,
@@ -939,11 +964,16 @@ public class DataConnector extends SQLiteOpenHelper {
 							cursor.getString(cursor.getColumnIndex(Keys.Email)));
 					bundle.putString(Keys.PLAYERAVATAR, cursor.getString(cursor
 							.getColumnIndex(Keys.PLAYERAVATAR)));
-					bundle.putString(Keys.FirstName, cursor.getString(cursor
-							.getColumnIndex(Keys.FirstName)));
-					bundle.putString(Keys.LastName, cursor.getString(cursor
-							.getColumnIndex(Keys.LastName)));
-
+					bundle.putString(Keys.Mutual, cursor.getString(cursor
+							.getColumnIndex(Keys.Mutual)));
+					String firstName = cursor.getString(cursor
+							.getColumnIndex(Keys.FirstName));
+					String lastName = cursor.getString(cursor
+							.getColumnIndex(Keys.LastName));
+					bundle.putString(Keys.FirstName, firstName);
+					bundle.putString(Keys.LastName, lastName);
+					bundle.putString(Keys.PLAYERNAME, firstName + ","
+							+ lastName);
 					bundle.putString(Keys.Age,
 							cursor.getString(cursor.getColumnIndex(Keys.Age)));
 
@@ -1121,6 +1151,10 @@ public class DataConnector extends SQLiteOpenHelper {
 									.getColumnIndex(Keys.EventIMAGEURL)));
 					bundle.putString(Keys.GROUPDATE, cursor.getString(cursor
 							.getColumnIndex(Keys.GROUPDATE)));
+					bundle.putString(Keys.GameIsLiked, cursor.getString(cursor
+							.getColumnIndex(Keys.GameIsLiked)));
+					bundle.putString(Keys.isMember, cursor.getString(cursor
+							.getColumnIndex(Keys.isMember)));
 					bundle.putString(Keys.GruopCreatorName, cursor
 							.getString(cursor
 									.getColumnIndex(Keys.PLAYERNICKNAME)));
@@ -1253,42 +1287,36 @@ public class DataConnector extends SQLiteOpenHelper {
 	 */
 	public ArrayList<Bundle> getTable(String tableName, String sepateID) {
 
-		if (lilDb.get(tableName) == null) {
-			if (!checkDBTableExits(tableName)) {
-				getQuerry(tableName);
-			} else {
-				if (tableName.equals(Keys.HomeWallTable)) {
-					return getSQLitePWall(tableName, sepateID);
-				} else if (tableName.equals(Keys.newsTable)) {
-					return getSQLiteNews(tableName);
-				} else if (tableName.equals(Keys.groupsTable)) {
-					return getSQLiteGroups(tableName);
-				} else if (tableName.equals(Keys.gamesTable)) {
-					return getSQLiteGame(tableName);
-				} else if (tableName.equals(Keys.companyTable)) {
-					return getSQLiteCompanies(tableName);
-				} else if (tableName.equals(Keys.HomeMsgTable)) {
-					return getSQLitePMSG(tableName, sepateID);
-				} else if (tableName.equals(Keys.HomeSubscriptionTable)) {
-					return getSQLitePSubscription(tableName);
-				} else if (tableName.equals(Keys.HomeEventTable)) {
-					return getSQLitePEvent(tableName);
-				} else if (tableName.equals(Keys.HomeFriendsTable)) {
-					return getSQLitePFriends(tableName, sepateID);
-				} else if (tableName.equals(Keys.HomeGamesTable)) {
-					return getSQLitePGames(tableName, sepateID);
-				} else if (tableName.equals(Keys.HomeGroupTable)) {
-					return getSQLitePGroup(tableName, sepateID);
-				} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
-					return getSQLitePWallReplies(tableName, sepateID);
-				} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
-					return getSQLitePMsgReplies(tableName, sepateID);
-				} else if (tableName.equals(Keys.whoIsPlayingTable)) {
-					return getSQLiteWhoIsPlaying(tableName, sepateID);
-				}
-			}
+		if (tableName.equals(Keys.HomeWallTable)) {
+			return getSQLitePWall(tableName, sepateID);
+		} else if (tableName.equals(Keys.newsTable)) {
+			return getSQLiteNews(tableName);
+		} else if (tableName.equals(Keys.groupsTable)) {
+			return getSQLiteGroups(tableName);
+		} else if (tableName.equals(Keys.gamesTable)) {
+			return getSQLiteGame(tableName);
+		} else if (tableName.equals(Keys.companyTable)) {
+			return getSQLiteCompanies(tableName);
+		} else if (tableName.equals(Keys.HomeMsgTable)) {
+			return getSQLitePMSG(tableName, sepateID);
+		} else if (tableName.equals(Keys.HomeSubscriptionTable)) {
+			return getSQLitePSubscription(tableName);
+		} else if (tableName.equals(Keys.HomeEventTable)) {
+			return getSQLitePEvent(tableName);
+		} else if (tableName.equals(Keys.HomeFriendsTable)) {
+			return getSQLitePFriends(tableName, sepateID);
+		} else if (tableName.equals(Keys.HomeGamesTable)) {
+			return getSQLitePGames(tableName, sepateID);
+		} else if (tableName.equals(Keys.HomeGroupTable)) {
+			return getSQLitePGroup(tableName, sepateID);
+		} else if (tableName.equals(Keys.HomeWallRepliesTable)) {
+			return getSQLitePWallReplies(tableName, sepateID);
+		} else if (tableName.equals(Keys.HomeMsgRepliesTable)) {
+			return getSQLitePMsgReplies(tableName, sepateID);
+		} else if (tableName.equals(Keys.whoIsPlayingTable)) {
+			return getSQLiteWhoIsPlaying(tableName, sepateID);
 		}
-		return lilDb.get(tableName);
+		return null;
 	}
 
 	/**
@@ -1668,13 +1696,14 @@ public class DataConnector extends SQLiteOpenHelper {
 				Keys.HomeFriendsTable, "0", 0);
 		if (json != null) {
 			for (int i = 0; i < json.length(); i++) {
-
 				try {
 					String ID = json.getJSONObject(i).getString(Keys.ID_PLAYER);
 					if (!checkRowExist(Keys.HomeFriendsTable, ID, playerID)) {
 						ContentValues map = new ContentValues();
 
 						map.put(Keys.ID_PLAYER, ID);
+						map.put(Keys.ID_FRIEND, json.getJSONObject(i)
+								.getString(Keys.ID_FRIEND));
 						map.put(Keys.ID_OWNER,
 								json.getJSONObject(i).getString(Keys.ID_OWNER));
 						map.put(Keys.CITY,
@@ -1689,13 +1718,17 @@ public class DataConnector extends SQLiteOpenHelper {
 								Keys.PLAYERAVATAR);
 
 						map.put(Keys.PLAYERAVATAR, imageUrl);
-
-						map.put(Keys.FirstName, json.getJSONObject(i)
-								.getString(Keys.FirstName));
-						map.put(Keys.LastName,
-								json.getJSONObject(i).getString(Keys.LastName));
+						String firstName = json.getJSONObject(i).getString(
+								Keys.FirstName);
+						String lastName = json.getJSONObject(i).getString(
+								Keys.LastName);
+						map.put(Keys.FirstName, firstName);
+						map.put(Keys.LastName, lastName);
+						map.put(Keys.PLAYERNAME, firstName + "," + lastName);
 						map.put(Keys.Age,
 								json.getJSONObject(i).getString(Keys.Age));
+						map.put(Keys.Mutual,
+								json.getJSONObject(i).getString(Keys.Mutual));
 						sql.insertWithOnConflict(Keys.HomeFriendsTable, null,
 								map, SQLiteDatabase.CONFLICT_REPLACE);
 					}
@@ -1704,7 +1737,6 @@ public class DataConnector extends SQLiteOpenHelper {
 				}
 			}
 		}
-		// sql.close();
 	}
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi", "InlinedApi" })
@@ -1765,6 +1797,9 @@ public class DataConnector extends SQLiteOpenHelper {
 						m.put(Keys.ID_GAME, ID);
 						m.put(Keys.RATING,
 								json.getJSONObject(i).getString(Keys.RATING));
+						m.put(Keys.GameIsLiked, json.getJSONObject(i)
+								.getString(Keys.GameIsLiked));
+
 						m.put(Keys.GAMEESRB,
 								json.getJSONObject(i).getString(Keys.GAMEESRB));
 						m.put(Keys.GAMEURL,
@@ -1843,10 +1878,12 @@ public class DataConnector extends SQLiteOpenHelper {
 							+ "";
 					if (!checkRowExist(Keys.HomeGroupTable, ID, playerID)) {
 						ContentValues m = new ContentValues();
-
 						m.put(Keys.ID_GROUP, ID);
 						m.put(Keys.ID_PLAYER,
 								json.getJSONObject(i).getInt(Keys.ID_PLAYER)
+										+ "");
+						m.put(Keys.ID_CREATOR,
+								json.getJSONObject(i).getInt(Keys.ID_CREATOR)
 										+ "");
 						m.put(Keys.GROUPNAME,
 								json.getJSONObject(i).getString(Keys.GROUPNAME));
@@ -1871,6 +1908,8 @@ public class DataConnector extends SQLiteOpenHelper {
 								.getString(Keys.PLAYERNICKNAME));
 						m.put(Keys.GameIsLiked, json.getJSONObject(i)
 								.getString(Keys.GameIsLiked));
+						m.put(Keys.isMember,
+								json.getJSONObject(i).getString(Keys.isMember));
 						sql.insertWithOnConflict(Keys.HomeGroupTable, null, m,
 								SQLiteDatabase.CONFLICT_REPLACE);
 					}
@@ -2309,8 +2348,9 @@ public class DataConnector extends SQLiteOpenHelper {
 
 	public ArrayList<Bundle> queryPlayerFriendsSearch(CharSequence search) {
 		searchArray = new ArrayList<Bundle>();
-		JSONArray json = getArrayFromQuerryWithPostVariable(Keys.TEMPLAYERID,
-				Keys.SearchFriendsTable, search.toString(), 0);
+		JSONArray json = getArrayFromQuerryWithPostVariable(
+				Configurations.CurrentPlayerID, Keys.SearchFriendsTable,
+				search.toString(), 0);
 
 		// // Print the data to the console
 		if (json != null) {
@@ -2329,10 +2369,15 @@ public class DataConnector extends SQLiteOpenHelper {
 							json.getJSONObject(i).getString(Keys.Email));
 					map.putString(Keys.PLAYERAVATAR, json.getJSONObject(i)
 							.getString(Keys.PLAYERAVATAR));
-					map.putString(Keys.FirstName, json.getJSONObject(i)
-							.getString(Keys.FirstName));
-					map.putString(Keys.LastName, json.getJSONObject(i)
-							.getString(Keys.LastName));
+					String firstName = json.getJSONObject(i).getString(
+							Keys.FirstName);
+					String lastName = json.getJSONObject(i).getString(
+							Keys.LastName);
+					map.putString(Keys.Mutual,
+							json.getJSONObject(i).getString(Keys.Mutual));
+					map.putString(Keys.FirstName, firstName);
+					map.putString(Keys.LastName, lastName);
+					map.putString(Keys.PLAYERNAME, firstName + "," + lastName);
 					map.putString(Keys.Age,
 							json.getJSONObject(i).getString(Keys.Age));
 
@@ -2341,9 +2386,50 @@ public class DataConnector extends SQLiteOpenHelper {
 					Log.e("Fetching Friends Search", "Error Friends Search" + e);
 				}
 			}
-			return searchArray;
-		} else
-			return null;
+		}
+		return searchArray;
+	}
+
+	public ArrayList<Bundle> queryNotification(String PlayerID) {
+		ArrayList<Bundle> notifications = new ArrayList<Bundle>();
+		JSONArray json = getArrayFromQuerryWithPostVariable(PlayerID,
+				Keys.HomeNotificationTable, "", 0);
+
+		// // Print the data to the console
+		if (json != null) {
+			for (int i = 0; i < json.length(); i++) {
+				try {
+					Bundle map = new Bundle();
+					map.putString(Keys.ID_NOTIFICATION, json.getJSONObject(i)
+							.getString(Keys.ID_NOTIFICATION));
+					map.putString(Keys.NotificationType, json.getJSONObject(i)
+							.getString(Keys.NotificationType));
+					int date = Integer.parseInt(json.getJSONObject(i)
+							.getString(Keys.NotificationTime));
+					String returnDate = HelperClass.convertTime(date,
+							dataTemplate);
+					map.putString(Keys.NotificationTime, returnDate);
+					map.putString(
+							Keys.NotificationFromType,
+							json.getJSONObject(i).getString(
+									Keys.NotificationFromType));
+					map.putString(Keys.NotificationisRead, json
+							.getJSONObject(i)
+							.getString(Keys.NotificationisRead));
+					map.putString(Keys.PLAYERNICKNAME, json.getJSONObject(i)
+							.getString(Keys.PLAYERNICKNAME));
+					map.putString(
+							Keys.NotificationPlayerCount,
+							json.getJSONObject(i).getString(
+									Keys.NotificationPlayerCount));
+					notifications.add(map);
+				} catch (Exception e) {
+					Log.e("Fetching queryNotification",
+							"Error queryNotification" + e);
+				}
+			}
+		}
+		return notifications;
 	}
 
 	public String returnEventPrivacy(int index) {
@@ -2469,12 +2555,13 @@ public class DataConnector extends SQLiteOpenHelper {
 				+ Keys.ID_GAME + " INTEGER PRIMARY KEY, " + Keys.GAMENAME
 				+ " TEXT, " + Keys.GAMETYPE + " TEXT, " + Keys.GAMEDESC
 				+ " TEXT, " + Keys.GAMEDATE + " TEXT, " + Keys.EventIMAGEURL
-				+ " TEXT, " + Keys.GameIsLiked + " INTEGER, " + Keys.RATING
-				+ " TEXT, " + Keys.GAMEESRB + " TEXT, " + Keys.GAMEURL
-				+ " TEXT, " + Keys.GAMEPLAYERSCOUNT + " TEXT, "
-				+ Keys.GAMETYPENAME + " TEXT, " + Keys.GAMEPLATFORM + " TEXT, "
-				+ Keys.GAMECompanyDistributor + " TEXT, " + Keys.CompanyFounded
-				+ " TEXT, " + Keys.CompanyName + " TEXT" + ");";
+				+ " TEXT, " + Keys.GameIsLiked + " TEXT, " + Keys.GameisPlaying
+				+ " TEXT, " + Keys.RATING + " TEXT, " + Keys.GAMEESRB
+				+ " TEXT, " + Keys.GAMEURL + " TEXT, " + Keys.GAMEPLAYERSCOUNT
+				+ " TEXT, " + Keys.GAMETYPENAME + " TEXT, " + Keys.GAMEPLATFORM
+				+ " TEXT, " + Keys.GAMECompanyDistributor + " TEXT, "
+				+ Keys.CompanyFounded + " TEXT, " + Keys.CompanyName + " TEXT"
+				+ ");";
 		db.execSQL(cREATE_gamesTable);
 
 		String cREATE_HomeGamesTable = "CREATE TABLE " + Keys.HomeGamesTable
@@ -2485,8 +2572,8 @@ public class DataConnector extends SQLiteOpenHelper {
 				+ Keys.GAMENAME + " TEXT," + Keys.GAMEDESC + " TEXT,"
 				+ Keys.GameID_GAMETYPE + " INTEGER," + Keys.GAMETYPE + " TEXT,"
 				+ Keys.GAMETYPENAME + " TEXT, " + Keys.EventIMAGEURL + " TEXT,"
-				+ Keys.GameisPlaying + " INTEGER," + Keys.GameIsLiked
-				+ " INTEGER, " + Keys.GamesisSubscribed + " INTEGER,"
+				+ Keys.GameisPlaying + " TEXT," + Keys.GameIsLiked
+				+ " INTEGER, " + Keys.GamesisSubscribed + " TEXT,"
 				+ Keys.GamePostCount + " INTEGER," + Keys.GamesSubscriptionTime
 				+ " TEXT," + Keys.GAMEPLATFORM + " TEXT, "
 				+ Keys.GAMECompanyDistributor + " TEXT, " + Keys.CompanyFounded
@@ -2494,12 +2581,13 @@ public class DataConnector extends SQLiteOpenHelper {
 		db.execSQL(cREATE_HomeGamesTable);
 
 		String cREATE_groupsTable = "CREATE TABLE " + Keys.groupsTable + " ("
-				+ Keys.ID_GROUP + " INTEGER PRIMARY KEY, " + Keys.GROUPNAME
-				+ " TEXT, " + Keys.GROUPTYPE + " TEXT, " + Keys.EventIMAGEURL
-				+ " TEXT, " + Keys.GROUPDESC + " TEXT, " + Keys.GROUPTYPE2
-				+ " TEXT, " + Keys.GroupMemberCount + " TEXT, "
-				+ Keys.GROUPDATE + " TEXT, " + Keys.GruopCreatorName
-				+ " TEXT);";
+				+ Keys.ID_GROUP + " INTEGER PRIMARY KEY, " + Keys.ID_CREATOR
+				+ " INTEGER, " + Keys.GROUPNAME + " TEXT, " + Keys.GROUPTYPE
+				+ " TEXT, " + Keys.EventIMAGEURL + " TEXT, " + Keys.GROUPDESC
+				+ " TEXT, " + Keys.GROUPTYPE2 + " TEXT, " + Keys.GameIsLiked
+				+ " TEXT, " + Keys.isMember + " TEXT, " + Keys.GroupMemberCount
+				+ " TEXT, " + Keys.GROUPDATE + " TEXT, "
+				+ Keys.GruopCreatorName + " TEXT);";
 		db.execSQL(cREATE_groupsTable);
 
 		String cREATE_newsTable = "CREATE TABLE " + Keys.newsTable + " ("
@@ -2551,10 +2639,11 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		String cREATE_HomeFriendsTable = "CREATE TABLE "
 				+ Keys.HomeFriendsTable + " (" + Keys.ID_PLAYER
-				+ " INTEGER PRIMARY KEY," + Keys.ID_OWNER + " INTEGER,"
-				+ Keys.CITY + " TEXT," + Keys.COUNTRY + " TEXT,"
-				+ Keys.PLAYERNICKNAME + " TEXT," + Keys.Email + " TEXT,"
-				+ Keys.PLAYERAVATAR + " TEXT," + Keys.FirstName + " TEXT,"
+				+ " INTEGER PRIMARY KEY," + Keys.ID_FRIEND + " INTEGER,"
+				+ Keys.ID_OWNER + " INTEGER," + Keys.CITY + " TEXT,"
+				+ Keys.COUNTRY + " TEXT," + Keys.PLAYERNICKNAME + " TEXT,"
+				+ Keys.Email + " TEXT," + Keys.PLAYERAVATAR + " TEXT,"
+				+ Keys.FirstName + " TEXT," + Keys.Mutual + " TEXT,"
 				+ Keys.LastName + " TEXT," + Keys.Age + " TEXT);";
 		db.execSQL(cREATE_HomeFriendsTable);
 
@@ -2569,13 +2658,14 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		String cREATE_HomeGroupTable = "CREATE TABLE " + Keys.HomeGroupTable
 				+ " (" + Keys.ID_GROUP + " INTEGER PRIMARY KEY,"
-				+ Keys.ID_PLAYER + " INTEGER," + Keys.GROUPNAME + " TEXT,"
-				+ Keys.GROUPDESC + " TEXT," + Keys.GROUPTYPE + " TEXT,"
-				+ Keys.GROUPTYPE2 + " TEXT," + Keys.GAMENAME + " TEXT,"
-				+ Keys.GameIsLiked + " INTEGER, " + Keys.GroupMemberCount
-				+ " TEXT," + Keys.EventIMAGEURL + " TEXT," + Keys.GROUPDATE
-				+ " TEXT," + Keys.GruopCreatorName + " TEXT,"
-				+ Keys.PLAYERNICKNAME + " TEXT);";
+				+ Keys.ID_PLAYER + " INTEGER," + Keys.ID_CREATOR + " INTEGER, "
+				+ Keys.GROUPNAME + " TEXT," + Keys.GROUPDESC + " TEXT,"
+				+ Keys.GROUPTYPE + " TEXT," + Keys.GROUPTYPE2 + " TEXT,"
+				+ Keys.GAMENAME + " TEXT," + Keys.GameIsLiked + " TEXT, "
+				+ Keys.isMember + " TEXT, " + Keys.GroupMemberCount + " TEXT,"
+				+ Keys.EventIMAGEURL + " TEXT," + Keys.GROUPDATE + " TEXT,"
+				+ Keys.GruopCreatorName + " TEXT," + Keys.PLAYERNICKNAME
+				+ " TEXT);";
 		db.execSQL(cREATE_HomeGroupTable);
 
 		String cREATE_HomeWallRepliesTable = "CREATE TABLE "
@@ -2676,8 +2766,18 @@ public class DataConnector extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeWallTable);
 		db.execSQL("DROP TABLE IF EXISTS " + Keys.newsTempTable);
 		db.execSQL("DROP TABLE IF EXISTS " + Keys.companyTempTable);
-		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeMsgTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.PlayerTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.LASTIDTABLE);
 		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeSubscriptionTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeMsgRepliesTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeWallRepliesTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeGroupTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.whoIsPlayingTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeFriendsTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeEventTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeMsgTable);
+		db.execSQL("DROP TABLE IF EXISTS " + Keys.HomeGamesTable);
+
 		onCreate(db);
 	}
 
@@ -2806,14 +2906,14 @@ public class DataConnector extends SQLiteOpenHelper {
 
 		if (jArray != null) {
 			try {
-				Keys.TEMPLAYERID = jArray.getJSONObject(0).getString(
-						Keys.ID_PLAYER);
+				Configurations.CurrentPlayerID = jArray.getJSONObject(0)
+						.getString(Keys.ID_PLAYER);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			SharedPreferences.Editor editPref = pref.edit();
 			editPref.putString(Keys.USERNAME, email);
-			editPref.putString(Keys.ID_PLAYER, Keys.TEMPLAYERID);
+			editPref.putString(Keys.ID_PLAYER, Configurations.CurrentPlayerID);
 			editPref.putString(Keys.Password, pass);
 			editPref.putBoolean(Keys.ActiveSession, true);
 			editPref.commit();
@@ -2828,28 +2928,29 @@ public class DataConnector extends SQLiteOpenHelper {
 			String action, String Comments) {
 		String result = "http://" + ServerIp + "/test/";
 		// String temp = url;
-		String temp = result + url;
+		String temp = result;
 		if (phpName.startsWith("game")) {
-			url += "gameFuncions.php";
+			temp += "gameFunction.php";
 		} else if (phpName.startsWith("group")) {
-			url += "groupFuncions.php";
+			temp += "groupFunction.php";
 		} else if (phpName.startsWith("friend")) {
-			url += "friendFuncions.php";
+			temp += "friendFuncions.php";
 		}
+		System.out.println(temp);
 
 		// http post
 		try {
 			httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(url);
+			HttpPost httppost = new HttpPost(temp);
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			// url = temp;
-			pairs.add(new BasicNameValuePair("funtion", action));
+			pairs.add(new BasicNameValuePair("function", action));
 			pairs.add(new BasicNameValuePair("ID_PLAYER", ID_PLAYER));
 			if (phpName.startsWith("game")) {
 				pairs.add(new BasicNameValuePair("ID_GAME", Another));
 				pairs.add(new BasicNameValuePair("Comments", Comments));
 			} else if (phpName.startsWith("group")) {
-				pairs.add(new BasicNameValuePair("LastName", Another));
+				pairs.add(new BasicNameValuePair("ID_GROUP", Another));
 				pairs.add(new BasicNameValuePair("Comments", Comments));
 			} else if (phpName.startsWith("friend")) {
 				pairs.add(new BasicNameValuePair("ID_FRIEND", Another));
@@ -2857,7 +2958,7 @@ public class DataConnector extends SQLiteOpenHelper {
 
 			httppost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
+			response.getEntity();
 		} catch (Exception e) {
 			Log.e("log_tag HTML Conn",
 					"Error in functionQuery http connection " + e.toString());

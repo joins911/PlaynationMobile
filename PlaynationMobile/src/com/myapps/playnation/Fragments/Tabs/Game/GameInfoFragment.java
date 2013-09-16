@@ -1,17 +1,23 @@
 package com.myapps.playnation.Fragments.Tabs.Game;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.myapps.playnation.R;
 import com.myapps.playnation.Classes.Keys;
+import com.myapps.playnation.Fragments.DialogSendCommentFragment;
+import com.myapps.playnation.Operations.Configurations;
+import com.myapps.playnation.Operations.DataConnector;
 import com.myapps.playnation.Operations.HelperClass;
 import com.myapps.playnation.main.ISectionAdapter;
+import com.myapps.playnation.main.MainActivity;
 
 public class GameInfoFragment extends Fragment {
 	ISectionAdapter mCallback;
@@ -20,8 +26,10 @@ public class GameInfoFragment extends Fragment {
 	private WebView txtNewsText;
 	// private ImageView newsImage;
 	private View view;
+	private DataConnector con;
 
 	public void initGameInfo() {
+		con = DataConnector.getInst();
 		txtNewsText = (WebView) view.findViewById(R.id.webview2);
 		txtNewsTitle = (WebView) view.findViewById(R.id.webview);
 		setupWebView(txtNewsText);
@@ -61,6 +69,59 @@ public class GameInfoFragment extends Fragment {
 					.getString(Keys.GAMECompanyDistributor);
 			String gameFounded = myIntent.getString(Keys.CompanyFounded);
 			String gameDeveloper = myIntent.getString(Keys.CompanyName);
+
+			final String id_game = myIntent.getString(Keys.ID_GAME);
+			String isLiked = myIntent.getString(Keys.GameIsLiked);
+			String isPlaying = myIntent.getString(Keys.GameisPlaying);
+
+			TextView tx = (TextView) view.findViewById(R.id.btnAddGame);
+
+			if (isPlaying.equals("1"))
+				tx.setVisibility(View.GONE);
+
+			tx.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					DialogFragment dialog = new DialogSendCommentFragment();
+					dialog.show(getChildFragmentManager(), "Game");
+					Bundle argss = new Bundle();
+					argss.putString(Keys.ID_PLAYER, Configurations.CurrentPlayerID);
+					argss.putString(Keys.functionAnotherID, id_game);
+					argss.putString(Keys.functionAction,
+							Keys.POSTFUNCOMMANTAddGame);
+					argss.putString(Keys.functionPhpName, "gameFunction.php");
+					dialog.setArguments(argss);
+				}
+			});
+
+			final TextView txlike = (TextView) view
+					.findViewById(R.id.btnGameLike);
+			if (isLiked.equals("1")) {
+				txlike.setText(getActivity().getResources().getString(
+						R.string.btnUnlike));
+			} else {
+				txlike.setText(getActivity().getResources().getString(
+						R.string.btnLike));
+
+			}
+			txlike.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (txlike.getText().equals("Like"))
+						con.functionQuery(Configurations.CurrentPlayerID, id_game,
+								"gameFunction.php", Keys.POSTFUNCOMMANTLike, "");
+					else
+						con.functionQuery(Configurations.CurrentPlayerID, id_game,
+								"gameFunction.php", Keys.POSTFUNCOMMANTUnLike,
+								"");
+				}
+			});
+			if (MainActivity.configs.getApplicationState() != 0) {
+				tx.setVisibility(View.GONE);
+				txlike.setVisibility(View.GONE);
+			}
 
 			txtNewsTitle.loadData(gameName, "text/html", null);
 			// newsImage.setImageResource(myIntent.getIntExtra(Keys.NEWSCOLIMAGE,
